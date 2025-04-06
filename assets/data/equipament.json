@@ -1,0 +1,66 @@
+{
+	"equipos": [
+		{
+			"equipo": "TM0000000001IE",
+			"descripcion": "MOLINO DE BOLA METSO N°1",
+			"estado": "Disponible",
+			"general": {
+				"tipo": "MOLINO DE BOLA",
+				"clase": "FV MOLINOS",
+				"grupo_autorizacion": "",
+				"peso": "25 T",
+				"nro_inventario": "",
+				"fecha_validez": "01.01.2024"
+			},
+			"emplazamiento": {
+				"centro": "METSO",
+				"emplazamiento": "",
+				"local": "1234",
+				"area_empresa": "METSO",
+				"puesto_trabajo": "",
+				"utilizacion": "4"
+			},
+			"organizacion": {
+				"sociedad": "0101",
+				"activo_fijo": "",
+				"centro_coste": "CECOMANTTO"
+			},
+			"estructura": {
+				"ubicacion_tecnica": "FVG-PLA-MOLI-MOBA-MOL01",
+				"denominacion": "MOLINO N°1",
+				"posicion": ""
+			},
+			"garantias": {
+				"inicio_garantia": "01.01.2024",
+				"fin_garantia": "31.12.2030",
+				"tipo_garantia": "Total"
+			},
+			"materiales": [
+				{
+					"codigo_material": "527",
+					"nombre_material": "PM_ACEITE X GL",
+					"cantidad": 2,
+					"unidad": "L",
+					"valido_desde": "22.09.2024",
+					"valido_hasta": "31.12.9999"
+				},
+				{
+					"codigo_material": "1076",
+					"nombre_material": "FILTRO DE ACEITE 1R-1807",
+					"cantidad": 2,
+					"unidad": "L",
+					"valido_desde": "22.09.2024",
+					"valido_hasta": "31.12.9999"
+				},
+				{
+					"codigo_material": "776",
+					"nombre_material": "ACEITE",
+					"cantidad": 5,
+					"unidad": "BTO",
+					"valido_desde": "22.09.2024",
+					"valido_hasta": "31.12.9999"
+				}
+			]
+		}
+	]
+}

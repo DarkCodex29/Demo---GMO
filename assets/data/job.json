@@ -1,0 +1,49 @@
+{
+	"puestos_trabajo": [
+		{
+			"puesto": "FAMECANI",
+			"centro": "0101",
+			"descripcion": "Mecánico de planta",
+			"datos_basicos": {
+				"categoria_trabajo": "0005",
+				"responsable": "002",
+				"emplazamiento": "",
+				"sistema_qde": "",
+				"area_produccion": "",
+				"utilizacion_hruta": "009"
+			},
+			"valores_propuestos": {
+				"clave_control": "POM01",
+				"cc_nomina": "",
+				"grupo_salarial": "",
+				"hojas_sueldo": "0",
+				"impresora": ""
+			},
+			"capacidades": {
+				"clase_capacidad": "002",
+				"persona": "Mecánico de planta",
+				"form_nec_fabr": "POM01"
+			},
+			"programacion": {
+				"duracion_preparacion": "0",
+				"duracion_tratamiento": "0",
+				"duracion_desmontar": "0",
+				"tiempo_espera_normal": "0.000",
+				"tiempo_espera_minimo": "0.000",
+				"dimension_trabajo": "TIME",
+				"unidad_trabajo": "H"
+			},
+			"calculo_coste": {
+				"fecha_inicio": "01.01.2024",
+				"fecha_final": "31.12.2030",
+				"sociedad": "PE00",
+				"centro_coste": "CECOMANTTO"
+			},
+			"tecnologia": {
+				"tipo_maquina": "",
+				"concepto_clasificacion": "",
+				"planificador_cap": ""
+			}
+		}
+	]
+}

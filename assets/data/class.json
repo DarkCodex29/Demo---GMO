@@ -1,0 +1,16 @@
+{
+	"clases": [
+		{
+			"categoriaClase": "002",
+			"claseEquipo": "MOLINO",
+			"validoDe": "27.08.2024",
+			"caracteristicas": ["CAPACIDAD DE CARGA MOLINO"],
+			"datosAdicionales": {
+				"fabricante": "Fabricante Desconocido",
+				"peso": "5000 kg",
+				"altura": "4 metros",
+				"ubicacion": "Planta de Procesamiento"
+			}
+		}
+	]
+}

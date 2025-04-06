@@ -1,0 +1,11 @@
+{
+	"ubicaciones": [
+		{
+			"ubicacion": "FVG-PLA-MOLI-MOBA-MOL01",
+			"mascCodif": "XXXX-XXX-SSSS-XX-XX",
+			"nivJerarquicos": "1 2 3 4 5 6",
+			"indEstructura": "MTT01",
+			"descripcion": "Mina de Oro FVGOLD"
+		}
+	]
+}

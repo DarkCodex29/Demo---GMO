@@ -1,0 +1,211 @@
+{
+	"avisos": [
+		{
+			"nroAviso": "5100007445",
+			"fecha": "25.07.2018 11:59:56",
+			"orden": "8300002587",
+			"statusMensaje": "CERR",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-02",
+			"equipo": "20008382",
+			"descripcion": "CAMBIO DE CELDAS DE CARGA DE TOLVA",
+			"autor": "MACASTRO",
+			"averiaParada": {
+				"inicioAveria": "25.07.2018 09:54:18",
+				"finAveria": "",
+				"duracionParada": "0.00",
+				"prioridad": "2 PRIORITARIO"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO16",
+				"emplazamiento": "PLANTA DE HARINA DE PESCADO",
+				"areaEmpresa": "PRODUCCION",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007446",
+			"fecha": "26.07.2018 14:23:10",
+			"orden": "8300002588",
+			"statusMensaje": "ABIE",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-03",
+			"equipo": "20008383",
+			"descripcion": "REPARACIÓN DE MOTOR PRINCIPAL",
+			"autor": "JSMITH",
+			"averiaParada": {
+				"inicioAveria": "26.07.2018 13:30:00",
+				"finAveria": "",
+				"duracionParada": "1.00",
+				"prioridad": "1 URGENTE"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO17",
+				"emplazamiento": "PLANTA DE PROCESAMIENTO",
+				"areaEmpresa": "MANTENIMIENTO",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007447",
+			"fecha": "27.07.2018 08:45:30",
+			"orden": "8300002589",
+			"statusMensaje": "PLAN",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-04",
+			"equipo": "20008384",
+			"descripcion": "CAMBIO DE FILTROS DE AIRE",
+			"autor": "MLOPEZ",
+			"averiaParada": {
+				"inicioAveria": "27.07.2018 07:00:00",
+				"finAveria": "27.07.2018 08:00:00",
+				"duracionParada": "1.00",
+				"prioridad": "3 NORMAL"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO18",
+				"emplazamiento": "PLANTA DE HARINA DE SOYA",
+				"areaEmpresa": "OPERACIONES",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007448",
+			"fecha": "28.07.2018 10:15:45",
+			"orden": "8300002590",
+			"statusMensaje": "ABIE",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-05",
+			"equipo": "20008385",
+			"descripcion": "SUSTITUCIÓN DE RODILLOS",
+			"autor": "RGOMEZ",
+			"averiaParada": {
+				"inicioAveria": "28.07.2018 09:00:00",
+				"finAveria": "",
+				"duracionParada": "1.50",
+				"prioridad": "2 PRIORITARIO"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO19",
+				"emplazamiento": "PLANTA DE ACEITE DE PESCADO",
+				"areaEmpresa": "MANTENIMIENTO",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007449",
+			"fecha": "29.07.2018 12:30:00",
+			"orden": "8300002591",
+			"statusMensaje": "CERR",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-06",
+			"equipo": "20008386",
+			"descripcion": "MANTENIMIENTO DE CORREAS TRANSPORTADORAS",
+			"autor": "ADIAZ",
+			"averiaParada": {
+				"inicioAveria": "29.07.2018 11:00:00",
+				"finAveria": "29.07.2018 12:00:00",
+				"duracionParada": "1.00",
+				"prioridad": "2 PRIORITARIO"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO20",
+				"emplazamiento": "PLANTA DE PROCESAMIENTO DE MAÍZ",
+				"areaEmpresa": "MANTENIMIENTO",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007450",
+			"fecha": "30.07.2018 09:45:20",
+			"orden": "8300002592",
+			"statusMensaje": "ABIE",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-07",
+			"equipo": "20008387",
+			"descripcion": "AJUSTE DE TENSION DE CADENAS",
+			"autor": "FPEREZ",
+			"averiaParada": {
+				"inicioAveria": "30.07.2018 09:00:00",
+				"finAveria": "",
+				"duracionParada": "0.75",
+				"prioridad": "1 URGENTE"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO21",
+				"emplazamiento": "PLANTA DE TRATAMIENTO DE AGUA",
+				"areaEmpresa": "PRODUCCION",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007451",
+			"fecha": "31.07.2018 14:10:55",
+			"orden": "8300002593",
+			"statusMensaje": "PLAN",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-08",
+			"equipo": "20008388",
+			"descripcion": "INSPECCIÓN DE VÁLVULAS",
+			"autor": "GGARCIA",
+			"averiaParada": {
+				"inicioAveria": "31.07.2018 13:00:00",
+				"finAveria": "",
+				"duracionParada": "1.25",
+				"prioridad": "3 NORMAL"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO22",
+				"emplazamiento": "PLANTA DE PROCESAMIENTO DE FRUTAS",
+				"areaEmpresa": "OPERACIONES",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007452",
+			"fecha": "01.08.2018 10:00:00",
+			"orden": "8300002594",
+			"statusMensaje": "ABIE",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-09",
+			"equipo": "20008389",
+			"descripcion": "LIMPIEZA DE SISTEMA DE REFRIGERACIÓN",
+			"autor": "AMARTINEZ",
+			"averiaParada": {
+				"inicioAveria": "01.08.2018 09:00:00",
+				"finAveria": "",
+				"duracionParada": "1.00",
+				"prioridad": "2 PRIORITARIO"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO23",
+				"emplazamiento": "PLANTA DE PROCESAMIENTO DE CARNES",
+				"areaEmpresa": "MANTENIMIENTO",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		},
+		{
+			"nroAviso": "5100007453",
+			"fecha": "02.08.2018 11:20:30",
+			"orden": "8300002595",
+			"statusMensaje": "PLAN",
+			"ubicacionTecnica": "PERU-CHI-PCBN-RA-10",
+			"equipo": "20008390",
+			"descripcion": "CALIBRACIÓN DE INSTRUMENTOS",
+			"autor": "JHERNANDEZ",
+			"averiaParada": {
+				"inicioAveria": "02.08.2018 10:00:00",
+				"finAveria": "",
+				"duracionParada": "1.50",
+				"prioridad": "3 NORMAL"
+			},
+			"datosEmplazamiento": {
+				"ceEmplazamiento": "CO24",
+				"emplazamiento": "PLANTA DE HARINA DE PESCADO",
+				"areaEmpresa": "PRODUCCION",
+				"puestoTrabajo": "CHI_JMTO",
+				"sociedad": "COPEINCA S.A.C"
+			}
+		}
+	]
+}
