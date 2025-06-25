@@ -1,11 +1,204 @@
 {
 	"ubicaciones": [
 		{
-			"ubicacion": "FVG-PLA-MOLI-MOBA-MOL01",
-			"mascCodif": "XXXX-XXX-SSSS-XX-XX",
-			"nivJerarquicos": "1 2 3 4 5 6",
-			"indEstructura": "MTT01",
-			"descripcion": "Mina de Oro FVGOLD"
+			"ubicacion": "PE-100-4566",
+			"descripcion": "Sala de Bombas - Bomba Centrífuga Principal",
+			"general": {
+				"denominacion": "Sala de Bombas Principal",
+				"tipo_objeto": "Ubicación Funcional",
+				"categoria": "Sala de Equipos",
+				"estado": "Activo",
+				"responsable": "Juan Pérez",
+				"fecha_instalacion": "2024-01-10"
+			},
+			"organizacion": {
+				"centro_costo": "10000887",
+				"centro_planificacion": "1001",
+				"grupo_planificacion": "PM1",
+				"area_responsabilidad": "Producción",
+				"supervisor": "María González"
+			},
+			"emplazamiento": {
+				"edificio": "Edificio Principal",
+				"piso": "Planta Baja",
+				"zona": "A-01",
+				"coordenadas": "X: 125.5, Y: 89.2",
+				"acceso": "Acceso Norte"
+			},
+			"estructura": {
+				"ubicacion_superior": "PE-100",
+				"ubicaciones_subordinadas": [],
+				"nivel_jerarquico": 3,
+				"mascara_codificacion": "PE-XXX-XXXX"
+			},
+			"equipos_asignados": ["100001", "100002"],
+			"caracteristicas": {
+				"temperatura_operacion": "20-35°C",
+				"humedad_relativa": "45-65%",
+				"nivel_ruido": "< 85 dB",
+				"ventilacion": "Forzada",
+				"iluminacion": "LED Industrial"
+			}
+		},
+		{
+			"ubicacion": "PE-100-4567",
+			"descripcion": "Proceso de Troquelado - Control Principal",
+			"general": {
+				"denominacion": "Proceso de Troquelado",
+				"tipo_objeto": "Ubicación Funcional",
+				"categoria": "Área de Proceso",
+				"estado": "Activo",
+				"responsable": "Carlos López",
+				"fecha_instalacion": "2024-01-25"
+			},
+			"organizacion": {
+				"centro_costo": "10000887",
+				"centro_planificacion": "1002",
+				"grupo_planificacion": "PM2",
+				"area_responsabilidad": "Producción",
+				"supervisor": "Ana Rodríguez"
+			},
+			"emplazamiento": {
+				"edificio": "Edificio de Producción",
+				"piso": "Primer Piso",
+				"zona": "B-02",
+				"coordenadas": "X: 245.8, Y: 156.7",
+				"acceso": "Acceso Este"
+			},
+			"estructura": {
+				"ubicacion_superior": "PE-100",
+				"ubicaciones_subordinadas": [],
+				"nivel_jerarquico": 3,
+				"mascara_codificacion": "PE-XXX-XXXX"
+			},
+			"equipos_asignados": ["100003"],
+			"caracteristicas": {
+				"temperatura_operacion": "18-30°C",
+				"humedad_relativa": "40-60%",
+				"nivel_ruido": "< 80 dB",
+				"ventilacion": "Natural",
+				"iluminacion": "LED + Natural"
+			}
+		},
+		{
+			"ubicacion": "PE-100-4568",
+			"descripcion": "Sala de Compresores - Sistema de Aire",
+			"general": {
+				"denominacion": "Sala de Compresores",
+				"tipo_objeto": "Ubicación Funcional",
+				"categoria": "Sala de Equipos",
+				"estado": "Activo",
+				"responsable": "Ana Rodriguez",
+				"fecha_instalacion": "2024-02-10"
+			},
+			"organizacion": {
+				"centro_costo": "10000888",
+				"centro_planificacion": "1003",
+				"grupo_planificacion": "PM3",
+				"area_responsabilidad": "Servicios Auxiliares",
+				"supervisor": "Luis Martínez"
+			},
+			"emplazamiento": {
+				"edificio": "Edificio de Servicios",
+				"piso": "Sótano",
+				"zona": "C-01",
+				"coordenadas": "X: 95.3, Y: 45.8",
+				"acceso": "Acceso Sótano"
+			},
+			"estructura": {
+				"ubicacion_superior": "PE-100",
+				"ubicaciones_subordinadas": [],
+				"nivel_jerarquico": 3,
+				"mascara_codificacion": "PE-XXX-XXXX"
+			},
+			"equipos_asignados": ["100004", "100005"],
+			"caracteristicas": {
+				"temperatura_operacion": "15-40°C",
+				"humedad_relativa": "35-70%",
+				"nivel_ruido": "< 90 dB",
+				"ventilacion": "Forzada + Extracción",
+				"iluminacion": "LED Industrial"
+			}
+		},
+		{
+			"ubicacion": "PE-100-4569",
+			"descripcion": "Área de Mantenimiento - Taller",
+			"general": {
+				"denominacion": "Taller de Mantenimiento",
+				"tipo_objeto": "Ubicación Funcional",
+				"categoria": "Área de Trabajo",
+				"estado": "Activo",
+				"responsable": "Miguel Santos",
+				"fecha_instalacion": "2024-01-05"
+			},
+			"organizacion": {
+				"centro_costo": "10000889",
+				"centro_planificacion": "1004",
+				"grupo_planificacion": "PM4",
+				"area_responsabilidad": "Mantenimiento",
+				"supervisor": "Pedro Ruiz"
+			},
+			"emplazamiento": {
+				"edificio": "Edificio de Mantenimiento",
+				"piso": "Planta Baja",
+				"zona": "D-01",
+				"coordenadas": "X: 175.2, Y: 98.5",
+				"acceso": "Acceso Sur"
+			},
+			"estructura": {
+				"ubicacion_superior": "PE-100",
+				"ubicaciones_subordinadas": [],
+				"nivel_jerarquico": 3,
+				"mascara_codificacion": "PE-XXX-XXXX"
+			},
+			"equipos_asignados": [],
+			"caracteristicas": {
+				"temperatura_operacion": "16-28°C",
+				"humedad_relativa": "40-65%",
+				"nivel_ruido": "< 75 dB",
+				"ventilacion": "Natural + Extracción",
+				"iluminacion": "LED + Natural"
+			}
+		},
+		{
+			"ubicacion": "PE-100-4570",
+			"descripcion": "Almacén de Repuestos",
+			"general": {
+				"denominacion": "Almacén de Repuestos y Materiales",
+				"tipo_objeto": "Ubicación Funcional",
+				"categoria": "Área de Almacén",
+				"estado": "Activo",
+				"responsable": "Laura Fernández",
+				"fecha_instalacion": "2024-01-12"
+			},
+			"organizacion": {
+				"centro_costo": "10000890",
+				"centro_planificacion": "1005",
+				"grupo_planificacion": "PM5",
+				"area_responsabilidad": "Logística",
+				"supervisor": "Roberto Silva"
+			},
+			"emplazamiento": {
+				"edificio": "Edificio de Almacenes",
+				"piso": "Planta Baja",
+				"zona": "E-01",
+				"coordenadas": "X: 305.7, Y: 125.3",
+				"acceso": "Acceso Oeste"
+			},
+			"estructura": {
+				"ubicacion_superior": "PE-100",
+				"ubicaciones_subordinadas": [],
+				"nivel_jerarquico": 3,
+				"mascara_codificacion": "PE-XXX-XXXX"
+			},
+			"equipos_asignados": [],
+			"caracteristicas": {
+				"temperatura_operacion": "18-25°C",
+				"humedad_relativa": "30-50%",
+				"nivel_ruido": "< 70 dB",
+				"ventilacion": "Controlada",
+				"iluminacion": "LED"
+			}
 		}
 	]
 }

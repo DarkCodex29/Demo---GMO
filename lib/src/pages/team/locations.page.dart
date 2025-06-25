@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:responsive_framework/responsive_framework.dart';
 
 class LocationsPage extends StatefulWidget {
   const LocationsPage({super.key});
@@ -10,332 +11,821 @@ class LocationsPage extends StatefulWidget {
 }
 
 class LocationsPageState extends State<LocationsPage> {
-  List<Map<String, dynamic>> locations = [];
-  List<Map<String, dynamic>> equipments = [];
-  Map<String, dynamic>? selectedLocation;
+  List<Map<String, dynamic>> ubicaciones = [];
+  List<Map<String, dynamic>> filteredUbicaciones = [];
+  bool isLoading = true;
+  String searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    _loadLocations();
-    _loadEquipments();
+    _loadUbicaciones();
   }
 
-  Future<void> _loadLocations() async {
-    final String response =
-        await rootBundle.loadString('assets/data/locations.json');
-    final data = await json.decode(response);
-    setState(() {
-      locations = List<Map<String, dynamic>>.from(data['ubicaciones']);
-    });
+  Future<void> _loadUbicaciones() async {
+    try {
+      final String response = await rootBundle.loadString('assets/data/locations.json');
+      final data = await json.decode(response);
+      setState(() {
+        ubicaciones = (data['ubicaciones'] as List)
+            .map((item) => Map<String, dynamic>.from(item as Map))
+            .toList();
+        filteredUbicaciones = ubicaciones;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar datos de ubicaciones: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text('Error al cargar datos: ${e.toString()}'),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
-  Future<void> _loadEquipments() async {
-    final String response =
-        await rootBundle.loadString('assets/data/equipament.json');
-    final data = await json.decode(response);
+  void _filterUbicaciones(String query) {
     setState(() {
-      equipments = List<Map<String, dynamic>>.from(data['equipos']);
+      searchQuery = query;
+      if (query.isEmpty) {
+        filteredUbicaciones = ubicaciones;
+      } else {
+        filteredUbicaciones = ubicaciones.where((ubicacion) {
+          return ubicacion.values.any((value) => 
+              value.toString().toLowerCase().contains(query.toLowerCase()));
+        }).toList();
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          title: const Text('Ubicaciones Técnicas'),
+          backgroundColor: Colors.orange,
+          foregroundColor: Colors.white,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+          ),
+        ),
+      );
+    }
+
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Ubicaciones Técnicas'),
-        backgroundColor: Colors.orange,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Autocomplete<Map<String, dynamic>>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text.isEmpty) {
-                      return const Iterable<Map<String, dynamic>>.empty();
-                    }
-                    return locations.where((Map<String, dynamic> location) {
-                      return location['ubicacion']
-                          .toLowerCase()
-                          .contains(textEditingValue.text.toLowerCase());
-                    });
-                  },
-                  displayStringForOption: (Map<String, dynamic> option) =>
-                      option['ubicacion'],
-                  onSelected: (Map<String, dynamic> selection) {
-                    setState(() {
-                      selectedLocation = selection;
-                    });
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode,
-                      onFieldSubmitted) {
-                    return TextField(
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      decoration: const InputDecoration(
-                        hintText: 'Buscar ubicación...',
-                        prefixIcon: Icon(Icons.search),
-                        border: InputBorder.none,
-                      ),
-                    );
-                  },
+        title: ResponsiveRowColumn(
+          layout: ResponsiveRowColumnType.ROW,
+          children: [
+            const ResponsiveRowColumnItem(
+              child: Icon(Icons.location_on, color: Colors.white),
+            ),
+            const ResponsiveRowColumnItem(
+              child: SizedBox(width: 8),
+            ),
+            ResponsiveRowColumnItem(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Ubicaciones Técnicas',
+                  style: TextStyle(
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 18.0),
+                        const Condition.largerThan(name: MOBILE, value: 20.0),
+                      ],
+                    ).value,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  _buildCard(context, 'Ubicación Técnica', Icons.place),
-                  //_buildCard(context, 'Máscara Codificación', Icons.code),
-                  //_buildCard(context, 'Niveles Jerárquicos', Icons.layers),
-                  //_buildCard(context, 'Indicador Estructura', Icons.info),
-                  //_buildCard(context, 'Descripción', Icons.description),
-                  _buildCard(context, 'Equipos', Icons.build),
+          ],
+        ),
+        backgroundColor: Colors.orange,
+        elevation: 2,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: ResponsiveRowColumn(
+        layout: ResponsiveRowColumnType.COLUMN,
+        children: [
+          // Barra de búsqueda responsiva
+          ResponsiveRowColumnItem(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TextField(
+                onChanged: _filterUbicaciones,
+                style: TextStyle(
+                  fontSize: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.smallerThan(name: TABLET, value: 14.0),
+                      const Condition.largerThan(name: MOBILE, value: 16.0),
+                    ],
+                  ).value,
+                ),
+                decoration: InputDecoration(
+                  hintText: isMobile 
+                      ? 'Buscar ubicaciones...' 
+                      : 'Buscar por código, descripción o edificio...',
+                  hintStyle: TextStyle(
+                    color: Colors.grey[500], 
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 13.0),
+                        const Condition.largerThan(name: MOBILE, value: 15.0),
+                      ],
+                    ).value,
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  suffixIcon: searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            _filterUbicaciones('');
+                          },
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 16.0),
+                        const Condition.largerThan(name: MOBILE, value: 20.0),
+                      ],
+                    ).value,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Lista de ubicaciones responsiva
+          ResponsiveRowColumnItem(
+            child: Expanded(
+              child: filteredUbicaciones.isEmpty
+                  ? _buildEmptyState()
+                  : Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: ResponsiveValue<double>(
+                          context,
+                          conditionalValues: [
+                            const Condition.smallerThan(name: TABLET, value: 12.0),
+                            const Condition.largerThan(name: MOBILE, value: 16.0),
+                          ],
+                        ).value,
+                      ),
+                      child: isTablet || !isMobile
+                          ? _buildDesktopUbicacionTable()
+                          : _buildMobileUbicacionList(),
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.location_off_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            searchQuery.isEmpty
+                ? 'No hay ubicaciones disponibles'
+                : 'No se encontraron ubicaciones',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileUbicacionList() {
+    return ListView.builder(
+      padding: const EdgeInsets.only(top: 8),
+      itemCount: filteredUbicaciones.length,
+      itemBuilder: (context, index) {
+        return _buildUbicacionCard(filteredUbicaciones[index]);
+      },
+    );
+  }
+
+  Widget _buildUbicacionCard(Map<String, dynamic> ubicacion) {
+    final statusColor = _getStatusColor(ubicacion['general']['estado']);
+    final categoriaColor = _getCategoriaColor(ubicacion['general']['categoria']);
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => _showLocationDetails(ubicacion),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: ResponsiveRowColumn(
+            layout: ResponsiveRowColumnType.ROW,
+            children: [
+              // Ícono de la ubicación
+              ResponsiveRowColumnItem(
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    _getLocationIcon(ubicacion['general']['categoria']),
+                    color: Colors.orange.shade700,
+                    size: 20,
+                  ),
+                ),
+              ),
+              const ResponsiveRowColumnItem(
+                child: SizedBox(width: 12),
+              ),
+              // Información principal
+              ResponsiveRowColumnItem(
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              ubicacion['ubicacion'],
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87,
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: categoriaColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  ubicacion['general']['categoria'].toString().split(' ').first,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: statusColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  ubicacion['general']['estado'],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        ubicacion['descripcion'],
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[700],
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildDetailRow('Edificio', ubicacion['emplazamiento']['edificio']),
+                      _buildDetailRow('Piso', ubicacion['emplazamiento']['piso']),
+                      _buildDetailRow('Centro', ubicacion['organizacion']['centro_costo']),
+                      _buildDetailRow('Responsable', ubicacion['general']['responsable']),
+                      if (ubicacion['equipos_asignados'] != null && ubicacion['equipos_asignados'].isNotEmpty)
+                        _buildDetailRow('Equipos', '${ubicacion['equipos_asignados'].length} asignados'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 11,
+                color: Colors.black87,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDesktopUbicacionTable() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        columnSpacing: ResponsiveValue<double>(
+          context,
+          conditionalValues: [
+            const Condition.smallerThan(name: DESKTOP, value: 20.0),
+            const Condition.largerThan(name: TABLET, value: 30.0),
+          ],
+        ).value,
+        dataRowMaxHeight: 60,
+        headingRowColor: WidgetStateProperty.all(Colors.grey.shade50),
+        columns: const [
+          DataColumn(
+            label: Text(
+              'Ubicación Técnica',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Descripción',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Categoría',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Edificio',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Centro Costo',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Responsable',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Equipos',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+              'Estado',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+          ),
+        ],
+        rows: filteredUbicaciones.map((ubicacion) {
+          final statusColor = _getStatusColor(ubicacion['general']['estado']);
+          final categoriaColor = _getCategoriaColor(ubicacion['general']['categoria']);
+          
+          return DataRow(
+            onSelectChanged: (selected) {
+              if (selected == true) {
+                _showLocationDetails(ubicacion);
+              }
+            },
+            cells: [
+              DataCell(
+                Row(
+                  children: [
+                    Icon(
+                      _getLocationIcon(ubicacion['general']['categoria']),
+                      color: Colors.orange.shade600,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      ubicacion['ubicacion'],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              DataCell(
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    ubicacion['descripcion'],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              ),
+              DataCell(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: categoriaColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    ubicacion['general']['categoria'],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              DataCell(
+                Text(
+                  ubicacion['emplazamiento']['edificio'],
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+              DataCell(
+                Text(
+                  ubicacion['organizacion']['centro_costo'],
+                  style: const TextStyle(fontSize: 12, fontFamily: 'monospace'),
+                ),
+              ),
+              DataCell(
+                Text(
+                  ubicacion['general']['responsable'],
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+              DataCell(
+                Text(
+                  ubicacion['equipos_asignados'] != null ? 
+                    '${ubicacion['equipos_asignados'].length}' : '0',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              DataCell(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: statusColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    ubicacion['general']['estado'],
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  IconData _getLocationIcon(String categoria) {
+    switch (categoria.toLowerCase()) {
+      case 'sala de equipos':
+        return Icons.room_preferences;
+      case 'área de proceso':
+        return Icons.factory;
+      case 'área de trabajo':
+        return Icons.work;
+      case 'área de almacén':
+        return Icons.warehouse;
+      default:
+        return Icons.location_on;
+    }
+  }
+
+  Color _getStatusColor(String estado) {
+    switch (estado.toLowerCase()) {
+      case 'activo':
+        return Colors.green;
+      case 'en mantenimiento':
+        return Colors.orange;
+      case 'inactivo':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Color _getCategoriaColor(String categoria) {
+    switch (categoria.toLowerCase()) {
+      case 'sala de equipos':
+        return Colors.blue;
+      case 'área de proceso':
+        return Colors.purple;
+      case 'área de trabajo':
+        return Colors.teal;
+      case 'área de almacén':
+        return Colors.brown;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  void _showLocationDetails(Map<String, dynamic> ubicacion) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          child: Container(
+            width: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 350.0),
+                const Condition.largerThan(name: MOBILE, value: 600.0),
+              ],
+            ).value,
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        _getLocationIcon(ubicacion['general']['categoria']),
+                        color: Colors.orange.shade600,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ubicacion['ubicacion'],
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            fontFamily: 'monospace',
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildDetailSection('General', ubicacion['general']),
+                  _buildDetailSection('Organización', ubicacion['organizacion']),
+                  _buildDetailSection('Emplazamiento', ubicacion['emplazamiento']),
+                  _buildDetailSection('Estructura', ubicacion['estructura']),
+                  _buildDetailSection('Características', ubicacion['caracteristicas']),
+                  if (ubicacion['equipos_asignados'] != null && ubicacion['equipos_asignados'].isNotEmpty)
+                    _buildEquiposSection(ubicacion['equipos_asignados']),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildCard(BuildContext context, String title, IconData icon) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.orange),
-        title: Text(title),
-        trailing: const Icon(Icons.arrow_forward),
-        onTap: () {
-          if (selectedLocation != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LocationDetailPage(
-                  title: title,
-                  locationData: selectedLocation!,
-                  equipments: equipments,
+  Widget _buildDetailSection(String title, Map<String, dynamic> data) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.orange.shade700,
+          ),
+        ),
+        const SizedBox(height: 8),
+        ...data.entries.map((entry) => Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 120,
+                child: Text(
+                  _formatFieldName(entry.key),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Por favor, selecciona una ubicación.'),
+              Expanded(
+                child: Text(
+                  entry.value.toString(),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
-            );
-          }
-        },
-      ),
+            ],
+          ),
+        )),
+        const SizedBox(height: 12),
+      ],
     );
   }
-}
 
-class LocationDetailPage extends StatelessWidget {
-  final String title;
-  final Map<String, dynamic> locationData;
-  final List<Map<String, dynamic>> equipments;
-
-  const LocationDetailPage({
-    super.key,
-    required this.title,
-    required this.locationData,
-    required this.equipments,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final String? ubicacionTecnica = locationData['ubicacion'];
-    final List<Map<String, dynamic>> assignedEquipments = equipments
-        .where((equipment) =>
-            equipment['estructura']['ubicacion_tecnica'] == ubicacionTecnica)
-        .toList();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.orange,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Detalles de $title',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.orange,
+  Widget _buildEquiposSection(List<dynamic> equipos) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Equipos Asignados',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.orange.shade700,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 4,
+          children: equipos.map((equipo) => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              border: Border.all(color: Colors.blue.shade200),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              equipo.toString(),
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.blue.shade700,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'monospace',
               ),
             ),
-            const SizedBox(height: 16),
-            if (title == 'Ubicación Técnica') ...[
-              _buildDetailTile('Ubicación Técnica', locationData['ubicacion']),
-            ],
-            if (title == 'Máscara Codificación') ...[
-              _buildDetailTile(
-                  'Máscara Codificación', locationData['mascCodif']),
-            ],
-            if (title == 'Niveles Jerárquicos') ...[
-              _buildDetailTile(
-                  'Niv. Jerárquicos', locationData['nivJerarquicos']),
-            ],
-            if (title == 'Indicador Estructura') ...[
-              _buildDetailTile(
-                  'Ind. Estructura', locationData['indEstructura']),
-            ],
-            if (title == 'Descripción') ...[
-              _buildDetailTile('Descripción', locationData['descripcion']),
-            ],
-            if (title == 'Equipos') ...[
-              if (assignedEquipments.isNotEmpty) ...[
-                ...assignedEquipments.map((equipment) {
-                  return ListTile(
-                    title: Text('Equipo: ${equipment['equipo']}'),
-                    subtitle: Text(equipment['descripcion']),
-                    trailing: const Icon(Icons.arrow_forward),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EquipmentDetailPage(equipment: equipment),
-                        ),
-                      );
-                    },
-                  );
-                }),
-              ] else ...[
-                const Text('No hay equipos asignados a esta ubicación.'),
-              ]
-            ],
-          ],
+          )).toList(),
         ),
-      ),
+        const SizedBox(height: 12),
+      ],
     );
   }
 
-  Widget _buildDetailTile(String title, String? content) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(content ?? 'N/A'),
-      ),
-    );
-  }
-}
-
-class EquipmentDetailPage extends StatelessWidget {
-  final Map<String, dynamic> equipment;
-
-  const EquipmentDetailPage({super.key, required this.equipment});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detalles del Equipo ${equipment['equipo']}'),
-        backgroundColor: Colors.orange,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            _buildDetailTile('Equipo', equipment['equipo']),
-            _buildDetailTile('Descripción', equipment['descripcion']),
-            _buildDetailTile('Estado', equipment['estado']),
-            const SizedBox(height: 16.0),
-            const Text(
-              'General',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDetailTile('Tipo', equipment['general']['tipo']),
-            _buildDetailTile('Clase', equipment['general']['clase']),
-            _buildDetailTile('Grupo Autorización',
-                equipment['general']['grupo_autorizacion']),
-            _buildDetailTile('Peso', equipment['general']['peso']),
-            _buildDetailTile(
-                'Nro Inventario', equipment['general']['nro_inventario']),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Emplazamiento',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDetailTile(
-                'Centro Emplazamiento', equipment['emplazamiento']['centro']),
-            _buildDetailTile(
-                'Emplazamiento', equipment['emplazamiento']['emplazamiento']),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Organización',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDetailTile('Sociedad', equipment['organizacion']['sociedad']),
-            _buildDetailTile(
-                'Activo Fijo', equipment['organizacion']['activo_fijo']),
-            _buildDetailTile(
-                'Centro Coste', equipment['organizacion']['centro_coste']),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Estructura',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDetailTile('Ubicación Técnica',
-                equipment['estructura']['ubicacion_tecnica']),
-            _buildDetailTile(
-                'Denominación', equipment['estructura']['denominacion']),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Garantías',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            _buildDetailTile(
-                'Inicio Garantía', equipment['garantias']['inicio_garantia']),
-            _buildDetailTile(
-                'Fin Garantía', equipment['garantias']['fin_garantia']),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDetailTile(String title, String? value) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: ListTile(
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(value ?? 'N/A'),
-      ),
-    );
+  String _formatFieldName(String fieldName) {
+    return fieldName
+        .replaceAll('_', ' ')
+        .split(' ')
+        .map((word) => word.isNotEmpty 
+            ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+            : word)
+        .join(' ');
   }
 }

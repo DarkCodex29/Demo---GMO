@@ -1,66 +1,209 @@
 {
 	"equipos": [
 		{
-			"equipo": "TM0000000001IE",
-			"descripcion": "MOLINO DE BOLA METSO N°1",
-			"estado": "Disponible",
+			"equipo": "100001",
+			"descripcion": "Bomba centrífuga principal",
 			"general": {
-				"tipo": "MOLINO DE BOLA",
-				"clase": "FV MOLINOS",
-				"grupo_autorizacion": "",
-				"peso": "25 T",
-				"nro_inventario": "",
-				"fecha_validez": "01.01.2024"
+				"tipo_equipo": "Máquina",
+				"descripcion": "bomba centrífuga",
+				"modelo": "XYZ-2000",
+				"fabricante": "GRUNDFOS",
+				"numero_serie": "GF2024001",
+				"fecha_instalacion": "2024-01-15",
+				"estado": "Operativo",
+				"criticidad": "Alta"
 			},
 			"emplazamiento": {
-				"centro": "METSO",
-				"emplazamiento": "",
-				"local": "1234",
-				"area_empresa": "METSO",
-				"puesto_trabajo": "",
-				"utilizacion": "4"
+				"ubicacion_tecnica": "PE-100-4566",
+				"area": "sala de bombas",
+				"centro_trabajo": "1001",
+				"piso": "Planta Baja",
+				"edificio": "Edificio Principal"
 			},
 			"organizacion": {
-				"sociedad": "0101",
-				"activo_fijo": "",
-				"centro_coste": "CECOMANTTO"
+				"centro_costo": "10000887",
+				"centro_planificacion": "1001",
+				"grupo_planificacion": "PM1",
+				"puesto_trabajo": "PM_ELECT",
+				"responsable": "Juan Pérez"
 			},
 			"estructura": {
-				"ubicacion_tecnica": "FVG-PLA-MOLI-MOBA-MOL01",
-				"denominacion": "MOLINO N°1",
-				"posicion": ""
+				"ubicacion_tecnica": "PE-100-4566",
+				"equipo_superior": "",
+				"equipos_subordinados": ["100002", "100003"],
+				"categoria_objeto": "Equipo Principal"
 			},
 			"garantias": {
-				"inicio_garantia": "01.01.2024",
-				"fin_garantia": "31.12.2030",
-				"tipo_garantia": "Total"
+				"proveedor": "GRUNDFOS SA",
+				"fecha_inicio": "2024-01-15",
+				"fecha_fin": "2026-01-15",
+				"tipo_garantia": "Completa",
+				"contacto": "soporte@grundfos.com"
+			}
+		},
+		{
+			"equipo": "100002",
+			"descripcion": "Motor eléctrico auxiliar",
+			"general": {
+				"tipo_equipo": "Motor",
+				"descripcion": "motor eléctrico trifásico",
+				"modelo": "ABB-M3000",
+				"fabricante": "ABB",
+				"numero_serie": "ABB2024002",
+				"fecha_instalacion": "2024-01-20",
+				"estado": "Operativo",
+				"criticidad": "Media"
 			},
-			"materiales": [
-				{
-					"codigo_material": "527",
-					"nombre_material": "PM_ACEITE X GL",
-					"cantidad": 2,
-					"unidad": "L",
-					"valido_desde": "22.09.2024",
-					"valido_hasta": "31.12.9999"
-				},
-				{
-					"codigo_material": "1076",
-					"nombre_material": "FILTRO DE ACEITE 1R-1807",
-					"cantidad": 2,
-					"unidad": "L",
-					"valido_desde": "22.09.2024",
-					"valido_hasta": "31.12.9999"
-				},
-				{
-					"codigo_material": "776",
-					"nombre_material": "ACEITE",
-					"cantidad": 5,
-					"unidad": "BTO",
-					"valido_desde": "22.09.2024",
-					"valido_hasta": "31.12.9999"
-				}
-			]
+			"emplazamiento": {
+				"ubicacion_tecnica": "PE-100-4566",
+				"area": "sala de bombas",
+				"centro_trabajo": "1001",
+				"piso": "Planta Baja",
+				"edificio": "Edificio Principal"
+			},
+			"organizacion": {
+				"centro_costo": "10000887",
+				"centro_planificacion": "1001",
+				"grupo_planificacion": "PM1",
+				"puesto_trabajo": "PM_ELECT",
+				"responsable": "María García"
+			},
+			"estructura": {
+				"ubicacion_tecnica": "PE-100-4566",
+				"equipo_superior": "100001",
+				"equipos_subordinados": [],
+				"categoria_objeto": "Equipo Auxiliar"
+			},
+			"garantias": {
+				"proveedor": "ABB Argentina",
+				"fecha_inicio": "2024-01-20",
+				"fecha_fin": "2025-01-20",
+				"tipo_garantia": "Limitada",
+				"contacto": "servicio@abb.com.ar"
+			}
+		},
+		{
+			"equipo": "100003",
+			"descripcion": "Válvula de control principal",
+			"general": {
+				"tipo_equipo": "Válvula",
+				"descripcion": "válvula de control automática",
+				"modelo": "FISHER-V200",
+				"fabricante": "FISHER",
+				"numero_serie": "FV2024003",
+				"fecha_instalacion": "2024-02-01",
+				"estado": "Operativo",
+				"criticidad": "Alta"
+			},
+			"emplazamiento": {
+				"ubicacion_tecnica": "PE-100-4567",
+				"area": "proceso de troquelado",
+				"centro_trabajo": "1002",
+				"piso": "Primer Piso",
+				"edificio": "Edificio de Producción"
+			},
+			"organizacion": {
+				"centro_costo": "10000887",
+				"centro_planificacion": "1002",
+				"grupo_planificacion": "PM2",
+				"puesto_trabajo": "PM_MECANICO",
+				"responsable": "Carlos López"
+			},
+			"estructura": {
+				"ubicacion_tecnica": "PE-100-4567",
+				"equipo_superior": "",
+				"equipos_subordinados": [],
+				"categoria_objeto": "Equipo de Control"
+			},
+			"garantias": {
+				"proveedor": "FISHER Controls",
+				"fecha_inicio": "2024-02-01",
+				"fecha_fin": "2027-02-01",
+				"tipo_garantia": "Extendida",
+				"contacto": "support@fisher.com"
+			}
+		},
+		{
+			"equipo": "100004",
+			"descripcion": "Compresor de aire principal",
+			"general": {
+				"tipo_equipo": "Compresor",
+				"descripcion": "compresor de aire rotativo",
+				"modelo": "ATLAS-GA55",
+				"fabricante": "ATLAS COPCO",
+				"numero_serie": "AC2024004",
+				"fecha_instalacion": "2024-02-15",
+				"estado": "En Mantenimiento",
+				"criticidad": "Alta"
+			},
+			"emplazamiento": {
+				"ubicacion_tecnica": "PE-100-4568",
+				"area": "sala de compresores",
+				"centro_trabajo": "1003",
+				"piso": "Sótano",
+				"edificio": "Edificio de Servicios"
+			},
+			"organizacion": {
+				"centro_costo": "10000888",
+				"centro_planificacion": "1003",
+				"grupo_planificacion": "PM3",
+				"puesto_trabajo": "PM_MECANICO",
+				"responsable": "Ana Rodriguez"
+			},
+			"estructura": {
+				"ubicacion_tecnica": "PE-100-4568",
+				"equipo_superior": "",
+				"equipos_subordinados": ["100005"],
+				"categoria_objeto": "Equipo Principal"
+			},
+			"garantias": {
+				"proveedor": "Atlas Copco Argentina",
+				"fecha_inicio": "2024-02-15",
+				"fecha_fin": "2026-02-15",
+				"tipo_garantia": "Completa",
+				"contacto": "service@atlascopco.com.ar"
+			}
+		},
+		{
+			"equipo": "100005",
+			"descripcion": "Secador de aire refrigerativo",
+			"general": {
+				"tipo_equipo": "Secador",
+				"descripcion": "secador refrigerativo",
+				"modelo": "ATLAS-FX15",
+				"fabricante": "ATLAS COPCO",
+				"numero_serie": "AC2024005",
+				"fecha_instalacion": "2024-02-20",
+				"estado": "Operativo",
+				"criticidad": "Media"
+			},
+			"emplazamiento": {
+				"ubicacion_tecnica": "PE-100-4568",
+				"area": "sala de compresores",
+				"centro_trabajo": "1003",
+				"piso": "Sótano",
+				"edificio": "Edificio de Servicios"
+			},
+			"organizacion": {
+				"centro_costo": "10000888",
+				"centro_planificacion": "1003",
+				"grupo_planificacion": "PM3",
+				"puesto_trabajo": "PM_INST",
+				"responsable": "Luis Martinez"
+			},
+			"estructura": {
+				"ubicacion_tecnica": "PE-100-4568",
+				"equipo_superior": "100004",
+				"equipos_subordinados": [],
+				"categoria_objeto": "Equipo Auxiliar"
+			},
+			"garantias": {
+				"proveedor": "Atlas Copco Argentina",
+				"fecha_inicio": "2024-02-20",
+				"fecha_fin": "2025-02-20",
+				"tipo_garantia": "Limitada",
+				"contacto": "service@atlascopco.com.ar"
+			}
 		}
 	]
 }

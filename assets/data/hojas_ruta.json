@@ -1,0 +1,367 @@
+[
+	{
+		"codigo": "HR-100001",
+		"nombre": "Mantenimiento Bomba Centrífuga",
+		"descripcion": "Hoja de ruta para mantenimiento preventivo de bomba centrífuga principal",
+		"tipo": "E",
+		"equipo": "100001",
+		"equipoDescripcion": "Bomba centrífuga principal",
+		"centro": "1001",
+		"centroDescripcion": "Centro de Mantenimiento Eléctrico",
+		"estado": "Liberado",
+		"responsable": "Carlos Méndez",
+		"ubicacionTecnica": "PE-100-4566",
+		"fechaCreacion": "2024-10-15",
+		"fechaUltimaActualizacion": "2024-12-15",
+		"version": "2.1",
+		"operaciones": [
+			{
+				"numero": "10",
+				"descripcion": "Cambio de rodamientos",
+				"puestoTrabajo": "PM_ELECT",
+				"cantidadPersonas": 1,
+				"duracion": "2h",
+				"duracionReal": "1.8h",
+				"tiempoPreparacion": "15min",
+				"tiempoProcesamiento": "1.5h",
+				"tiempoPostProceso": "15min",
+				"frecuencia": "1 mes",
+				"herramientas": [
+					"Extractor de rodamientos",
+					"Martillo de inercia",
+					"Calibrador"
+				],
+				"materiales": [
+					{
+						"codigo": "ROD-6205-2RS",
+						"descripcion": "Rodamiento 6205-2RS",
+						"cantidad": 2,
+						"unidad": "PZ",
+						"almacen": "2001"
+					}
+				],
+				"instrucciones": [
+					"Desconectar alimentación eléctrica",
+					"Drenar fluido del sistema",
+					"Desmontar acoplamiento",
+					"Extraer rodamientos desgastados",
+					"Instalar nuevos rodamientos",
+					"Alinear y ensamblar"
+				]
+			},
+			{
+				"numero": "20",
+				"descripcion": "Cambio de eje",
+				"puestoTrabajo": "PM_MECANICO",
+				"cantidadPersonas": 2,
+				"duracion": "4h",
+				"duracionReal": "3.5h",
+				"tiempoPreparacion": "30min",
+				"tiempoProcesamiento": "3h",
+				"tiempoPostProceso": "30min",
+				"frecuencia": "2 meses",
+				"herramientas": [
+					"Grúa portátil",
+					"Alineador láser",
+					"Llaves de torque"
+				],
+				"materiales": [
+					{
+						"codigo": "EJE-BC-001",
+						"descripcion": "Eje principal bomba centrífuga",
+						"cantidad": 1,
+						"unidad": "PZ",
+						"almacen": "2001"
+					}
+				],
+				"instrucciones": [
+					"Asegurar área de trabajo",
+					"Desmontar bomba completamente",
+					"Extraer eje dañado",
+					"Instalar eje nuevo",
+					"Verificar alineación",
+					"Ensamblar y probar"
+				]
+			}
+		],
+		"documentosAdjuntos": [
+			"Manual_Bomba_Centrífuga_V2.1.pdf",
+			"Plano_Montaje_Rodamientos.dwg",
+			"Procedimiento_Seguridad_BC001.pdf"
+		],
+		"historialCambios": [
+			{
+				"fecha": "2024-12-15",
+				"version": "2.1",
+				"usuario": "Carlos Méndez",
+				"cambios": "Actualización de tiempos de operación 20"
+			},
+			{
+				"fecha": "2024-11-20",
+				"version": "2.0",
+				"usuario": "Ana Torres",
+				"cambios": "Revisión completa de procedimientos de seguridad"
+			}
+		]
+	},
+	{
+		"codigo": "HR-100002",
+		"nombre": "Mantenimiento Motor Eléctrico Auxiliar",
+		"descripcion": "Hoja de ruta para mantenimiento del motor eléctrico auxiliar",
+		"tipo": "E",
+		"equipo": "100002",
+		"equipoDescripcion": "Motor eléctrico auxiliar",
+		"centro": "1001",
+		"centroDescripcion": "Centro de Mantenimiento Eléctrico",
+		"estado": "Liberado",
+		"responsable": "Luis Ramírez",
+		"ubicacionTecnica": "PE-100-4566",
+		"fechaCreacion": "2024-09-20",
+		"fechaUltimaActualizacion": "2024-12-10",
+		"version": "1.5",
+		"operaciones": [
+			{
+				"numero": "10",
+				"descripcion": "Inspección eléctrica",
+				"puestoTrabajo": "PM_ELECT",
+				"cantidadPersonas": 1,
+				"duracion": "1h",
+				"duracionReal": "0.8h",
+				"tiempoPreparacion": "10min",
+				"tiempoProcesamiento": "40min",
+				"tiempoPostProceso": "10min",
+				"frecuencia": "15 días",
+				"herramientas": ["Multímetro", "Megóhmetro", "Pinza amperimétrica"],
+				"materiales": [],
+				"instrucciones": [
+					"Verificar conexiones eléctricas",
+					"Medir resistencia de aislamiento",
+					"Revisar consumo de corriente",
+					"Inspeccionar terminales"
+				]
+			}
+		],
+		"documentosAdjuntos": [
+			"Manual_Motor_Auxiliar_V1.5.pdf",
+			"Esquema_Eléctrico_MOT002.pdf"
+		],
+		"historialCambios": [
+			{
+				"fecha": "2024-12-10",
+				"version": "1.5",
+				"usuario": "Luis Ramírez",
+				"cambios": "Actualización de frecuencias de inspección"
+			}
+		]
+	},
+	{
+		"codigo": "HR-100003",
+		"nombre": "Mantenimiento Válvula de Control",
+		"descripcion": "Hoja de ruta para válvula de control proceso troquelado",
+		"tipo": "E",
+		"equipo": "100003",
+		"equipoDescripcion": "Válvula de control neumática",
+		"centro": "1002",
+		"centroDescripcion": "Centro de Mantenimiento Instrumentación",
+		"estado": "Liberado",
+		"responsable": "Patricia Silva",
+		"ubicacionTecnica": "PE-100-4567",
+		"fechaCreacion": "2024-10-01",
+		"fechaUltimaActualizacion": "2024-12-08",
+		"version": "1.3",
+		"operaciones": [
+			{
+				"numero": "10",
+				"descripcion": "Calibración actuador",
+				"puestoTrabajo": "PM_INST",
+				"cantidadPersonas": 1,
+				"duracion": "1.5h",
+				"duracionReal": "1.2h",
+				"tiempoPreparacion": "15min",
+				"tiempoProcesamiento": "1h",
+				"tiempoPostProceso": "15min",
+				"frecuencia": "1 mes",
+				"herramientas": [
+					"Calibrador de presión",
+					"Multímetro",
+					"Destornilladores de precisión"
+				],
+				"materiales": [
+					{
+						"codigo": "SEAL-VLV-001",
+						"descripcion": "Kit de sellos para válvula",
+						"cantidad": 1,
+						"unidad": "KIT",
+						"almacen": "2002"
+					}
+				],
+				"instrucciones": [
+					"Verificar presión de aire",
+					"Calibrar señal de control 4-20mA",
+					"Verificar carrera completa",
+					"Ajustar parámetros PID"
+				]
+			}
+		],
+		"documentosAdjuntos": [
+			"Manual_Válvula_Control_V1.3.pdf",
+			"Hoja_Calibración_VLV003.xlsx"
+		],
+		"historialCambios": [
+			{
+				"fecha": "2024-12-08",
+				"version": "1.3",
+				"usuario": "Patricia Silva",
+				"cambios": "Actualización de procedimientos de calibración"
+			}
+		]
+	},
+	{
+		"codigo": "HR-100004",
+		"nombre": "Mantenimiento Compresor",
+		"descripcion": "Hoja de ruta para mantenimiento de compresor de aire",
+		"tipo": "E",
+		"equipo": "100004",
+		"equipoDescripcion": "Compresor de aire industrial",
+		"centro": "1003",
+		"centroDescripcion": "Centro de Mantenimiento Mecánico",
+		"estado": "Liberado",
+		"responsable": "Miguel Herrera",
+		"ubicacionTecnica": "PE-100-4568",
+		"fechaCreacion": "2024-09-15",
+		"fechaUltimaActualizacion": "2024-12-12",
+		"version": "2.0",
+		"operaciones": [
+			{
+				"numero": "10",
+				"descripcion": "Cambio de filtros",
+				"puestoTrabajo": "PM_MECANICO",
+				"cantidadPersonas": 1,
+				"duracion": "0.5h",
+				"duracionReal": "0.4h",
+				"tiempoPreparacion": "5min",
+				"tiempoProcesamiento": "20min",
+				"tiempoPostProceso": "5min",
+				"frecuencia": "2 semanas",
+				"herramientas": ["Llaves inglesas", "Trapos industriales"],
+				"materiales": [
+					{
+						"codigo": "FILT-AIR-002",
+						"descripcion": "Filtro de aire compresor",
+						"cantidad": 1,
+						"unidad": "PZ",
+						"almacen": "2003"
+					}
+				],
+				"instrucciones": [
+					"Despresurizar sistema",
+					"Remover filtro usado",
+					"Limpiar carcasa",
+					"Instalar filtro nuevo",
+					"Verificar fugas"
+				]
+			},
+			{
+				"numero": "20",
+				"descripcion": "Cambio de aceite",
+				"puestoTrabajo": "PM_MECANICO",
+				"cantidadPersonas": 1,
+				"duracion": "1h",
+				"duracionReal": "0.9h",
+				"tiempoPreparacion": "10min",
+				"tiempoProcesamiento": "40min",
+				"tiempoPostProceso": "10min",
+				"frecuencia": "1 mes",
+				"herramientas": ["Llave de filtro", "Recipiente para aceite usado"],
+				"materiales": [
+					{
+						"codigo": "ACE-COMP-001",
+						"descripcion": "Aceite sintético para compresor",
+						"cantidad": 5,
+						"unidad": "LT",
+						"almacen": "2003"
+					}
+				],
+				"instrucciones": [
+					"Calentar motor a temperatura operación",
+					"Drenar aceite usado",
+					"Cambiar filtro de aceite",
+					"Cargar aceite nuevo",
+					"Verificar nivel y fugas"
+				]
+			}
+		],
+		"documentosAdjuntos": [
+			"Manual_Compresor_V2.0.pdf",
+			"Programa_Mantenimiento_COMP004.xlsx"
+		],
+		"historialCambios": [
+			{
+				"fecha": "2024-12-12",
+				"version": "2.0",
+				"usuario": "Miguel Herrera",
+				"cambios": "Revisión mayor - nuevos procedimientos de aceite"
+			}
+		]
+	},
+	{
+		"codigo": "HR-100005",
+		"nombre": "Mantenimiento Secador",
+		"descripcion": "Hoja de ruta para mantenimiento de secador de aire comprimido",
+		"tipo": "E",
+		"equipo": "100005",
+		"equipoDescripcion": "Secador de aire por refrigeración",
+		"centro": "1003",
+		"centroDescripcion": "Centro de Mantenimiento Mecánico",
+		"estado": "En Revisión",
+		"responsable": "Roberto Vega",
+		"ubicacionTecnica": "PE-100-4568",
+		"fechaCreacion": "2024-11-01",
+		"fechaUltimaActualizacion": "2024-12-14",
+		"version": "1.0",
+		"operaciones": [
+			{
+				"numero": "10",
+				"descripcion": "Limpieza condensadores",
+				"puestoTrabajo": "PM_MECANICO",
+				"cantidadPersonas": 1,
+				"duracion": "1h",
+				"duracionReal": "1.1h",
+				"tiempoPreparacion": "15min",
+				"tiempoProcesamiento": "40min",
+				"tiempoPostProceso": "15min",
+				"frecuencia": "3 semanas",
+				"herramientas": [
+					"Compresor de aire",
+					"Cepillos",
+					"Productos de limpieza"
+				],
+				"materiales": [
+					{
+						"codigo": "LIMP-COND-001",
+						"descripcion": "Limpiador de condensadores",
+						"cantidad": 0.5,
+						"unidad": "LT",
+						"almacen": "2003"
+					}
+				],
+				"instrucciones": [
+					"Apagar equipo y esperar enfriamiento",
+					"Desmontar paneles de acceso",
+					"Limpiar aletas del condensador",
+					"Verificar ventiladores",
+					"Ensamblar y probar"
+				]
+			}
+		],
+		"documentosAdjuntos": ["Manual_Secador_V1.0.pdf"],
+		"historialCambios": [
+			{
+				"fecha": "2024-12-14",
+				"version": "1.0",
+				"usuario": "Roberto Vega",
+				"cambios": "Creación inicial de hoja de ruta"
+			}
+		]
+	}
+]

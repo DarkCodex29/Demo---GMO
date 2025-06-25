@@ -12,6 +12,7 @@ import 'package:demo/src/pages/team/materials.page.dart';
 import 'package:demo/src/pages/planning/maintenance/cycle.page.dart';
 import 'package:demo/src/pages/planning/strategies.page.dart';
 import 'package:demo/src/pages/planning/capacity_management.page.dart';
+import 'package:demo/src/pages/planning/roadmap_main.page.dart';
 import 'package:demo/src/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -443,6 +444,12 @@ class HomePageState extends State<HomePage> {
         subtitle: 'Planificación y programación de recursos',
         onTap: () => _navigateTo(context, const CapacityManagementPage()),
       ),
+      _buildMenuItem(
+        icon: Icons.route,
+        title: 'Hoja de Ruta',
+        subtitle: 'Gestión de hojas de ruta y equipos de trabajo',
+        onTap: () => _navigateTo(context, const RoadmapMainPage()),
+      ),
       _buildSubExpansionTile(
         icon: Icons.calendar_today,
         title: 'Plan de Mantenimiento',
@@ -452,13 +459,6 @@ class HomePageState extends State<HomePage> {
             title: 'Ciclo Individual',
             subtitle: 'Programación de ciclos de mantenimiento',
             onTap: () => _navigateTo(context, const CyclePage()),
-            isSubItem: true,
-          ),
-          _buildMenuItem(
-            icon: Icons.bar_chart,
-            title: 'Estrategia',
-            subtitle: 'Definición de estrategias de mantenimiento',
-            onTap: () => _navigateTo(context, const StrategiesPage()),
             isSubItem: true,
           ),
         ],
