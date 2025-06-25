@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:demo/src/pages/maintenance/order.page.dart';
 import 'package:demo/src/pages/maintenance/warning.page.dart';
 import 'package:demo/src/pages/maintenance/create_order.page.dart';
+import 'package:demo/src/pages/maintenance/demand_management.page.dart';
 import 'package:demo/src/pages/team/class.page.dart';
 import 'package:demo/src/pages/team/locations.page.dart';
 import 'package:demo/src/pages/team/job.page.dart';
@@ -13,6 +14,7 @@ import 'package:demo/src/pages/planning/maintenance/strategy.page.dart';
 import 'package:demo/src/pages/planning/capacity_management.page.dart';
 import 'package:demo/src/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,7 +29,6 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // Simular notificaciones del sistema después de 10 segundos
     _startNotificationSimulation();
   }
 
@@ -63,23 +64,34 @@ class HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Cerrar sesión'),
-          content: const Text('¿Estás seguro de que deseas cerrar la sesión?'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: const Row(
+            children: [
+              Icon(Icons.logout, color: Colors.orange),
+              SizedBox(width: 8),
+              Text('Cerrar sesión'),
+            ],
+          ),
+          content: const Text(
+            '¿Estás seguro de que deseas cerrar la sesión?',
+            style: TextStyle(fontSize: 16),
+          ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child:
-                  const Text('Cancelar', style: TextStyle(color: Colors.grey)),
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text(
+                'Cancelar', 
+                style: TextStyle(color: Colors.grey, fontSize: 16)
+              ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              child: const Text('Cerrar sesión',
-                  style: TextStyle(color: Colors.white)),
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              ),
+              child: const Text('Cerrar sesión', style: TextStyle(fontSize: 16)),
             ),
           ],
         );
@@ -90,7 +102,6 @@ class HomePageState extends State<HomePage> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('isLoggedIn');
 
-      // Verificar si el contexto sigue siendo válido antes de usarlo
       if (context.mounted) {
         Navigator.pushReplacement(
           context,
@@ -102,351 +113,755 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Usar ResponsiveBreakpoints para obtener información del dispositivo
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Sistema GMO - Demo'),
-        backgroundColor: Colors.orange,
-        actions: [
-          // Botón para toggle de notificaciones
-          IconButton(
-            icon: Icon(_notificationsEnabled ? Icons.notifications : Icons.notifications_off),
-            onPressed: () {
-              setState(() {
-                _notificationsEnabled = !_notificationsEnabled;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    _notificationsEnabled 
-                      ? 'Notificaciones activadas' 
-                      : 'Notificaciones desactivadas'
-                  ),
+        title: ResponsiveRowColumn(
+          layout: ResponsiveRowColumnType.ROW,
+          children: [
+            const ResponsiveRowColumnItem(
+              child: Icon(Icons.engineering, color: Colors.white),
+            ),
+            const ResponsiveRowColumnItem(
+              child: SizedBox(width: 8),
+            ),
+            ResponsiveRowColumnItem(
+              child: Text(
+                'Sistema GMO - Demo',
+                style: TextStyle(
+                  fontSize: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.smallerThan(name: TABLET, value: 18.0),
+                      const Condition.largerThan(name: MOBILE, value: 20.0),
+                    ],
+                  ).value,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
-              );
-            },
-          ),
-          // Botón para simular notificación inmediata
-          IconButton(
-            icon: const Icon(Icons.notification_add),
-            onPressed: () {
-              NotificationService.showOrderNotification(
-                orderNumber: "TEST-${DateTime.now().millisecondsSinceEpoch % 1000}",
-                description: "Notificación de prueba",
-                priority: "NORMAL",
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => _confirmLogout(context),
-          ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.orange,
+        elevation: 2,
+        centerTitle: false,
+        actions: [
+          // Botones responsivos
+          if (isDesktop || isTablet) ..._buildFullActions(),
+          if (isMobile) ..._buildCompactActions(),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(
+          ResponsiveValue<double>(
+            context,
+            conditionalValues: [
+              const Condition.smallerThan(name: TABLET, value: 8.0),
+              const Condition.largerThan(name: MOBILE, value: 16.0),
+            ],
+          ).value,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Banner de notificaciones
-            if (_notificationsEnabled)
-              Card(
-                color: Colors.orange.shade50,
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.notifications_active, color: Colors.orange),
-                      SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Notificaciones del sistema activadas. Recibirás alertas en tiempo real.',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            
-            const SizedBox(height: 8),
+            // Banner de notificaciones mejorado y responsivo
+            if (_notificationsEnabled) _buildNotificationBanner(),
 
-            // Datos Maestros para Equipo
-            ExpansionTile(
-              leading: const Icon(Icons.engineering),
-              title: const Text('Datos Maestros para Equipo'),
-              children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.list),
-                  title: const Text('Clases'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ClasesPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.location_on),
-                  title: const Text('Ubicaciones Técnicas'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LocationsPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.work),
-                  title: const Text('Puesto de trabajo'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const JobPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.build),
-                  title: const Text('Equipos'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EquipmentPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.list_alt),
-                  title: const Text('Lista de Materiales'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MaterialsPage(),
-                      ),
-                    );
-                  },
-                ),
+            SizedBox(height: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 8.0),
+                const Condition.largerThan(name: MOBILE, value: 16.0),
               ],
-            ),
-            
-            // Datos Maestros para Planificación
-            ExpansionTile(
-              leading: const Icon(Icons.timeline),
-              title: const Text('Datos Maestros para Planificación'),
-              children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.stacked_line_chart),
-                  title: const Text('Estrategias'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const StrategyPage(),
-                      ),
-                    );
-                  },
-                ),
-                // NUEVO: Gestión de Capacidades
-                ListTile(
-                  leading: const Icon(Icons.assessment),
-                  title: const Text('Gestión de Capacidades'),
-                  subtitle: const Text('Planificación y programación de recursos'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CapacityManagementPage(),
-                      ),
-                    );
-                  },
-                ),
-                ExpansionTile(
-                  leading: const Icon(Icons.calendar_today),
-                  title: const Text('Plan de Mantenimiento'),
-                  children: <Widget>[
-                    ListTile(
-                      leading: const Icon(Icons.repeat),
-                      title: const Text('Ciclo Individual'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CyclePage(),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.bar_chart),
-                      title: const Text('Estrategia'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const StrategyPage(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            
-            // Mantenimiento Correctivo
-            ExpansionTile(
-              leading: const Icon(Icons.warning),
-              title: const Text('Mantenimiento Correctivo'),
-              children: <Widget>[
-                ListTile(
-                  leading: const Icon(Icons.notification_important),
-                  title: const Text('Aviso'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AvisoPage(),
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.build_circle),
-                  title: const Text('Orden'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const OrdenPage(),
-                      ),
-                    );
-                  },
-                ),
-                // NUEVO: Crear Orden
-                ListTile(
-                  leading: const Icon(Icons.add_circle),
-                  title: const Text('Crear Orden'),
-                  subtitle: const Text('Crear nueva orden de mantenimiento'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateOrderPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+            ).value),
 
-            const SizedBox(height: 16),
+            // Secciones principales con diseño responsive
+            if (isDesktop) 
+              _buildDesktopLayout()
+            else if (isTablet)
+              _buildTabletLayout()
+            else
+              _buildMobileLayout(),
 
-            // Sección de acciones rápidas
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Acciones Rápidas',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildQuickAction(
-                          context,
-                          'Nueva Orden',
-                          Icons.add_circle_outline,
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CreateOrderPage(),
-                            ),
-                          ),
-                        ),
-                        _buildQuickAction(
-                          context,
-                          'Capacidades',
-                          Icons.assessment,
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CapacityManagementPage(),
-                            ),
-                          ),
-                        ),
-                        _buildQuickAction(
-                          context,
-                          'Equipos',
-                          Icons.build,
-                          () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EquipmentPage(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            SizedBox(height: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 12.0),
+                const Condition.largerThan(name: MOBILE, value: 24.0),
+              ],
+            ).value),
+
+            // Acciones rápidas eliminadas según solicitud del usuario
           ],
         ),
       ),
     );
   }
 
-  Widget _buildQuickAction(
-    BuildContext context,
-    String title,
-    IconData icon,
-    VoidCallback onTap,
-  ) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.orange.shade50,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.orange.shade200),
+  Widget _buildNotificationBanner() {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        bottom: ResponsiveValue<double>(
+          context,
+          conditionalValues: [
+            const Condition.smallerThan(name: TABLET, value: 8.0),
+            const Condition.largerThan(name: MOBILE, value: 16.0),
+          ],
+        ).value,
+      ),
+      padding: EdgeInsets.all(
+        ResponsiveValue<double>(
+          context,
+          conditionalValues: [
+            const Condition.smallerThan(name: TABLET, value: 8.0),
+            const Condition.largerThan(name: MOBILE, value: 16.0),
+          ],
+        ).value,
+      ),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.orange.shade50, Colors.orange.shade100],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, color: Colors.orange, size: 32),
-            const SizedBox(height: 4),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.orange,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.orange.shade200),
+      ),
+      child: ResponsiveRowColumn(
+        layout: ResponsiveRowColumnType.ROW,
+        children: [
+          const ResponsiveRowColumnItem(
+            child: Icon(Icons.notifications_active, color: Colors.orange, size: 24),
+          ),
+          ResponsiveRowColumnItem(
+            child: SizedBox(width: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 6.0),
+                const Condition.largerThan(name: MOBILE, value: 12.0),
+              ],
+            ).value),
+          ),
+          ResponsiveRowColumnItem(
+            child: Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Notificaciones Activas',
+                    style: TextStyle(
+                      fontSize: ResponsiveValue<double>(
+                        context,
+                        conditionalValues: [
+                          const Condition.smallerThan(name: TABLET, value: 12.0),
+                          const Condition.largerThan(name: MOBILE, value: 14.0),
+                        ],
+                      ).value,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.orange,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Recibirás alertas de mantenimiento en tiempo real',
+                    style: TextStyle(
+                      fontSize: ResponsiveValue<double>(
+                        context,
+                        conditionalValues: [
+                          const Condition.smallerThan(name: TABLET, value: 10.0),
+                          const Condition.largerThan(name: MOBILE, value: 12.0),
+                        ],
+                      ).value,
+                      color: Colors.orange,
+                    ),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Layout para Desktop
+  Widget _buildDesktopLayout() {
+    return ResponsiveRowColumn(
+      layout: ResponsiveRowColumnType.ROW,
+      rowCrossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ResponsiveRowColumnItem(
+          rowFlex: 1,
+          child: Column(
+            children: [
+              _buildExpansionSection(
+                icon: Icons.engineering,
+                title: 'Datos Maestros para Equipo',
+                children: _buildEquipmentMenuItems(),
+              ),
+              const SizedBox(height: 12),
+              _buildExpansionSection(
+                icon: Icons.timeline,
+                title: 'Datos Maestros para Planificación',
+                children: _buildPlanningMenuItems(),
+              ),
+            ],
+          ),
+        ),
+        const ResponsiveRowColumnItem(
+          child: SizedBox(width: 16),
+        ),
+        ResponsiveRowColumnItem(
+          rowFlex: 1,
+          child: _buildExpansionSection(
+            icon: Icons.warning,
+            title: 'Mantenimiento Correctivo',
+            children: _buildMaintenanceMenuItems(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Layout para Tablet
+  Widget _buildTabletLayout() {
+    return Column(
+      children: [
+        _buildExpansionSection(
+          icon: Icons.engineering,
+          title: 'Datos Maestros para Equipo',
+          children: _buildEquipmentMenuItems(),
+        ),
+        const SizedBox(height: 12),
+        ResponsiveRowColumn(
+          layout: ResponsiveRowColumnType.ROW,
+          rowCrossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ResponsiveRowColumnItem(
+              rowFlex: 1,
+              child: _buildExpansionSection(
+                icon: Icons.timeline,
+                title: 'Datos Maestros para Planificación',
+                children: _buildPlanningMenuItems(),
+              ),
+            ),
+            const ResponsiveRowColumnItem(
+              child: SizedBox(width: 12),
+            ),
+            ResponsiveRowColumnItem(
+              rowFlex: 1,
+              child: _buildExpansionSection(
+                icon: Icons.warning,
+                title: 'Mantenimiento Correctivo',
+                children: _buildMaintenanceMenuItems(),
+              ),
             ),
           ],
         ),
+      ],
+    );
+  }
+
+  // Layout para Mobile
+  Widget _buildMobileLayout() {
+    return Column(
+      children: [
+        _buildExpansionSection(
+          icon: Icons.engineering,
+          title: 'Datos Maestros para Equipo',
+          children: _buildEquipmentMenuItems(),
+        ),
+        const SizedBox(height: 12),
+        _buildExpansionSection(
+          icon: Icons.timeline,
+          title: 'Datos Maestros para Planificación',
+          children: _buildPlanningMenuItems(),
+        ),
+        const SizedBox(height: 12),
+        _buildExpansionSection(
+          icon: Icons.warning,
+          title: 'Mantenimiento Correctivo',
+          children: _buildMaintenanceMenuItems(),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _buildEquipmentMenuItems() {
+    return [
+      _buildMenuItem(
+        icon: Icons.category,
+        title: 'Clases',
+        subtitle: 'Clasificación de equipos y componentes',
+        onTap: () => _navigateTo(context, const ClasesPage()),
       ),
+      _buildMenuItem(
+        icon: Icons.location_on,
+        title: 'Ubicaciones Técnicas',
+        subtitle: 'Estructura jerárquica de ubicaciones',
+        onTap: () => _navigateTo(context, const LocationsPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.work,
+        title: 'Puesto de Trabajo',
+        subtitle: 'Centros de trabajo y responsabilidades',
+        onTap: () => _navigateTo(context, const JobPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.build,
+        title: 'Equipos',
+        subtitle: 'Registro maestro de equipos',
+        onTap: () => _navigateTo(context, const EquipmentPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.inventory,
+        title: 'Lista de Materiales',
+        subtitle: 'Catálogo de materiales y repuestos',
+        onTap: () => _navigateTo(context, const MaterialsPage()),
+      ),
+    ];
+  }
+
+  List<Widget> _buildPlanningMenuItems() {
+    return [
+      _buildMenuItem(
+        icon: Icons.stacked_line_chart,
+        title: 'Estrategias',
+        subtitle: 'Estrategias de mantenimiento preventivo',
+        onTap: () => _navigateTo(context, const StrategyPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.assessment,
+        title: 'Gestión de Capacidades',
+        subtitle: 'Planificación y programación de recursos',
+        onTap: () => _navigateTo(context, const CapacityManagementPage()),
+      ),
+      _buildSubExpansionTile(
+        icon: Icons.calendar_today,
+        title: 'Plan de Mantenimiento',
+        children: [
+          _buildMenuItem(
+            icon: Icons.repeat,
+            title: 'Ciclo Individual',
+            subtitle: 'Programación de ciclos de mantenimiento',
+            onTap: () => _navigateTo(context, const CyclePage()),
+            isSubItem: true,
+          ),
+          _buildMenuItem(
+            icon: Icons.bar_chart,
+            title: 'Estrategia',
+            subtitle: 'Definición de estrategias de mantenimiento',
+            onTap: () => _navigateTo(context, const StrategyPage()),
+            isSubItem: true,
+          ),
+        ],
+      ),
+    ];
+  }
+
+  List<Widget> _buildMaintenanceMenuItems() {
+    return [
+      _buildMenuItem(
+        icon: Icons.notification_important,
+        title: 'Aviso',
+        subtitle: 'Registro y seguimiento de avisos',
+        onTap: () => _navigateTo(context, const AvisoPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.build_circle,
+        title: 'Orden',
+        subtitle: 'Gestión de órdenes de trabajo',
+        onTap: () => _navigateTo(context, const OrdenPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.add_circle,
+        title: 'Crear Orden',
+        subtitle: 'Crear nueva orden de mantenimiento',
+        onTap: () => _navigateTo(context, const CreateOrderPage()),
+      ),
+      _buildMenuItem(
+        icon: Icons.report_problem,
+        title: 'Gestión de Demandas',
+        subtitle: 'Procesar avisos y demandas de mantenimiento',
+        onTap: () => _navigateTo(context, const DemandManagementPage()),
+      ),
+    ];
+  }
+
+  List<Widget> _buildFullActions() {
+    return [
+      Tooltip(
+        message: _notificationsEnabled ? 'Desactivar notificaciones' : 'Activar notificaciones',
+        child: IconButton(
+          icon: Icon(
+            _notificationsEnabled ? Icons.notifications_active : Icons.notifications_off,
+            color: Colors.white,
+          ),
+          onPressed: _toggleNotifications,
+        ),
+      ),
+      Tooltip(
+        message: 'Enviar notificación de prueba',
+        child: IconButton(
+          icon: const Icon(Icons.notification_add, color: Colors.white),
+          onPressed: _sendTestNotification,
+        ),
+      ),
+      Tooltip(
+        message: 'Cerrar sesión',
+        child: IconButton(
+          icon: const Icon(Icons.logout, color: Colors.white),
+          onPressed: () => _confirmLogout(context),
+        ),
+      ),
+      const SizedBox(width: 8),
+    ];
+  }
+
+  List<Widget> _buildCompactActions() {
+    return [
+      PopupMenuButton<String>(
+        icon: const Icon(Icons.more_vert, color: Colors.white),
+        offset: const Offset(0, 45),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 8,
+        onSelected: (value) {
+          switch (value) {
+            case 'notifications':
+              _toggleNotifications();
+              break;
+            case 'test':
+              _sendTestNotification();
+              break;
+            case 'logout':
+              _confirmLogout(context);
+              break;
+          }
+        },
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: 'notifications',
+            child: _buildPopupMenuItem(
+              icon: _notificationsEnabled ? Icons.notifications_off : Icons.notifications_active,
+              text: _notificationsEnabled ? 'Desactivar' : 'Activar',
+              iconColor: _notificationsEnabled ? Colors.grey[600]! : Colors.orange,
+            ),
+          ),
+          PopupMenuItem(
+            value: 'test',
+            child: _buildPopupMenuItem(
+              icon: Icons.notification_add,
+              text: 'Probar',
+              iconColor: Colors.blue,
+            ),
+          ),
+          PopupMenuItem(
+            value: 'logout',
+            child: _buildPopupMenuItem(
+              icon: Icons.logout,
+              text: 'Cerrar sesión',
+              iconColor: Colors.red,
+            ),
+          ),
+        ],
+      ),
+    ];
+  }
+
+  Widget _buildPopupMenuItem({
+    required IconData icon,
+    required String text,
+    required Color iconColor,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(
+              icon,
+              color: iconColor,
+              size: 18,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _toggleNotifications() {
+    setState(() {
+      _notificationsEnabled = !_notificationsEnabled;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(
+              _notificationsEnabled ? Icons.check_circle : Icons.cancel,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              _notificationsEnabled 
+                ? 'Notificaciones activadas' 
+                : 'Notificaciones desactivadas',
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+        backgroundColor: _notificationsEnabled ? Colors.green : Colors.grey[600],
+      ),
+    );
+  }
+
+  void _sendTestNotification() {
+    NotificationService.showOrderNotification(
+      orderNumber: "TEST-${DateTime.now().millisecondsSinceEpoch % 1000}",
+      description: "Notificación de prueba",
+      priority: "NORMAL",
+    );
+  }
+
+  Widget _buildExpansionSection({
+    required IconData icon,
+    required String title,
+    required List<Widget> children,
+  }) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          expansionTileTheme: const ExpansionTileThemeData(
+            backgroundColor: Colors.transparent,
+            collapsedBackgroundColor: Colors.transparent,
+            iconColor: Colors.orange,
+            textColor: Colors.orange,
+            collapsedTextColor: Colors.black87,
+            collapsedIconColor: Colors.orange,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        ),
+        child: ExpansionTile(
+          leading: Icon(icon, color: Colors.orange, size: 24),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: ResponsiveValue<double>(
+                context,
+                conditionalValues: [
+                  const Condition.smallerThan(name: TABLET, value: 13.0),
+                  const Condition.largerThan(name: MOBILE, value: 16.0),
+                ],
+              ).value,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+          tilePadding: EdgeInsets.symmetric(
+            horizontal: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 8.0),
+                const Condition.largerThan(name: MOBILE, value: 16.0),
+              ],
+            ).value,
+            vertical: 4,
+          ),
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+          children: children,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    bool isSubItem = false,
+  }) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: isSubItem ? 
+          ResponsiveValue<double>(
+            context,
+            conditionalValues: [
+              const Condition.smallerThan(name: TABLET, value: 16.0),
+              const Condition.largerThan(name: MOBILE, value: 24.0),
+            ],
+          ).value : 
+          ResponsiveValue<double>(
+            context,
+            conditionalValues: [
+              const Condition.smallerThan(name: TABLET, value: 4.0),
+              const Condition.largerThan(name: MOBILE, value: 8.0),
+            ],
+          ).value,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.transparent,
+      ),
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.orange.shade50,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon, 
+            color: Colors.orange, 
+            size: isSubItem ? 20 : 22,
+          ),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                Condition.smallerThan(name: TABLET, value: isSubItem ? 12.0 : 13.0),
+                Condition.largerThan(name: MOBILE, value: isSubItem ? 14.0 : 15.0),
+              ],
+            ).value,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            fontSize: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                Condition.smallerThan(name: TABLET, value: isSubItem ? 9.0 : 10.0),
+                Condition.largerThan(name: MOBILE, value: isSubItem ? 11.0 : 12.0),
+              ],
+            ).value,
+            color: Colors.grey[600],
+          ),
+          maxLines: ResponsiveBreakpoints.of(context).isDesktop ? 2 : 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey[400],
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: ResponsiveValue<double>(
+            context,
+            conditionalValues: [
+              const Condition.smallerThan(name: TABLET, value: 8.0),
+              const Condition.largerThan(name: MOBILE, value: 12.0),
+            ],
+          ).value,
+          vertical: 4,
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+
+  Widget _buildSubExpansionTile({
+    required IconData icon,
+    required String title,
+    required List<Widget> children,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.grey[50],
+      ),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          expansionTileTheme: const ExpansionTileThemeData(
+            backgroundColor: Colors.transparent,
+            collapsedBackgroundColor: Colors.transparent,
+            iconColor: Colors.orange,
+            textColor: Colors.orange,
+            collapsedTextColor: Colors.black87,
+            collapsedIconColor: Colors.orange,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
+          ),
+        ),
+        child: ExpansionTile(
+          leading: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.orange.shade50,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: Colors.orange, size: 22),
+          ),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: ResponsiveValue<double>(
+                context,
+                conditionalValues: [
+                  const Condition.smallerThan(name: TABLET, value: 14.0),
+                  const Condition.largerThan(name: MOBILE, value: 15.0),
+                ],
+              ).value,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
+          ),
+          tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          children: children,
+        ),
+      ),
+    );
+  }
+
+  void _navigateTo(BuildContext context, Widget page) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
     );
   }
 }
