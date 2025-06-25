@@ -25,10 +25,62 @@ class OrdenPageState extends State<OrdenPage> {
 
   Future<void> _loadOrdenes() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/ordenes.json');
-      final data = json.decode(response);
+      final String response = await rootBundle.loadString('assets/data/ordenes_pm.json');
+      final List<dynamic> data = json.decode(response);
       setState(() {
-        ordenes = List<Map<String, dynamic>>.from(data['ordenes']);
+        // Adaptar los datos reales a la estructura esperada por la aplicación
+        ordenes = data.map<Map<String, dynamic>>((orden) {
+          return {
+            'nroOrden': orden['Equipo']?.toString() ?? 'N/A',
+            'fecha': _formatDateFromSAP(orden['Fecha inicio real']?.toString() ?? ''),
+            'claseOrden': orden['Clase de orden']?.toString() ?? '',
+            'textoBrave': orden['Texto breve']?.toString() ?? '',
+            'statusMensaje': orden['Status del sistema']?.toString() ?? '',
+            'equipo': orden['Equipo']?.toString() ?? '',
+            'denominacionEquipo': orden['Denominación de objeto técnico']?.toString() ?? '',
+            'ubicacionTecnica': orden['Ubicación técnica']?.toString() ?? '',
+            'denominacionUbicacion': orden['Denominación de la ubicación técnica']?.toString() ?? '',
+            'responsable': {
+              'centroPlanificacion': orden['Centro planificación']?.toString() ?? '',
+              'puestoTrabajoResponsable': orden['Pto.tbjo.responsable']?.toString() ?? '',
+              'areaEmpresa': orden['Área de empresa']?.toString() ?? ''
+            },
+            'fechas': {
+              'inicioExtrema': _formatDateFromSAP(orden['Fecha de inicio extrema']?.toString() ?? ''),
+              'finExtrema': _formatDateFromSAP(orden['Fecha fin extrema']?.toString() ?? ''),
+              'inicioProgramado': _formatDateFromSAP(orden['Inicio programado']?.toString() ?? ''),
+              'fechaReferencia': _formatDateFromSAP(orden['Fecha de referencia']?.toString() ?? ''),
+              'inicioReal': _formatDateFromSAP(orden['Fecha inicio real']?.toString() ?? ''),
+              'finReal': _formatDateFromSAP(orden['Fecha real de fin de la orden']?.toString() ?? ''),
+              'horaInicioReal': orden['Hora inicio real']?.toString() ?? '',
+              'horaFinReal': orden['Fin real (hora)']?.toString() ?? ''
+            },
+            'costos': {
+              'costePlan': orden['Suma de costes plan']?.toString() ?? '0',
+              'costeReal': orden['Costes tot.reales']?.toString() ?? '0',
+              'moneda': 'PEN'
+            },
+            'clasificacion': {
+              'campoClasificacion': orden['Campo de clasificación']?.toString() ?? '',
+              'claseActividadPM': orden['Clase actividad PM']?.toString() ?? ''
+            },
+            'status': {
+              'sistemaStatus': orden['Status del sistema']?.toString() ?? '',
+              'usuarioStatus': orden['Status de usuario']?.toString() ?? ''
+            },
+            // Campos adicionales específicos de SAP
+            'emplazamiento': orden['Emplazamiento']?.toString() ?? '',
+            'planMantenimientoPreventivo': orden['Plan mant.preventivo']?.toString() ?? '',
+            'hojaRuta': orden['Hoja de Ruta']?.toString() ?? '',
+            'grupoHojasRuta': orden['Grupo hojas ruta']?.toString() ?? '',
+            'fechaEntrada': _formatDateFromSAP(orden['Fecha entrada']?.toString() ?? ''),
+            'fechaModificacion': _formatDateFromSAP(orden['Fecha modific.maestro orden']?.toString() ?? ''),
+            'horaInicioProgr': orden['Hora de inicio prog.']?.toString() ?? '',
+            'horaFinProgr': orden['Hora de fin progr.']?.toString() ?? '',
+            'horaFinExtrema': orden['Hora de fin extrema']?.toString() ?? ''
+          };
+        }).toList();
+        
         filteredOrdenes = ordenes;
         isLoading = false;
       });
@@ -36,6 +88,7 @@ class OrdenPageState extends State<OrdenPage> {
       setState(() {
         isLoading = false;
       });
+      print('Error detallado al cargar órdenes: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -49,10 +102,46 @@ class OrdenPageState extends State<OrdenPage> {
               ],
             ),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
           ),
         );
       }
     }
+  }
+
+  // Función auxiliar para extraer número de orden del texto breve
+  String _extractOrdenNumber(String textoBrave) {
+    // Intentar extraer un número de orden del texto breve
+    final match = RegExp(r'\b\d{5,}\b').firstMatch(textoBrave);
+    if (match != null) {
+      return match.group(0) ?? 'N/A';
+    }
+    return 'N/A';
+  }
+
+  // Función auxiliar para convertir fechas de SAP (YYYY-MM-DD HH:MM:SS) a formato DD.MM.YYYY
+  String _formatDateFromSAP(String sapDate) {
+    if (sapDate.isEmpty || sapDate == 'null' || sapDate == '') return '';
+    
+    try {
+      // Extraer solo la parte de la fecha (antes del espacio si hay hora)
+      String dateOnly = sapDate.trim().split(' ')[0];
+      
+      // Dividir la fecha YYYY-MM-DD
+      List<String> parts = dateOnly.split('-');
+      if (parts.length == 3 && parts[0].length == 4) {
+        String day = parts[2].padLeft(2, '0');
+        String month = parts[1].padLeft(2, '0');
+        String year = parts[0];
+        return '$day.$month.$year'; // DD.MM.YYYY
+      }
+    } catch (e) {
+      print('Error parsing date: $sapDate - Error: $e');
+      // Si hay error, devolver fecha vacía
+      return '';
+    }
+    
+    return '';
   }
 
   void _filterOrdenes(String query) {
@@ -653,17 +742,25 @@ class OrdenPageState extends State<OrdenPage> {
       },
       children: [
         _buildTableHeader(),
-        _buildTableRow('proceso', 'Orden', orden['nroOrden'] ?? '45000'),
-        _buildTableRow('', 'operacion', '0010'),
-        _buildTableRow('', 'fecha inicio', orden['fecha'] ?? '18.06.2025'),
-        _buildTableRow('', 'hora inicio', orden['fechas']?['horaInicioReal'] ?? '10:00:00'),
-        _buildTableRow('', 'fecha fin', orden['fecha'] ?? '18.06.2025'),
-        _buildTableRow('', 'hora fin', orden['fechas']?['horaFinReal'] ?? '12:00:00'),
-        _buildTableRow('', 'tiempo real', '2'),
-        _buildTableRow('Notificacion de ordenes', 'Operario', orden['responsable']?['puestoTrabajoResponsable'] ?? 'Juan Sanchez'),
-        _buildTableRow('', 'motivo de desviacion', ''),
-        _buildTableRow('Cierre de orden', 'orden', orden['nroOrden'] ?? '45000'),
-        _buildTableRow('', 'fecha de cierre', orden['fecha'] ?? '18.06.2025'),
+        _buildTableRow('Información General', 'Orden', orden['nroOrden'] ?? 'N/A'),
+        _buildTableRow('', 'Clase orden', orden['claseOrden'] ?? 'N/A'),
+        _buildTableRow('', 'Equipo', '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
+        _buildTableRow('', 'Ubicación', orden['denominacionUbicacion'] ?? 'N/A'),
+        _buildTableRow('', 'Centro planif.', orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
+        _buildTableRow('', 'Área empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
+        _buildTableRow('Fechas y Tiempos', 'Fecha entrada', orden['fechaEntrada'] ?? 'N/A'),
+        _buildTableRow('', 'Inicio progr.', '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
+        _buildTableRow('', 'Inicio real', '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
+        _buildTableRow('', 'Fin real', '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
+        _buildTableRow('', 'Fecha refer.', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
+        _buildTableRow('Responsable', 'Puesto trabajo', orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
+        _buildTableRow('', 'Emplazamiento', orden['emplazamiento'] ?? 'N/A'),
+        _buildTableRow('Costos', 'Costo planif.', '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildTableRow('', 'Costo real', '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildTableRow('Status', 'Sistema', _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
+        _buildTableRow('', 'Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
+        _buildTableRow('Clasificación', 'Campo clasif.', orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
+        _buildTableRow('', 'Actividad PM', orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
       ],
     );
   }
@@ -712,18 +809,36 @@ class OrdenPageState extends State<OrdenPage> {
   Widget _buildListView(Map<String, dynamic> orden) {
     return Column(
       children: [
-        _buildDetailRow('Número de Orden', orden['nroOrden'] ?? '45000'),
-        _buildDetailRow('Operación', '0010'),
-        _buildDetailRow('Fecha Inicio', orden['fecha'] ?? '18.06.2025'),
-        _buildDetailRow('Hora Inicio', orden['fechas']?['horaInicioReal'] ?? '10:00:00'),
-        _buildDetailRow('Fecha Fin', orden['fecha'] ?? '18.06.2025'),
-        _buildDetailRow('Hora Fin', orden['fechas']?['horaFinReal'] ?? '12:00:00'),
-        _buildDetailRow('Tiempo Real', '2'),
-        _buildDetailRow('Operario', orden['responsable']?['puestoTrabajoResponsable'] ?? 'Juan Sanchez'),
-        _buildDetailRow('Motivo de Desviación', ''),
-        _buildDetailRow('Fecha de Cierre', orden['fecha'] ?? '18.06.2025'),
+        _buildDetailRow('Número de Orden', orden['nroOrden'] ?? 'N/A'),
+        _buildDetailRow('Clase Orden', orden['claseOrden'] ?? 'N/A'),
+        _buildDetailRow('Equipo', '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
+        _buildDetailRow('Ubicación', orden['denominacionUbicacion'] ?? 'N/A'),
+        _buildDetailRow('Centro Planificación', orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
+        _buildDetailRow('Área Empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
+        _buildDetailRow('Fecha Entrada', orden['fechaEntrada'] ?? 'N/A'),
+        _buildDetailRow('Inicio Programado', '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
+        _buildDetailRow('Inicio Real', '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
+        _buildDetailRow('Fin Real', '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
+        _buildDetailRow('Fecha Referencia', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
+        _buildDetailRow('Puesto Trabajo', orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
+        _buildDetailRow('Emplazamiento', orden['emplazamiento'] ?? 'N/A'),
+        _buildDetailRow('Costo Planificado', '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildDetailRow('Costo Real', '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildDetailRow('Status Sistema', _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
+        _buildDetailRow('Status Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
+        _buildDetailRow('Campo Clasificación', orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
+        _buildDetailRow('Actividad PM', orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
       ],
     );
+  }
+
+  // Función para formatear status largos a versión corta
+  String _formatStatusShort(String status) {
+    if (status.isEmpty || status == 'N/A') return status;
+    
+    // Tomar solo los primeros 3 status codes si hay múltiples
+    List<String> statusCodes = status.split(' ').take(3).toList();
+    return statusCodes.join(' ');
   }
 
   Widget _buildDetailRow(String label, dynamic value) {
