@@ -1,0 +1,40 @@
+[
+	{
+		"nombre": "Unidades Básicas de Trabajo",
+		"tipo": "proceso_principal",
+		"datos": {
+			"ubts": [
+				{
+					"codigo": "UBT-001",
+					"nombre": "Lubricación General",
+					"descripcion": "Lubricación de equipos rotativos",
+					"tiempoEstimado": "2.5 horas",
+					"recursos": "Aceite lubricante, pistola de grasa",
+					"categoria": "Mantenimiento Preventivo",
+					"frecuencia": "Quincenal",
+					"estado": "Activo"
+				},
+				{
+					"codigo": "UBT-002",
+					"nombre": "Inspección Visual",
+					"descripcion": "Inspección visual de componentes críticos",
+					"tiempoEstimado": "1.0 hora",
+					"recursos": "Lista de verificación, linterna",
+					"categoria": "Inspección",
+					"frecuencia": "Diaria",
+					"estado": "Activo"
+				},
+				{
+					"codigo": "UBT-003",
+					"nombre": "Calibración Instrumentos",
+					"descripcion": "Calibración de instrumentos de medición",
+					"tiempoEstimado": "4.0 horas",
+					"recursos": "Calibrador, patrones de referencia",
+					"categoria": "Calibración",
+					"frecuencia": "Mensual",
+					"estado": "En Revisión"
+				}
+			]
+		}
+	}
+]

@@ -1,0 +1,102 @@
+[
+	{
+		"nombre": "Crear órdenes de mantenimiento",
+		"tipo": "proceso_principal",
+		"campos": [
+			{ "campo": "Clase de orden", "valor": "ZPM1", "referencia": "" },
+			{ "campo": "Prioridad", "valor": "alta", "referencia": "" },
+			{ "campo": "Equipo", "valor": "1000001", "referencia": "1000001" },
+			{
+				"campo": "Descripción de la orden",
+				"valor": "Cambio de rodajes",
+				"referencia": ""
+			},
+			{
+				"campo": "Operación 10",
+				"valor": "Cambio de rodamientos",
+				"referencia": ""
+			},
+			{ "campo": "puesto de trabajo", "valor": "PM_ELECT", "referencia": "" },
+			{ "campo": "cantidad de personas", "valor": "1", "referencia": "" },
+			{ "campo": "duración", "valor": "2h", "referencia": "" },
+			{ "campo": "Componentes", "valor": "rodamiento", "referencia": "" },
+			{ "campo": "trabajo plan", "valor": "2h", "referencia": "" },
+			{ "campo": "cantidad de rodamiento", "valor": "2", "referencia": "" },
+			{ "campo": "centro", "valor": "1001", "referencia": "" },
+			{ "campo": "almacen", "valor": "2001", "referencia": "" }
+		]
+	},
+	{
+		"nombre": "Generación de planos de mantenimiento",
+		"tipo": "proceso_principal",
+		"campos": [
+			{ "campo": "Tipo de plan", "valor": "Plan preventivo", "referencia": "" },
+			{
+				"campo": "título del plan",
+				"valor": "Mantenimiento de 500 km",
+				"referencia": ""
+			},
+			{ "campo": "Equipo", "valor": "1000001", "referencia": "" },
+			{ "campo": "clase de orden", "valor": "zpm3", "referencia": "" },
+			{ "campo": "prioridad", "valor": "alta", "referencia": "" },
+			{ "campo": "hoja de ruta", "valor": "ATM001", "referencia": "" },
+			{ "campo": "Inicio de plan", "valor": "01.08.2025", "referencia": "" }
+		]
+	},
+	{
+		"nombre": "Datos Maestros",
+		"tipo": "proceso_secundario",
+		"campos": [
+			{ "campo": "tipo de equipo", "valor": "Máquina", "referencia": "" },
+			{ "campo": "descripción", "valor": "bomba centrífuga", "referencia": "" },
+			{ "campo": "centro de costo", "valor": "10000887", "referencia": "" },
+			{ "campo": "criticidad", "valor": "A", "referencia": "" },
+			{ "campo": "area", "valor": "sala de bombas", "referencia": "" },
+			{
+				"campo": "Ubicación técnica",
+				"valor": "PE-100-4566",
+				"referencia": "EQUIPO"
+			},
+			{ "campo": "Tipo de ubicación técnica", "valor": "PT", "referencia": "" },
+			{
+				"campo": "ubicación técnica",
+				"valor": "PE-100-4566",
+				"referencia": ""
+			},
+			{
+				"campo": "descripción",
+				"valor": "Proceso de troquelado",
+				"referencia": "Ubicación técnica"
+			},
+			{ "campo": "centro de costo", "valor": "10000887", "referencia": "" },
+			{ "campo": "Tipo de hoja de ruta", "valor": "E", "referencia": "" },
+			{ "campo": "Equipo", "valor": "1000001", "referencia": "" },
+			{ "campo": "centro", "valor": "1001", "referencia": "" },
+			{ "campo": "estatus", "valor": "liberado", "referencia": "" },
+			{
+				"campo": "Operación 10",
+				"valor": "cambio de rodajes",
+				"referencia": ""
+			},
+			{ "campo": "operación 20", "valor": "cambio de eje", "referencia": "" },
+			{ "campo": "puesto de trabajo", "valor": "PM_ELECT", "referencia": "" },
+			{ "campo": "cantidad de personas", "valor": "1", "referencia": "" },
+			{ "campo": "duración", "valor": "2h", "referencia": "" },
+			{ "campo": "Componentes", "valor": "rodamiento", "referencia": "" },
+			{ "campo": "trabajo plan", "valor": "2h", "referencia": "" },
+			{ "campo": "cantidad de rodamiento", "valor": "2", "referencia": "" },
+			{ "campo": "centro", "valor": "1001", "referencia": "" },
+			{ "campo": "almacen", "valor": "2001", "referencia": "" },
+			{
+				"campo": "frecuencia de operación 10",
+				"valor": "1 mes",
+				"referencia": ""
+			},
+			{
+				"campo": "frecuencia de operación 20",
+				"valor": "2 meses",
+				"referencia": "Hoja de ruta"
+			}
+		]
+	}
+]

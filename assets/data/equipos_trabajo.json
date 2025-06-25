@@ -1,0 +1,40 @@
+[
+	{
+		"nombre": "Equipos de Trabajo",
+		"tipo": "proceso_principal",
+		"datos": {
+			"equipos": [
+				{
+					"id": "EQ-001",
+					"nombre": "Equipo Mecánico A",
+					"lider": "Juan Pérez",
+					"miembros": "4",
+					"especialidad": "Mantenimiento Mecánico",
+					"turno": "Mañana",
+					"estado": "Activo",
+					"ubicacion": "Planta 1"
+				},
+				{
+					"id": "EQ-002",
+					"nombre": "Equipo Eléctrico B",
+					"lider": "María García",
+					"miembros": "3",
+					"especialidad": "Mantenimiento Eléctrico",
+					"turno": "Tarde",
+					"estado": "Activo",
+					"ubicacion": "Planta 2"
+				},
+				{
+					"id": "EQ-003",
+					"nombre": "Equipo Instrumentación",
+					"lider": "Carlos López",
+					"miembros": "2",
+					"especialidad": "Instrumentación y Control",
+					"turno": "Noche",
+					"estado": "En Formación",
+					"ubicacion": "Planta 3"
+				}
+			]
+		}
+	}
+]

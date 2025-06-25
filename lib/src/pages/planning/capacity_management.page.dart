@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/services/notification_service.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 class CapacityManagementPage extends StatefulWidget {
   const CapacityManagementPage({super.key});
@@ -10,194 +13,464 @@ class CapacityManagementPage extends StatefulWidget {
 }
 
 class CapacityManagementPageState extends State<CapacityManagementPage> {
-  // Datos de capacidad según las imágenes del proceso
-  final List<Map<String, dynamic>> capacities = [
-    {
-      'puestoTrabajo': 'PM_MECANICO',
-      'centro': '1000',
-      'semanaNro': '20',
-      'necesidad': '20h',
-      'oferta': '15h',
-      'utilizacion': '85%',
-      'estado': 'Crítico'
-    },
-    {
-      'puestoTrabajo': 'PM_ELEC',
-      'centro': '1001',
-      'semanaNro': '20',
-      'necesidad': '15h',
-      'oferta': '18h',
-      'utilizacion': '83%',
-      'estado': 'Normal'
-    },
-    {
-      'puestoTrabajo': 'PM_INST',
-      'centro': '1002',
-      'semanaNro': '20',
-      'necesidad': '25h',
-      'oferta': '20h',
-      'utilizacion': '125%',
-      'estado': 'Sobrecargado'
-    },
-  ];
+  String searchQuery = '';
+  List<Map<String, dynamic>> capacidades = [];
+  List<Map<String, dynamic>> ordenesProgramadas = [];
+  List<Map<String, dynamic>> filteredCapacidades = [];
+  bool isLoading = true;
 
-  // Órdenes programadas según la imagen
-  final List<Map<String, dynamic>> scheduledOrders = [
-    {
-      'orden': '10000050',
-      'operacion': '0010',
-      'puestoTrabajo': 'PM_MECA',
-      'trabajoPlan': '4h'
-    },
-    {
-      'orden': '10000050',
-      'operacion': '0020',
-      'puestoTrabajo': 'PM_ELEC',
-      'trabajoPlan': '5h'
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      final String response = await rootBundle.loadString('assets/data/capacidades.json');
+      final List<dynamic> data = json.decode(response);
+      
+      if (data.isNotEmpty) {
+        final datos = data[0]['datos'];
+        setState(() {
+          capacidades = (datos['capacidades'] as List).cast<Map<String, dynamic>>();
+          ordenesProgramadas = (datos['ordenes_programadas'] as List).cast<Map<String, dynamic>>();
+          filteredCapacidades = capacidades;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error al cargar datos de capacidades: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text('Error al cargar datos: ${e.toString()}'),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  void _filterCapacidades(String query) {
+    setState(() {
+      searchQuery = query;
+      if (query.isEmpty) {
+        filteredCapacidades = capacidades;
+      } else {
+        filteredCapacidades = capacidades.where((capacidad) {
+          return capacidad.values.any((value) =>
+              value.toString().toLowerCase().contains(query.toLowerCase()));
+        }).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestión de Capacidades'),
-        backgroundColor: Colors.orange,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notification_add),
-            onPressed: _simulateCapacityAlert,
+    if (isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          title: const Text('Gestión de Capacidades'),
+          backgroundColor: Colors.orange,
+          foregroundColor: Colors.white,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        body: const Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+          ),
+        ),
+      );
+    }
+
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    
+    return Scaffold(
+      backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        title: ResponsiveRowColumn(
+          layout: ResponsiveRowColumnType.ROW,
           children: [
-            // Sección de Capacidades
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'GESTIÓN DE CAPACIDADES',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildCapacityTable(),
-                  ],
-                ),
-              ),
+            const ResponsiveRowColumnItem(
+              child: Icon(Icons.assessment, color: Colors.white),
             ),
-            const SizedBox(height: 16),
-
-            // Sección de Programación de Órdenes
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Crear programación de órdenes',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _generateProgram,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                          ),
-                          child: const Text(
-                            'Generar programa',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+            const ResponsiveRowColumnItem(
+              child: SizedBox(width: 8),
+            ),
+            ResponsiveRowColumnItem(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Gestión de Capacidades',
+                  style: TextStyle(
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 18.0),
+                        const Condition.largerThan(name: MOBILE, value: 20.0),
                       ],
-                    ),
-                    const SizedBox(height: 16),
-                    _buildProgrammingForm(),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            // Programa de Órdenes - Semana 20
-            Expanded(
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          'Programa de órdenes Semana 20',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Expanded(child: _buildOrdersSchedule()),
-                    ],
+                    ).value,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
           ],
         ),
+        backgroundColor: Colors.orange,
+        elevation: 2,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notification_add, color: Colors.white),
+            onPressed: _simulateCapacityAlert,
+          ),
+        ],
+      ),
+      body: ResponsiveRowColumn(
+        layout: ResponsiveRowColumnType.COLUMN,
+        children: [
+          // Barra de búsqueda responsiva
+          ResponsiveRowColumnItem(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TextField(
+                onChanged: _filterCapacidades,
+                style: TextStyle(
+                  fontSize: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.smallerThan(name: TABLET, value: 14.0),
+                      const Condition.largerThan(name: MOBILE, value: 16.0),
+                    ],
+                  ).value,
+                ),
+                decoration: InputDecoration(
+                  hintText: isMobile 
+                      ? 'Buscar capacidades...' 
+                      : 'Buscar por puesto, centro o estado...',
+                  hintStyle: TextStyle(
+                    color: Colors.grey[500], 
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 13.0),
+                        const Condition.largerThan(name: MOBILE, value: 15.0),
+                      ],
+                    ).value,
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  suffixIcon: searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          onPressed: () {
+                            _filterCapacidades('');
+                          },
+                        )
+                      : null,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.smallerThan(name: TABLET, value: 16.0),
+                        const Condition.largerThan(name: MOBILE, value: 20.0),
+                      ],
+                    ).value,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Contenido principal
+          ResponsiveRowColumnItem(
+            child: Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.smallerThan(name: TABLET, value: 12.0),
+                      const Condition.largerThan(name: MOBILE, value: 16.0),
+                    ],
+                  ).value,
+                  vertical: 8,
+                ),
+                child: Column(
+                  children: [
+                    // Sección de Capacidades
+                    _buildCapacidadCard(),
+                    const SizedBox(height: 16),
+                    
+                    // Sección de Órdenes Programadas
+                    _buildOrdenesCard(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildCapacityTable() {
+  Widget _buildCapacidadCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header del card
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.orange.shade50,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.assessment, color: Colors.white, size: 24),
+                ),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text(
+                    'Gestión de Capacidades',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          // Contenido del card
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: filteredCapacidades.isEmpty
+                ? _buildEmptyState()
+                : ResponsiveBreakpoints.of(context).isMobile
+                    ? _buildMobileCapacityList()
+                    : _buildDesktopCapacityTable(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.assessment_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            searchQuery.isEmpty
+                ? 'No hay capacidades disponibles'
+                : 'No se encontraron capacidades',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileCapacityList() {
+    return Column(
+      children: filteredCapacidades.map((capacidad) => _buildCapacityCard(capacidad)).toList(),
+    );
+  }
+
+  Widget _buildCapacityCard(Map<String, dynamic> capacidad) {
+    final statusColor = _getStatusColor(capacidad['estado']);
+    
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  capacidad['puestoTrabajo'],
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  capacidad['estado'],
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          _buildDetailRow('Centro', capacidad['centro']),
+          _buildDetailRow('Semana', capacidad['semanaNro']),
+          _buildDetailRow('Necesidad', capacidad['necesidad']),
+          _buildDetailRow('Oferta', capacidad['oferta']),
+          _buildDetailRow('Utilización', capacidad['utilizacion']),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDesktopCapacityTable() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
         columns: const [
           DataColumn(label: Text('Puesto de trabajo')),
-          DataColumn(label: Text('CENTRO')),
-          DataColumn(label: Text('Semana nro')),
+          DataColumn(label: Text('Centro')),
+          DataColumn(label: Text('Semana')),
           DataColumn(label: Text('Necesidad')),
           DataColumn(label: Text('Oferta')),
           DataColumn(label: Text('Utilización')),
           DataColumn(label: Text('Estado')),
         ],
-        rows: capacities.map((capacity) {
-          Color statusColor = _getStatusColor(capacity['estado']);
+        rows: filteredCapacidades.map((capacidad) {
+          final statusColor = _getStatusColor(capacidad['estado']);
           return DataRow(
             cells: [
-              DataCell(Text(capacity['puestoTrabajo'])),
-              DataCell(Text(capacity['centro'])),
-              DataCell(Text(capacity['semanaNro'])),
-              DataCell(Text(capacity['necesidad'])),
-              DataCell(Text(capacity['oferta'])),
-              DataCell(Text(capacity['utilizacion'])),
+              DataCell(Text(capacidad['puestoTrabajo'])),
+              DataCell(Text(capacidad['centro'])),
+              DataCell(Text(capacidad['semanaNro'])),
+              DataCell(Text(capacidad['necesidad'])),
+              DataCell(Text(capacidad['oferta'])),
+              DataCell(Text(capacidad['utilizacion'])),
               DataCell(
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -206,11 +479,11 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    capacity['estado'],
+                    capacidad['estado'],
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -222,74 +495,169 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
     );
   }
 
-  Widget _buildProgrammingForm() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Fecha inicio de programación',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  hintText: DateFormat('dd.MM.yyyy').format(DateTime.now()),
-                ),
-              ),
+  Widget _buildOrdenesCard() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header del card
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Fecha fin de programación',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Icon(Icons.schedule, color: Colors.white, size: 24),
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
+                      'Programa de Órdenes - Semana 20',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  onPressed: _generateProgram,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  hintText: DateFormat('dd.MM.yyyy').format(
-                    DateTime.now().add(const Duration(days: 7)),
+                  child: const Text(
+                    'Generar programa',
+                    style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ],
+          ),
+          
+          // Contenido del card
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: ordenesProgramadas.isEmpty
+                ? _buildEmptyOrdersState()
+                : ResponsiveBreakpoints.of(context).isMobile
+                    ? _buildMobileOrdersList()
+                    : _buildDesktopOrdersTable(),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildOrdersSchedule() {
+  Widget _buildEmptyOrdersState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.schedule_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'No hay órdenes programadas',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileOrdersList() {
+    return Column(
+      children: ordenesProgramadas.map((orden) => _buildOrderCard(orden)).toList(),
+    );
+  }
+
+  Widget _buildOrderCard(Map<String, dynamic> orden) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Orden: ${orden['orden']}',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+          _buildDetailRow('Operación', orden['operacion']),
+          _buildDetailRow('Puesto de trabajo', orden['puestoTrabajo']),
+          _buildDetailRow('Trabajo plan', orden['trabajoPlan']),
+          if (orden.containsKey('fechaInicio'))
+            _buildDetailRow('Fecha inicio', orden['fechaInicio']),
+          if (orden.containsKey('fechaFin'))
+            _buildDetailRow('Fecha fin', orden['fechaFin']),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDesktopOrdersTable() {
     return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
       child: DataTable(
         columns: const [
           DataColumn(label: Text('Orden')),
           DataColumn(label: Text('Operación')),
           DataColumn(label: Text('Puesto de trabajo')),
           DataColumn(label: Text('Trabajo plan')),
-          DataColumn(label: Text('Acciones')),
+          DataColumn(label: Text('Fecha inicio')),
+          DataColumn(label: Text('Fecha fin')),
         ],
-        rows: scheduledOrders.map((order) {
+        rows: ordenesProgramadas.map((orden) {
           return DataRow(
             cells: [
-              DataCell(Text(order['orden'])),
-              DataCell(Text(order['operacion'])),
-              DataCell(Text(order['puestoTrabajo'])),
-              DataCell(Text(order['trabajoPlan'])),
-              DataCell(
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.orange),
-                      onPressed: () => _editOrder(order),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.notifications, color: Colors.blue),
-                      onPressed: () => _notifyOrder(order),
-                    ),
-                  ],
-                ),
-              ),
+              DataCell(Text(orden['orden'])),
+              DataCell(Text(orden['operacion'])),
+              DataCell(Text(orden['puestoTrabajo'])),
+              DataCell(Text(orden['trabajoPlan'])),
+              DataCell(Text(orden['fechaInicio'] ?? '-')),
+              DataCell(Text(orden['fechaFin'] ?? '-')),
             ],
           );
         }).toList(),
@@ -298,111 +666,54 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   }
 
   Color _getStatusColor(String estado) {
-    switch (estado) {
-      case 'Crítico':
+    switch (estado.toLowerCase()) {
+      case 'crítico':
         return Colors.red;
-      case 'Sobrecargado':
-        return Colors.red.shade800;
-      case 'Normal':
+      case 'sobrecargado':
+        return Colors.deepOrange;
+      case 'normal':
         return Colors.green;
       default:
         return Colors.grey;
     }
   }
 
+  Future<void> _simulateCapacityAlert() async {
+    await NotificationService.showCapacityAlert(
+      workCenter: 'PM_INST',
+      message: 'El puesto está sobrecargado al 125%',
+    );
+    
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.white),
+              SizedBox(width: 8),
+              Expanded(child: Text('Notificación de capacidad enviada')),
+            ],
+          ),
+          backgroundColor: Colors.orange,
+        ),
+      );
+    }
+  }
+
   void _generateProgram() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Programa Generado'),
-        content: const Text(
-          'Se ha generado el programa de órdenes para la Semana 20\n\n'
-          '✓ 2 órdenes programadas\n'
-          '✓ Capacidades balanceadas\n'
-          '✓ Notificaciones enviadas',
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white),
+              SizedBox(width: 8),
+              Expanded(child: Text('Programa de órdenes generado exitosamente')),
+            ],
+          ),
+          backgroundColor: Colors.green,
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-
-    // Simular notificación de programa generado
-    NotificationService.showOrderNotification(
-      orderNumber: "PROGRAMA-S20",
-      description: "Programa de órdenes Semana 20 generado",
-      priority: "NORMAL",
-    );
-  }
-
-  void _simulateCapacityAlert() {
-    NotificationService.showCapacityAlert(
-      workCenter: "PM_MECANICO",
-      message: "Capacidad al 85% - Requiere ajuste de programación",
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Alerta de capacidad enviada'),
-        backgroundColor: Colors.orange,
-      ),
-    );
-  }
-
-  void _editOrder(Map<String, dynamic> order) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Editar Orden ${order['orden']}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Operación'),
-              controller: TextEditingController(text: order['operacion']),
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Puesto de trabajo'),
-              controller: TextEditingController(text: order['puestoTrabajo']),
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Trabajo planificado'),
-              controller: TextEditingController(text: order['trabajoPlan']),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Orden actualizada')),
-              );
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-            child: const Text('Guardar', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _notifyOrder(Map<String, dynamic> order) {
-    NotificationService.showOrderNotification(
-      orderNumber: order['orden'],
-      description: "Operación ${order['operacion']} programada",
-      priority: "NORMAL",
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Notificación enviada para orden ${order['orden']}')),
-    );
+      );
+    }
   }
 } 

@@ -10,7 +10,7 @@ import 'package:demo/src/pages/team/job.page.dart';
 import 'package:demo/src/pages/team/equipment.page.dart';
 import 'package:demo/src/pages/team/materials.page.dart';
 import 'package:demo/src/pages/planning/maintenance/cycle.page.dart';
-import 'package:demo/src/pages/planning/maintenance/strategy.page.dart';
+import 'package:demo/src/pages/planning/strategies.page.dart';
 import 'package:demo/src/pages/planning/capacity_management.page.dart';
 import 'package:demo/src/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -435,7 +435,7 @@ class HomePageState extends State<HomePage> {
         icon: Icons.stacked_line_chart,
         title: 'Estrategias',
         subtitle: 'Estrategias de mantenimiento preventivo',
-        onTap: () => _navigateTo(context, const StrategyPage()),
+        onTap: () => _navigateTo(context, const StrategiesPage()),
       ),
       _buildMenuItem(
         icon: Icons.assessment,
@@ -458,7 +458,7 @@ class HomePageState extends State<HomePage> {
             icon: Icons.bar_chart,
             title: 'Estrategia',
             subtitle: 'Definición de estrategias de mantenimiento',
-            onTap: () => _navigateTo(context, const StrategyPage()),
+            onTap: () => _navigateTo(context, const StrategiesPage()),
             isSubItem: true,
           ),
         ],

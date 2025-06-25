@@ -1,0 +1,50 @@
+[
+	{
+		"nombre": "Ciclos de Mantenimiento",
+		"tipo": "proceso_principal",
+		"datos": {
+			"ciclos": [
+				{
+					"tipo": "Ciclo Individual",
+					"descripcion": "Mantenimiento Preventivo Semanal",
+					"duracion": "7 días",
+					"ultimaEjecucion": "25/08/2024",
+					"proximaEjecucion": "01/09/2024",
+					"frecuencia": "Semanal",
+					"responsable": "Técnico de Turno",
+					"estado": "Activo"
+				},
+				{
+					"tipo": "Ciclo Lubricación",
+					"descripcion": "Lubricación de equipos rotativos",
+					"duracion": "14 días",
+					"ultimaEjecucion": "20/08/2024",
+					"proximaEjecucion": "03/09/2024",
+					"frecuencia": "Quincenal",
+					"responsable": "Especialista Lubricación",
+					"estado": "Activo"
+				},
+				{
+					"tipo": "Ciclo Inspección",
+					"descripcion": "Inspección visual de componentes críticos",
+					"duracion": "3 días",
+					"ultimaEjecucion": "26/08/2024",
+					"proximaEjecucion": "29/08/2024",
+					"frecuencia": "Diaria",
+					"responsable": "Inspector de Calidad",
+					"estado": "En Progreso"
+				},
+				{
+					"tipo": "Ciclo Calibración",
+					"descripcion": "Calibración de instrumentos de medición",
+					"duracion": "30 días",
+					"ultimaEjecucion": "15/08/2024",
+					"proximaEjecucion": "14/09/2024",
+					"frecuencia": "Mensual",
+					"responsable": "Técnico Calibración",
+					"estado": "Programado"
+				}
+			]
+		}
+	}
+]

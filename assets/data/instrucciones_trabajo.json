@@ -1,0 +1,40 @@
+[
+	{
+		"nombre": "Instrucciones de Trabajo",
+		"tipo": "proceso_principal",
+		"datos": {
+			"instrucciones": [
+				{
+					"codigo": "IT-001",
+					"titulo": "Inspección Visual de Equipos",
+					"descripcion": "Procedimiento para inspección visual sistemática",
+					"categoria": "Inspección",
+					"responsable": "Inspector Técnico",
+					"duracion": "30 min",
+					"frecuencia": "Diaria",
+					"estado": "Vigente"
+				},
+				{
+					"codigo": "IT-002",
+					"titulo": "Lubricación de Rodamientos",
+					"descripcion": "Proceso de lubricación preventiva",
+					"categoria": "Lubricación",
+					"responsable": "Técnico Mecánico",
+					"duracion": "45 min",
+					"frecuencia": "Semanal",
+					"estado": "Vigente"
+				},
+				{
+					"codigo": "IT-003",
+					"titulo": "Calibración de Instrumentos",
+					"descripcion": "Procedimiento de calibración mensual",
+					"categoria": "Calibración",
+					"responsable": "Especialista Metrología",
+					"duracion": "2 horas",
+					"frecuencia": "Mensual",
+					"estado": "En Revisión"
+				}
+			]
+		}
+	}
+]

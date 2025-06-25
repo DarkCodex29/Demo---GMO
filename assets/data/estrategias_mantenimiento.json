@@ -1,0 +1,37 @@
+[
+	{
+		"nombre": "Estrategia de Mantenimiento",
+		"tipo": "proceso_principal",
+		"datos": {
+			"estrategias": [
+				{
+					"tipo": "Planificación Trimestral",
+					"descripcion": "Estrategia basada en ciclos de 90 días",
+					"ciclo": "90 días",
+					"objetivo": "Mantener la eficiencia del equipo",
+					"frecuencia": "Trimestral",
+					"responsable": "Jefe de Mantenimiento",
+					"estado": "Activo"
+				},
+				{
+					"tipo": "Mantenimiento Preventivo",
+					"descripcion": "Programa de mantenimiento preventivo sistemático",
+					"ciclo": "30 días",
+					"objetivo": "Prevenir fallas críticas",
+					"frecuencia": "Mensual",
+					"responsable": "Técnico Senior",
+					"estado": "Activo"
+				},
+				{
+					"tipo": "Mantenimiento Predictivo",
+					"descripcion": "Monitoreo continuo de condiciones",
+					"ciclo": "7 días",
+					"objetivo": "Detectar anomalías temprano",
+					"frecuencia": "Semanal",
+					"responsable": "Especialista Predictivo",
+					"estado": "En Desarrollo"
+				}
+			]
+		}
+	}
+]

@@ -1,0 +1,55 @@
+[
+	{
+		"nombre": "Gestión de Capacidades",
+		"tipo": "proceso_principal",
+		"datos": {
+			"capacidades": [
+				{
+					"puestoTrabajo": "PM_MECANICO",
+					"centro": "1000",
+					"semanaNro": "20",
+					"necesidad": "20h",
+					"oferta": "15h",
+					"utilizacion": "85%",
+					"estado": "Crítico"
+				},
+				{
+					"puestoTrabajo": "PM_ELEC",
+					"centro": "1001",
+					"semanaNro": "20",
+					"necesidad": "15h",
+					"oferta": "18h",
+					"utilizacion": "83%",
+					"estado": "Normal"
+				},
+				{
+					"puestoTrabajo": "PM_INST",
+					"centro": "1002",
+					"semanaNro": "20",
+					"necesidad": "25h",
+					"oferta": "20h",
+					"utilizacion": "125%",
+					"estado": "Sobrecargado"
+				}
+			],
+			"ordenes_programadas": [
+				{
+					"orden": "10000050",
+					"operacion": "0010",
+					"puestoTrabajo": "PM_MECA",
+					"trabajoPlan": "4h",
+					"fechaInicio": "26.08.2024",
+					"fechaFin": "27.08.2024"
+				},
+				{
+					"orden": "10000050",
+					"operacion": "0020",
+					"puestoTrabajo": "PM_ELEC",
+					"trabajoPlan": "5h",
+					"fechaInicio": "28.08.2024",
+					"fechaFin": "29.08.2024"
+				}
+			]
+		}
+	}
+]
