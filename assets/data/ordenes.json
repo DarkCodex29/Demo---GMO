@@ -1,286 +1,120 @@
 {
 	"ordenes": [
 		{
-			"nroOrden": "8300002587",
-			"fecha": "26.07.2018",
-			"claseOrden": "ZM23",
-			"statusMensaje": "CTEC FMAT NLIQ PREC",
+			"nroOrden": "ZIA1-001",
+			"fecha": "18.04.2024",
+			"claseOrden": "ZIA1",
+			"textoBrave": "Emergencia Reparacion de Fuga ERI Pretec",
+			"statusMensaje": "CTEC NOTI IMPR JBFI KKMP NLIQ PREC",
+			"equipo": "2000914",
+			"denominacionEquipo": "TA060009020",
+			"ubicacionTecnica": "VAN-018-RED-RAP-68001A",
+			"denominacionUbicacion": "Sistema Alta Presión área Met Bucaramang",
 			"responsable": {
-				"grupoPlanificacion": "CBN",
-				"puestoTrabajoResponsable": "CHI_JMTO",
-				"jefeMantenimiento": "JMTO CHIMBOTE NORT"
+				"centroPlanificacion": "1801",
+				"puestoTrabajoResponsable": "PM-RA-VA",
+				"areaEmpresa": ""
 			},
 			"fechas": {
-				"inicioEjecucion": "26.07.2018",
-				"finEjecucion": "26.07.2018",
-				"prioridad": "2 PRIORITARIO",
-				"revision": "N/A"
+				"inicioExtrema": "18.04.2024",
+				"finExtrema": "",
+				"inicioProgramado": "19.04.2024",
+				"fechaReferencia": "13.01.2025",
+				"inicioReal": "19.04.2024",
+				"finReal": "19.04.2024",
+				"horaInicioReal": "07:00:00",
+				"horaFinReal": "08:00:00"
 			},
-			"objetoReferencia": {
-				"ubicacionTecnica": "PERU-CHI-PCBN-RA-",
-				"equipo": "20008382",
-				"conjunto": "TOLVA DE PESAJE M.P. LINEA Nº2"
-			},
-			"primeraOperacion": {
-				"operacion": "REG P1 CAMBIO CELDAS CARGA HUNTLEIGH TOL",
-				"puestoTrabajoCentro": "CHI_JMTO / CO16",
-				"claseControl": "ZPM1",
-				"numeroOperacion": "0010",
-				"trabajoReal": "0 H",
-				"trabajoInvertido": "0 H"
-			},
-			"operaciones": [
-				{
-					"op": "0010",
-					"puestoTrabajo": "CHI_JMTO",
-					"centro": "CO16",
-					"clase": "ZPM1",
-					"claveModo": "2",
-					"textoBreveOperacion": "REG P1 CAMBIO CELDAS CARGA HUNTLEIGH TOL",
-					"trabajoReal": "0 H",
-					"trabajo": "0 H"
-				},
-				{
-					"op": "0020",
-					"puestoTrabajo": "CHI_JMTO",
-					"centro": "CO16",
-					"clase": "ZPM2",
-					"claveModo": "2",
-					"textoBreveOperacion": "REG P2 AJUSTE DE MOTOR PRINCIPAL",
-					"trabajoReal": "1 H",
-					"trabajo": "1 H"
-				}
-			],
-			"componentes": [
-				{
-					"posicion": "0010",
-					"componente": "14110006",
-					"denominacion": "CELDA CARGA TEDEA-HUNTLEIGH 620 1000 KG",
-					"cantidadNecesaria": "4 UN",
-					"tipoAprovisionamiento": "Reserva para elemento PEP",
-					"destinatario": "MACASTRO",
-					"puestoDescarga": "PL.MANTTO",
-					"um": "UN",
-					"tp": "2",
-					"s": "1",
-					"almacenamiento": "1601",
-					"ce": "CO16",
-					"op": "0010",
-					"lote": "N/A"
-				}
-			],
 			"costos": {
-				"materiales": {
-					"costesEstimados": "0.00",
-					"costesPlan": "9,036.80",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				},
-				"servicios": {
-					"costesEstimados": "0.00",
-					"costesPlan": "0.00",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				}
+				"costePlan": "0",
+				"costeReal": "0",
+				"moneda": "PEN"
 			},
-			"datosAdicionales": {
-				"organizacion": "COPEINCA S.A.C",
-				"sociedadCO": "PE00",
-				"centroCosteResponsable": "CO02211621",
-				"claseObjeto": "GG Gastos",
-				"areaFuncional": "Z9-210",
-				"elementoPEP": "CHI-18-VN2-PCBN-RA-NP-OX",
-				"proyecto": "CHI NORTE T2 MTTO"
+			"clasificacion": {
+				"campoClasificacion": "RAP",
+				"claseActividadPM": "REP"
 			},
-			"emplazamiento": {
-				"ceEmplazamiento": "CO16",
-				"emplazamiento": "PLANTA DE HARINA DE PESCADO",
-				"local": "9211",
-				"areaEmpresa": "PRODUCCION",
-				"puestoTrabajo": "CHI_JMTO",
-				"sociedad": "COPEINCA S.A.C"
+			"status": {
+				"sistemaStatus": "CTEC NOTI IMPR JBFI KKMP NLIQ PREC",
+				"usuarioStatus": "CREA"
 			}
 		},
 		{
-			"nroOrden": "8300002588",
-			"fecha": "27.07.2018",
-			"claseOrden": "ZM24",
-			"statusMensaje": "PENDIENTE",
+			"nroOrden": "ZIA1-002",
+			"fecha": "06.05.2024",
+			"claseOrden": "ZIA1",
+			"textoBrave": "Instalar Kit de aislamiento",
+			"statusMensaje": "CTEC NOTI EDET IMPP JBFI MACO MOVM NLIQ*",
+			"equipo": "1138544",
+			"denominacionEquipo": "Kit de Aislamiento CIT-23022",
+			"ubicacionTecnica": "VAN-018-EST-CIT-23022",
+			"denominacionUbicacion": "City Gate-320B Provincia",
 			"responsable": {
-				"grupoPlanificacion": "CBO",
-				"puestoTrabajoResponsable": "CHI_JMTO",
-				"jefeMantenimiento": "JMTO CHIMBOTE SUD"
+				"centroPlanificacion": "1801",
+				"puestoTrabajoResponsable": "PM-PC-VA",
+				"areaEmpresa": "320"
 			},
 			"fechas": {
-				"inicioEjecucion": "27.07.2018",
-				"finEjecucion": "28.07.2018",
-				"prioridad": "3 NORMAL",
-				"revision": "N/A"
+				"inicioExtrema": "06.05.2024",
+				"finExtrema": "",
+				"inicioProgramado": "06.05.2024",
+				"fechaReferencia": "24.12.2024",
+				"inicioReal": "18.12.2024",
+				"finReal": "18.12.2024",
+				"horaInicioReal": "13:30:00",
+				"horaFinReal": "16:00:00"
 			},
-			"objetoReferencia": {
-				"ubicacionTecnica": "PERU-CHI-PCBN-RA-02",
-				"equipo": "20008383",
-				"conjunto": "TOLVA DE PESAJE M.P. LINEA Nº3"
-			},
-			"primeraOperacion": {
-				"operacion": "REG P2 MANTENIMIENTO MOTOR PRINCIPAL",
-				"puestoTrabajoCentro": "CHI_JMTO / CO17",
-				"claseControl": "ZPM2",
-				"numeroOperacion": "0020",
-				"trabajoReal": "1 H",
-				"trabajoInvertido": "1 H"
-			},
-			"operaciones": [
-				{
-					"op": "0020",
-					"puestoTrabajo": "CHI_JMTO",
-					"centro": "CO17",
-					"clase": "ZPM2",
-					"claveModo": "2",
-					"textoBreveOperacion": "REG P2 MANTENIMIENTO MOTOR PRINCIPAL",
-					"trabajoReal": "1 H",
-					"trabajo": "1 H"
-				}
-			],
-			"componentes": [
-				{
-					"posicion": "0020",
-					"componente": "14110007",
-					"denominacion": "MOTOR PRINCIPAL - 500 KW",
-					"cantidadNecesaria": "2 UN",
-					"tipoAprovisionamiento": "Reserva para elemento PEP",
-					"destinatario": "RCASTRO",
-					"puestoDescarga": "PL.MANTTO",
-					"um": "UN",
-					"tp": "2",
-					"s": "1",
-					"almacenamiento": "1602",
-					"ce": "CO17",
-					"op": "0020",
-					"lote": "N/A"
-				}
-			],
 			"costos": {
-				"materiales": {
-					"costesEstimados": "0.00",
-					"costesPlan": "15,500.00",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				},
-				"servicios": {
-					"costesEstimados": "0.00",
-					"costesPlan": "3,000.00",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				}
+				"costePlan": "147952.71",
+				"costeReal": "147952.71",
+				"moneda": "PEN"
 			},
-			"datosAdicionales": {
-				"organizacion": "COPEINCA S.A.C",
-				"sociedadCO": "PE00",
-				"centroCosteResponsable": "CO02211622",
-				"claseObjeto": "GG Gastos",
-				"areaFuncional": "Z9-211",
-				"elementoPEP": "CHI-18-VN2-PCBN-RA-NP-OY",
-				"proyecto": "CHI SUR T2 MTTO"
+			"clasificacion": {
+				"campoClasificacion": "KIT",
+				"claseActividadPM": "CAM"
 			},
-			"emplazamiento": {
-				"ceEmplazamiento": "CO17",
-				"emplazamiento": "PLANTA DE HARINA DE PESCADO",
-				"local": "9212",
-				"areaEmpresa": "PRODUCCION",
-				"puestoTrabajo": "CHI_JMTO",
-				"sociedad": "COPEINCA S.A.C"
+			"status": {
+				"sistemaStatus": "CTEC NOTI EDET IMPP JBFI MACO NLIQ PREC",
+				"usuarioStatus": "CREA"
 			}
 		},
 		{
-			"nroOrden": "8300002589",
-			"fecha": "28.07.2018",
-			"claseOrden": "ZM25",
-			"statusMensaje": "EN PROCESO",
+			"nroOrden": "ZIA1-003",
+			"fecha": "16.05.2024",
+			"claseOrden": "ZIA1",
+			"textoBrave": "Baja presión",
+			"statusMensaje": "CTEC NOTI JBFI KKMP NLIQ PREC",
+			"equipo": "1100290",
+			"denominacionEquipo": "Sistema Regulación DES-62028",
+			"ubicacionTecnica": "VAN-018-EST-DES-62028",
+			"denominacionUbicacion": "Descompresora San Pablo",
 			"responsable": {
-				"grupoPlanificacion": "CBP",
-				"puestoTrabajoResponsable": "CHI_JMTO",
-				"jefeMantenimiento": "JMTO CHIMBOTE OESTE"
+				"centroPlanificacion": "1801",
+				"puestoTrabajoResponsable": "PM-RG-VA",
+				"areaEmpresa": "323"
 			},
 			"fechas": {
-				"inicioEjecucion": "28.07.2018",
-				"finEjecucion": "29.07.2018",
-				"prioridad": "1 URGENTE",
-				"revision": "N/A"
+				"inicioExtrema": "16.05.2024",
+				"finExtrema": "",
+				"inicioProgramado": "16.05.2024",
+				"fechaReferencia": "27.12.2024",
+				"inicioReal": "13.05.2024",
+				"finReal": "13.05.2024",
+				"horaInicioReal": "13:00:00",
+				"horaFinReal": "16:30:00"
 			},
-			"objetoReferencia": {
-				"ubicacionTecnica": "PERU-CHI-PCBN-RA-03",
-				"equipo": "20008384",
-				"conjunto": "TOLVA DE PESAJE M.P. LINEA Nº4"
-			},
-			"primeraOperacion": {
-				"operacion": "REG P3 MANTENIMIENTO PREVENTIVO",
-				"puestoTrabajoCentro": "CHI_JMTO / CO18",
-				"claseControl": "ZPM3",
-				"numeroOperacion": "0030",
-				"trabajoReal": "2 H",
-				"trabajoInvertido": "2 H"
-			},
-			"operaciones": [
-				{
-					"op": "0030",
-					"puestoTrabajo": "CHI_JMTO",
-					"centro": "CO18",
-					"clase": "ZPM3",
-					"claveModo": "3",
-					"textoBreveOperacion": "REG P3 MANTENIMIENTO PREVENTIVO",
-					"trabajoReal": "2 H",
-					"trabajo": "2 H"
-				}
-			],
-			"componentes": [
-				{
-					"posicion": "0030",
-					"componente": "14110008",
-					"denominacion": "FILTROS DE AIRE",
-					"cantidadNecesaria": "10 UN",
-					"tipoAprovisionamiento": "Reserva para elemento PEP",
-					"destinatario": "GLOPEZ",
-					"puestoDescarga": "PL.MANTTO",
-					"um": "UN",
-					"tp": "2",
-					"s": "1",
-					"almacenamiento": "1603",
-					"ce": "CO18",
-					"op": "0030",
-					"lote": "N/A"
-				}
-			],
 			"costos": {
-				"materiales": {
-					"costesEstimados": "0.00",
-					"costesPlan": "5,000.00",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				},
-				"servicios": {
-					"costesEstimados": "0.00",
-					"costesPlan": "1,500.00",
-					"costesReales": "0.00",
-					"moneda": "PEN"
-				}
+				"costePlan": "0",
+				"costeReal": "0",
+				"moneda": "PEN"
 			},
-			"datosAdicionales": {
-				"organizacion": "COPEINCA S.A.C",
-				"sociedadCO": "PE00",
-				"centroCosteResponsable": "CO02211623",
-				"claseObjeto": "GG Gastos",
-				"areaFuncional": "Z9-212",
-				"elementoPEP": "CHI-18-VN2-PCBN-RA-NP-OZ",
-				"proyecto": "CHI ESTE T2 MTTO"
+			"clasificacion": {
+				"campoClasificacion": "DES",
+				"claseActividadPM": "CAL"
 			},
-			"emplazamiento": {
-				"ceEmplazamiento": "CO18",
-				"emplazamiento": "PLANTA DE HARINA DE PESCADO",
-				"local": "9213",
-				"areaEmpresa": "PRODUCCION",
-				"puestoTrabajo": "CHI_JMTO",
-				"sociedad": "COPEINCA S.A.C"
+			"status": {
+				"sistemaStatus": "CTEC NOTI JBFI KKMP NLIQ PREC",
+				"usuarioStatus": "CREA"
 			}
 		}
 	]
