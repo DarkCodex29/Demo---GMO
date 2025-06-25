@@ -190,122 +190,32 @@ class DemandManagementPageState extends State<DemandManagementPage> {
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,
         children: [
-          // Header del proceso responsivo
-          ResponsiveRowColumnItem(
-            child: Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(
-                ResponsiveValue<double>(
-                  context,
-                  conditionalValues: [
-                    const Condition.smallerThan(name: TABLET, value: 12.0),
-                    const Condition.largerThan(name: MOBILE, value: 16.0),
-                  ],
-                ).value,
-              ),
-              padding: EdgeInsets.all(
-                ResponsiveValue<double>(
-                  context,
-                  conditionalValues: [
-                    const Condition.smallerThan(name: TABLET, value: 16.0),
-                    const Condition.largerThan(name: MOBILE, value: 20.0),
-                  ],
-                ).value,
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.orange.shade600, Colors.orange.shade700],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.orange.shade300.withOpacity(0.5),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  ResponsiveRowColumn(
-                    layout: ResponsiveRowColumnType.ROW,
-                    rowMainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const ResponsiveRowColumnItem(
-                        child: Icon(Icons.business_center, color: Colors.white, size: 28),
-                      ),
-                      ResponsiveRowColumnItem(
-                        child: SizedBox(width: ResponsiveValue<double>(
-                          context,
-                          conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 8.0),
-                            const Condition.largerThan(name: MOBILE, value: 12.0),
-                          ],
-                        ).value),
-                      ),
-                      ResponsiveRowColumnItem(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'PROCESO - DEMANDA',
-                            style: TextStyle(
-                              fontSize: ResponsiveValue<double>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 20.0),
-                                  const Condition.largerThan(name: MOBILE, value: 24.0),
-                                ],
-                              ).value,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: ResponsiveValue<double>(
-                    context,
-                    conditionalValues: [
-                      const Condition.smallerThan(name: TABLET, value: 6.0),
-                      const Condition.largerThan(name: MOBILE, value: 8.0),
-                    ],
-                  ).value),
-                  Text(
-                    'Gestión y seguimiento de avisos de mantenimiento',
-                    style: TextStyle(
-                      fontSize: ResponsiveValue<double>(
-                        context,
-                        conditionalValues: [
-                          const Condition.smallerThan(name: TABLET, value: 12.0),
-                          const Condition.largerThan(name: MOBILE, value: 14.0),
-                        ],
-                      ).value,
-                      color: Colors.white.withOpacity(0.9),
-                      fontWeight: FontWeight.w400,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-
           // Barra de búsqueda responsiva
           ResponsiveRowColumnItem(
             child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: ResponsiveValue<double>(
+              margin: EdgeInsets.fromLTRB(
+                ResponsiveValue<double>(
                   context,
                   conditionalValues: [
                     const Condition.smallerThan(name: TABLET, value: 12.0),
                     const Condition.largerThan(name: MOBILE, value: 16.0),
                   ],
                 ).value,
-                vertical: 8,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 12.0),
+                    const Condition.largerThan(name: MOBILE, value: 16.0),
+                  ],
+                ).value,
+                8,
               ),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -598,21 +508,21 @@ class DemandManagementPageState extends State<DemandManagementPage> {
           context,
           conditionalValues: [
             const Condition.smallerThan(name: TABLET, value: 8.0),
-            const Condition.largerThan(name: MOBILE, value: 12.0),
+            const Condition.largerThan(name: MOBILE, value: 10.0),
           ],
         ).value,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: Colors.grey.shade300, width: 0.5),
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -625,10 +535,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
             collapsedTextColor: Colors.black87,
             collapsedIconColor: Colors.orange,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
             collapsedShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
           ),
         ),
@@ -647,159 +557,156 @@ class DemandManagementPageState extends State<DemandManagementPage> {
             bottom: ResponsiveValue<double>(
               context,
               conditionalValues: [
-                const Condition.smallerThan(name: TABLET, value: 12.0),
-                const Condition.largerThan(name: MOBILE, value: 16.0),
+                const Condition.smallerThan(name: TABLET, value: 8.0),
+                const Condition.largerThan(name: MOBILE, value: 12.0),
               ],
             ).value,
           ),
           leading: Container(
-            padding: const EdgeInsets.all(8),
+            width: 40,
+            height: 40,
             decoration: BoxDecoration(
-              color: priorityColor.withOpacity(0.1),
+              color: priorityColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: priorityColor.withOpacity(0.4), width: 1),
             ),
             child: Icon(
               priorityIcon,
               color: priorityColor,
-              size: ResponsiveValue<double>(
-                context,
-                conditionalValues: [
-                  const Condition.smallerThan(name: TABLET, value: 20.0),
-                  const Condition.largerThan(name: MOBILE, value: 24.0),
-                ],
-              ).value,
+              size: 20,
             ),
           ),
-          title: ResponsiveRowColumn(
-            layout: ResponsiveRowColumnType.COLUMN,
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ResponsiveRowColumnItem(
-                child: Text(
-                  _formatValue(demanda['tituloAviso']),
-                  style: TextStyle(
-                    fontSize: ResponsiveValue<double>(
-                      context,
-                      conditionalValues: [
-                        const Condition.smallerThan(name: TABLET, value: 14.0),
-                        const Condition.largerThan(name: MOBILE, value: 16.0),
+              // Información principal compacta
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _formatValue(demanda['tituloAviso']),
+                      style: TextStyle(
+                        fontSize: ResponsiveValue<double>(
+                          context,
+                          conditionalValues: [
+                            const Condition.smallerThan(name: TABLET, value: 14.0),
+                            const Condition.largerThan(name: MOBILE, value: 15.0),
+                          ],
+                        ).value,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                        height: 1.2,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(Icons.person, size: 12, color: Colors.grey[600]),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            _formatValue(demanda['autor']),
+                            style: TextStyle(
+                              fontSize: ResponsiveValue<double>(
+                                context,
+                                conditionalValues: [
+                                  const Condition.smallerThan(name: TABLET, value: 11.0),
+                                  const Condition.largerThan(name: MOBILE, value: 12.0),
+                                ],
+                              ).value,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w400,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
-                    ).value,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                  maxLines: isMobile ? 2 : 1,
-                  overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
-              ResponsiveRowColumnItem(
-                child: SizedBox(height: ResponsiveValue<double>(
-                  context,
-                  conditionalValues: [
-                    const Condition.smallerThan(name: TABLET, value: 6.0),
-                    const Condition.largerThan(name: MOBILE, value: 8.0),
-                  ],
-                ).value),
-              ),
-              ResponsiveRowColumnItem(
-                child: ResponsiveRowColumn(
-                  layout: isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
+              
+              // Badges y fecha a la derecha
+              Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    ResponsiveRowColumnItem(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: Colors.orange.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.orange.shade200),
-                        ),
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
+                    // Badges horizontales compactos
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.orange.shade50,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.orange.shade300, width: 0.5),
+                          ),
                           child: Text(
                             _formatValue(demanda['claseAviso']),
                             style: TextStyle(
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 10.0),
-                                  const Condition.largerThan(name: MOBILE, value: 11.0),
+                                  const Condition.smallerThan(name: TABLET, value: 9.0),
+                                  const Condition.largerThan(name: MOBILE, value: 10.0),
                                 ],
                               ).value,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               color: Colors.orange.shade700,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    ResponsiveRowColumnItem(
-                      child: SizedBox(
-                        width: isMobile ? 0 : 8,
-                        height: isMobile ? 4 : 0,
-                      ),
-                    ),
-                    ResponsiveRowColumnItem(
-                      child: ResponsiveRowColumn(
-                        layout: ResponsiveRowColumnType.ROW,
-                        children: [
-                          ResponsiveRowColumnItem(
-                            child: Icon(Icons.person, size: 14, color: Colors.grey[600]),
+                        const SizedBox(width: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: priorityColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: priorityColor.withOpacity(0.4), width: 0.5),
                           ),
-                          const ResponsiveRowColumnItem(
-                            child: SizedBox(width: 4),
-                          ),
-                          ResponsiveRowColumnItem(
-                            child: Flexible(
-                              child: Text(
-                                _formatValue(demanda['autor']),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.medical_services,
+                                size: 10,
+                                color: priorityColor,
+                              ),
+                              const SizedBox(width: 2),
+                              Text(
+                                sintoma.isNotEmpty ? sintoma.substring(0, sintoma.length > 4 ? 4 : sintoma.length) : 'N/A',
                                 style: TextStyle(
                                   fontSize: ResponsiveValue<double>(
                                     context,
                                     conditionalValues: [
-                                      const Condition.smallerThan(name: TABLET, value: 11.0),
-                                      const Condition.largerThan(name: MOBILE, value: 12.0),
+                                      const Condition.smallerThan(name: TABLET, value: 9.0),
+                                      const Condition.largerThan(name: MOBILE, value: 10.0),
                                     ],
                                   ).value,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
+                                  color: priorityColor,
                                 ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          subtitle: Padding(
-            padding: EdgeInsets.only(
-              top: ResponsiveValue<double>(
-                context,
-                conditionalValues: [
-                  const Condition.smallerThan(name: TABLET, value: 6.0),
-                  const Condition.largerThan(name: MOBILE, value: 8.0),
-                ],
-              ).value,
-            ),
-            child: ResponsiveRowColumn(
-              layout: isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,
-              children: [
-                ResponsiveRowColumnItem(
-                  child: ResponsiveRowColumn(
-                    layout: ResponsiveRowColumnType.ROW,
-                    children: [
-                      ResponsiveRowColumnItem(
-                        child: Icon(Icons.calendar_today, size: 14, color: Colors.grey[600]),
-                      ),
-                      const ResponsiveRowColumnItem(
-                        child: SizedBox(width: 4),
-                      ),
-                      ResponsiveRowColumnItem(
-                        child: Text(
+                    const SizedBox(height: 4),
+                    // Fecha
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(Icons.calendar_today, size: 12, color: Colors.grey[600]),
+                        const SizedBox(width: 4),
+                        Text(
                           _formatValue(demanda['fechaInicio']),
                           style: TextStyle(
                             fontSize: ResponsiveValue<double>(
@@ -813,51 +720,12 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-                ResponsiveRowColumnItem(
-                  child: SizedBox(
-                    width: isMobile ? 0 : 16,
-                    height: isMobile ? 4 : 0,
-                  ),
-                ),
-                ResponsiveRowColumnItem(
-                  child: ResponsiveRowColumn(
-                    layout: ResponsiveRowColumnType.ROW,
-                    children: [
-                      ResponsiveRowColumnItem(
-                        child: Icon(Icons.medical_services, size: 14, color: priorityColor),
-                      ),
-                      const ResponsiveRowColumnItem(
-                        child: SizedBox(width: 4),
-                      ),
-                      ResponsiveRowColumnItem(
-                        child: Flexible(
-                          child: Text(
-                            sintoma.isNotEmpty ? sintoma : '(Sin síntoma)',
-                            style: TextStyle(
-                              fontSize: ResponsiveValue<double>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 11.0),
-                                  const Condition.largerThan(name: MOBILE, value: 12.0),
-                                ],
-                              ).value,
-                              color: priorityColor,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           children: [
             _buildDemandDetails(demanda),
