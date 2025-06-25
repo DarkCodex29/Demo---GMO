@@ -190,7 +190,7 @@ class HomePageState extends State<HomePage> {
               _buildMobileLayout(),
 
             SizedBox(height: ResponsiveValue<double>(
-              context,
+                      context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 12.0),
                 const Condition.largerThan(name: MOBILE, value: 24.0),
@@ -209,7 +209,7 @@ class HomePageState extends State<HomePage> {
       width: double.infinity,
       margin: EdgeInsets.only(
         bottom: ResponsiveValue<double>(
-          context,
+                      context,
           conditionalValues: [
             const Condition.smallerThan(name: TABLET, value: 8.0),
             const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -218,7 +218,7 @@ class HomePageState extends State<HomePage> {
       ),
       padding: EdgeInsets.all(
         ResponsiveValue<double>(
-          context,
+                      context,
           conditionalValues: [
             const Condition.smallerThan(name: TABLET, value: 8.0),
             const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -242,7 +242,7 @@ class HomePageState extends State<HomePage> {
           ),
           ResponsiveRowColumnItem(
             child: SizedBox(width: ResponsiveValue<double>(
-              context,
+                      context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 6.0),
                 const Condition.largerThan(name: MOBILE, value: 12.0),
@@ -258,7 +258,7 @@ class HomePageState extends State<HomePage> {
                     'Notificaciones Activas',
                     style: TextStyle(
                       fontSize: ResponsiveValue<double>(
-                        context,
+                      context,
                         conditionalValues: [
                           const Condition.smallerThan(name: TABLET, value: 12.0),
                           const Condition.largerThan(name: MOBILE, value: 14.0),
@@ -273,7 +273,7 @@ class HomePageState extends State<HomePage> {
                     'Recibirás alertas de mantenimiento en tiempo real',
                     style: TextStyle(
                       fontSize: ResponsiveValue<double>(
-                        context,
+                          context,
                         conditionalValues: [
                           const Condition.smallerThan(name: TABLET, value: 10.0),
                           const Condition.largerThan(name: MOBILE, value: 12.0),
@@ -311,9 +311,9 @@ class HomePageState extends State<HomePage> {
                 icon: Icons.timeline,
                 title: 'Datos Maestros para Planificación',
                 children: _buildPlanningMenuItems(),
-              ),
-            ],
-          ),
+                    ),
+                  ],
+                ),
         ),
         const ResponsiveRowColumnItem(
           child: SizedBox(width: 16),
@@ -362,10 +362,10 @@ class HomePageState extends State<HomePage> {
                 title: 'Mantenimiento Correctivo',
                 children: _buildMaintenanceMenuItems(),
               ),
-            ),
-          ],
-        ),
-      ],
+                    ),
+                  ],
+                ),
+              ],
     );
   }
 
@@ -680,7 +680,7 @@ class HomePageState extends State<HomePage> {
             title,
             style: TextStyle(
               fontSize: ResponsiveValue<double>(
-                context,
+                      context,
                 conditionalValues: [
                   const Condition.smallerThan(name: TABLET, value: 13.0),
                   const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -692,7 +692,7 @@ class HomePageState extends State<HomePage> {
           ),
           tilePadding: EdgeInsets.symmetric(
             horizontal: ResponsiveValue<double>(
-              context,
+                      context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 8.0),
                 const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -754,7 +754,7 @@ class HomePageState extends State<HomePage> {
           title,
           style: TextStyle(
             fontSize: ResponsiveValue<double>(
-              context,
+                      context,
               conditionalValues: [
                 Condition.smallerThan(name: TABLET, value: isSubItem ? 12.0 : 13.0),
                 Condition.largerThan(name: MOBILE, value: isSubItem ? 14.0 : 15.0),

@@ -314,7 +314,7 @@ class OrdenPageState extends State<OrdenPage> {
                           },
                         )
                       : null,
-                  border: InputBorder.none,
+                        border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: ResponsiveValue<double>(
                       context,
@@ -364,10 +364,10 @@ class OrdenPageState extends State<OrdenPage> {
                                   ).value,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
+              ),
+            ),
+          ],
+        ),
                         )
                       : _buildOrdenList(),
             ),
@@ -483,10 +483,10 @@ class OrdenPageState extends State<OrdenPage> {
               // Información principal compacta
               Expanded(
                 flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
                       _formatValue(orden['nroOrden']),
                       style: TextStyle(
                         fontSize: ResponsiveValue<double>(
@@ -506,7 +506,7 @@ class OrdenPageState extends State<OrdenPage> {
                     const SizedBox(height: 2),
                     Text(
                       _formatValue(orden['textoBrave']),
-                      style: TextStyle(
+                style: TextStyle(
                         fontSize: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
@@ -529,7 +529,7 @@ class OrdenPageState extends State<OrdenPage> {
                         Expanded(
                           child: Text(
                             'Equipo: ${_formatValue(orden['equipo'])}',
-                            style: TextStyle(
+                style: TextStyle(
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
@@ -571,7 +571,7 @@ class OrdenPageState extends State<OrdenPage> {
                             _formatValue(orden['claseOrden']),
                             style: TextStyle(
                               fontSize: ResponsiveValue<double>(
-                                context,
+                          context,
                                 conditionalValues: [
                                   const Condition.smallerThan(name: TABLET, value: 9.0),
                                   const Condition.largerThan(name: MOBILE, value: 10.0),
@@ -631,7 +631,7 @@ class OrdenPageState extends State<OrdenPage> {
                           _formatValue(orden['fecha']),
                           style: TextStyle(
                             fontSize: ResponsiveValue<double>(
-                              context,
+                          context,
                               conditionalValues: [
                                 const Condition.smallerThan(name: TABLET, value: 11.0),
                                 const Condition.largerThan(name: MOBILE, value: 12.0),
@@ -778,7 +778,7 @@ class OrdenPageState extends State<OrdenPage> {
 
   TableRow _buildTableRow(String proceso, String campo, dynamic valor) {
     return TableRow(
-      children: [
+          children: [
         _buildTableCell(proceso),
         _buildTableCell(campo),
         _buildTableCell(_formatValue(valor)),
@@ -791,7 +791,7 @@ class OrdenPageState extends State<OrdenPage> {
       padding: const EdgeInsets.all(8),
       child: Text(
         text,
-        style: TextStyle(
+              style: TextStyle(
           fontSize: ResponsiveValue<double>(
             context,
             conditionalValues: [
@@ -848,8 +848,8 @@ class OrdenPageState extends State<OrdenPage> {
         border: Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
           Expanded(
             flex: 2,
             child: Text(
