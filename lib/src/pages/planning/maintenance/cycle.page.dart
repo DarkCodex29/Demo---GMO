@@ -100,35 +100,19 @@ class CyclePageState extends State<CyclePage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: ResponsiveRowColumn(
-          layout: ResponsiveRowColumnType.ROW,
-          children: [
-            const ResponsiveRowColumnItem(
-              child: Icon(Icons.refresh, color: Colors.white),
-            ),
-            const ResponsiveRowColumnItem(
-              child: SizedBox(width: 8),
-            ),
-            ResponsiveRowColumnItem(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  'Ciclos de Mantenimiento',
-                  style: TextStyle(
-                    fontSize: ResponsiveValue<double>(
-                      context,
-                      conditionalValues: [
-                        const Condition.smallerThan(name: TABLET, value: 18.0),
-                        const Condition.largerThan(name: MOBILE, value: 20.0),
-                      ],
-                    ).value,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        title: Text(
+          'Ciclos de Mantenimiento',
+          style: TextStyle(
+            fontSize: ResponsiveValue<double>(
+              context,
+              conditionalValues: [
+                const Condition.smallerThan(name: TABLET, value: 18.0),
+                const Condition.largerThan(name: MOBILE, value: 20.0),
+              ],
+            ).value,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.orange,
         elevation: 2,

@@ -10,8 +10,10 @@
 					"semanaNro": "20",
 					"necesidad": "20h",
 					"oferta": "15h",
-					"utilizacion": "85%",
-					"estado": "Crítico"
+					"utilizacion": "133%",
+					"deficit": "5h",
+					"estado": "Crítico",
+					"descripcion": "Déficit de capacidad - requiere programación adicional"
 				},
 				{
 					"puestoTrabajo": "PM_ELEC",
@@ -20,7 +22,9 @@
 					"necesidad": "15h",
 					"oferta": "18h",
 					"utilizacion": "83%",
-					"estado": "Normal"
+					"exceso": "3h",
+					"estado": "Normal",
+					"descripcion": "Capacidad disponible para trabajos adicionales"
 				},
 				{
 					"puestoTrabajo": "PM_INST",
@@ -29,27 +33,126 @@
 					"necesidad": "25h",
 					"oferta": "20h",
 					"utilizacion": "125%",
-					"estado": "Sobrecargado"
-				}
-			],
-			"ordenes_programadas": [
-				{
-					"orden": "10000050",
-					"operacion": "0010",
-					"puestoTrabajo": "PM_MECA",
-					"trabajoPlan": "4h",
-					"fechaInicio": "26.08.2024",
-					"fechaFin": "27.08.2024"
+					"deficit": "5h",
+					"estado": "Sobrecargado",
+					"descripcion": "Sobrecarga crítica - redistribuir cargas de trabajo"
 				},
 				{
-					"orden": "10000050",
-					"operacion": "0020",
-					"puestoTrabajo": "PM_ELEC",
-					"trabajoPlan": "5h",
-					"fechaInicio": "28.08.2024",
-					"fechaFin": "29.08.2024"
+					"puestoTrabajo": "PM_SOLDADURA",
+					"centro": "1003",
+					"semanaNro": "20",
+					"necesidad": "12h",
+					"oferta": "16h",
+					"utilizacion": "75%",
+					"exceso": "4h",
+					"estado": "Normal",
+					"descripcion": "Capacidad óptima con reserva disponible"
 				}
-			]
+			],
+			"programacion_ordenes": {
+				"fechaInicioPrograma": "20.06.2025",
+				"fechaFinPrograma": "21.06.2025",
+				"semana": "20",
+				"ordenes": [
+					{
+						"orden": "10000050",
+						"descripcion": "Mantenimiento preventivo bomba centrífuga",
+						"equipo": "100001",
+						"ubicacionTecnica": "PE-100-4566",
+						"prioridad": "Alta",
+						"fechaCreacion": "15.06.2025",
+						"fechaInicioPrograma": "20.06.2025",
+						"fechaFinPrograma": "21.06.2025",
+						"estado": "Programada",
+						"operaciones": [
+							{
+								"operacion": "0010",
+								"descripcion": "Cambio de rodamientos",
+								"puestoTrabajo": "PM_MECA",
+								"trabajoPlan": "4h",
+								"fechaInicio": "20.06.2025",
+								"horaInicio": "08:00",
+								"fechaFin": "20.06.2025",
+								"horaFin": "12:00",
+								"responsable": "Carlos Méndez",
+								"herramientas": ["Extractor rodamientos", "Martillo inercia"],
+								"materiales": [
+									{
+										"codigo": "ROD-6205-2RS",
+										"descripcion": "Rodamiento 6205-2RS",
+										"cantidad": 2,
+										"unidad": "PZ"
+									}
+								]
+							},
+							{
+								"operacion": "0020",
+								"descripcion": "Verificación eléctrica",
+								"puestoTrabajo": "PM_ELEC",
+								"trabajoPlan": "5h",
+								"fechaInicio": "21.06.2025",
+								"horaInicio": "08:00",
+								"fechaFin": "21.06.2025",
+								"horaFin": "13:00",
+								"responsable": "Luis Ramírez",
+								"herramientas": ["Multímetro", "Megóhmetro"],
+								"materiales": []
+							}
+						]
+					},
+					{
+						"orden": "10000051",
+						"descripcion": "Calibración válvula de control",
+						"equipo": "100003",
+						"ubicacionTecnica": "PE-100-4567",
+						"prioridad": "Media",
+						"fechaCreacion": "16.06.2025",
+						"fechaInicioPrograma": "20.06.2025",
+						"fechaFinPrograma": "20.06.2025",
+						"estado": "Programada",
+						"operaciones": [
+							{
+								"operacion": "0010",
+								"descripcion": "Calibración actuador neumático",
+								"puestoTrabajo": "PM_INST",
+								"trabajoPlan": "3h",
+								"fechaInicio": "20.06.2025",
+								"horaInicio": "14:00",
+								"fechaFin": "20.06.2025",
+								"horaFin": "17:00",
+								"responsable": "Patricia Silva",
+								"herramientas": [
+									"Calibrador presión",
+									"Destornilladores precisión"
+								],
+								"materiales": [
+									{
+										"codigo": "SEAL-VLV-001",
+										"descripcion": "Kit sellos válvula",
+										"cantidad": 1,
+										"unidad": "KIT"
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"resumen_semana": {
+				"semana": "20",
+				"periodo": "15.06.2025 - 21.06.2025",
+				"totalOrdenes": 2,
+				"totalOperaciones": 3,
+				"horasProgramadas": 12,
+				"puestosInvolucrados": ["PM_MECA", "PM_ELEC", "PM_INST"],
+				"equiposMantenimiento": ["100001", "100003"],
+				"estadisticas": {
+					"ordenesAlta": 1,
+					"ordenesMedia": 1,
+					"ordenesBaja": 0,
+					"eficienciaProgramacion": "92%"
+				}
+			}
 		}
 	}
 ]

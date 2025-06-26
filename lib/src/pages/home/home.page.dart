@@ -13,6 +13,7 @@ import 'package:demo/src/pages/planning/maintenance/cycle.page.dart';
 import 'package:demo/src/pages/planning/strategies.page.dart';
 import 'package:demo/src/pages/planning/capacity_management.page.dart';
 import 'package:demo/src/pages/planning/roadmap_main.page.dart';
+import 'package:demo/src/pages/reports/reports_main.page.dart';
 import 'package:demo/src/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -321,10 +322,20 @@ class HomePageState extends State<HomePage> {
         ),
         ResponsiveRowColumnItem(
           rowFlex: 1,
-          child: _buildExpansionSection(
-            icon: Icons.warning,
-            title: 'Mantenimiento Correctivo',
-            children: _buildMaintenanceMenuItems(),
+          child: Column(
+            children: [
+              _buildExpansionSection(
+                icon: Icons.warning,
+                title: 'Mantenimiento Correctivo',
+                children: _buildMaintenanceMenuItems(),
+              ),
+              const SizedBox(height: 12),
+              _buildExpansionSection(
+                icon: Icons.assessment,
+                title: 'Reportes y Análisis',
+                children: _buildReportsMenuItems(),
+              ),
+            ],
           ),
         ),
       ],
@@ -363,10 +374,16 @@ class HomePageState extends State<HomePage> {
                 title: 'Mantenimiento Correctivo',
                 children: _buildMaintenanceMenuItems(),
               ),
-                    ),
-                  ],
-                ),
-              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        _buildExpansionSection(
+          icon: Icons.assessment,
+          title: 'Reportes y Análisis',
+          children: _buildReportsMenuItems(),
+        ),
+      ],
     );
   }
 
@@ -390,6 +407,12 @@ class HomePageState extends State<HomePage> {
           icon: Icons.warning,
           title: 'Mantenimiento Correctivo',
           children: _buildMaintenanceMenuItems(),
+        ),
+        const SizedBox(height: 12),
+        _buildExpansionSection(
+          icon: Icons.assessment,
+          title: 'Reportes y Análisis',
+          children: _buildReportsMenuItems(),
         ),
       ],
     );
@@ -491,6 +514,17 @@ class HomePageState extends State<HomePage> {
         title: 'Gestión de Demandas',
         subtitle: 'Procesar avisos y demandas de mantenimiento',
         onTap: () => _navigateTo(context, const DemandManagementPage()),
+      ),
+    ];
+  }
+
+  List<Widget> _buildReportsMenuItems() {
+    return [
+      _buildMenuItem(
+        icon: Icons.analytics,
+        title: 'Centro de Reportes',
+        subtitle: 'Acceso a todos los reportes del sistema',
+        onTap: () => _navigateTo(context, const ReportsMainPage()),
       ),
     ];
   }
