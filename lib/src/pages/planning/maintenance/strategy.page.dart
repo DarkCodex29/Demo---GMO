@@ -84,10 +84,6 @@ class StrategyPageState extends State<StrategyPage> {
           title: const Text('Estrategias de Mantenimiento'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -102,27 +98,9 @@ class StrategyPageState extends State<StrategyPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(
-          'Estrategias de Mantenimiento',
-          style: TextStyle(
-            fontSize: ResponsiveValue<double>(
-              context,
-              conditionalValues: [
-                const Condition.smallerThan(name: TABLET, value: 18.0),
-                const Condition.largerThan(name: MOBILE, value: 20.0),
-              ],
-            ).value,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
+        title: const Text('Estrategias de Mantenimiento'),
         backgroundColor: Colors.orange,
-        elevation: 2,
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        foregroundColor: Colors.white,
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,

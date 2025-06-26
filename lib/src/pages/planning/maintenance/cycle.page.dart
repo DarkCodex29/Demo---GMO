@@ -79,13 +79,9 @@ class CyclePageState extends State<CyclePage> {
       return Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          title: const Text('Ciclos de Mantenimiento'),
+          title: const Text('Ciclo Individual'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(

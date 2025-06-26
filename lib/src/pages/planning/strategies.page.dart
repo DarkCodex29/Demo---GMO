@@ -90,10 +90,6 @@ class _StrategiesPageState extends State<StrategiesPage> {
           title: const Text('Planificación de Mantenimiento'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -125,10 +121,6 @@ class _StrategiesPageState extends State<StrategiesPage> {
         backgroundColor: Colors.orange,
         elevation: 2,
         centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,

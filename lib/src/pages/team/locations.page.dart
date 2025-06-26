@@ -77,13 +77,9 @@ class LocationsPageState extends State<LocationsPage> {
       return Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          title: const Text('Ubicaciones Técnicas'),
+          title: const Text('Gestión de Ubicaciones'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(

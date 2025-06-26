@@ -21,19 +21,13 @@ class ReportsMainPageState extends State<ReportsMainPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.assessment, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Reportes y Análisis',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
+        title: const Text(
+          'Reportes y Análisis',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.orange,
         elevation: 2,

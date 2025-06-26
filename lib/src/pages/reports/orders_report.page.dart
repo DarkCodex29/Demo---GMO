@@ -182,23 +182,9 @@ class OrdersReportPageState extends State<OrdersReportPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.assignment, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Reporte de Órdenes',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+        title: const Text('Reporte de Órdenes'),
         backgroundColor: Colors.green,
-        elevation: 2,
-        centerTitle: false,
+        foregroundColor: Colors.white,
       ),
       body: isLoading
           ? const Center(

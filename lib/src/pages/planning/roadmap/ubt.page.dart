@@ -79,13 +79,9 @@ class UbtPageState extends State<UbtPage> {
       return Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          title: const Text('Unidades Básicas de Trabajo'),
+          title: const Text('UBTs'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -100,27 +96,9 @@ class UbtPageState extends State<UbtPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(
-          'Unidades Básicas de Trabajo',
-          style: TextStyle(
-            fontSize: ResponsiveValue<double>(
-              context,
-              conditionalValues: [
-                const Condition.smallerThan(name: TABLET, value: 16.0),
-                const Condition.largerThan(name: MOBILE, value: 20.0),
-              ],
-            ).value,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
+        title: const Text('UBTs'),
         backgroundColor: Colors.orange,
-        elevation: 2,
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        foregroundColor: Colors.white,
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,

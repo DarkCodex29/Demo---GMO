@@ -708,10 +708,6 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
           title: const Text('Gestión de Capacidades'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -726,37 +722,9 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(
-          'Gestión de Capacidades',
-          style: TextStyle(
-            fontSize: ResponsiveValue<double>(
-              context,
-              conditionalValues: [
-                const Condition.smallerThan(name: TABLET, value: 18.0),
-                const Condition.largerThan(name: MOBILE, value: 20.0),
-              ],
-            ).value,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
+        title: const Text('Gestión de Capacidades'),
         backgroundColor: Colors.orange,
-        elevation: 2,
-        centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.calendar_view_week, color: Colors.white),
-            onPressed: _mostrarProgramaOrdenes,
-          ),
-          IconButton(
-            icon: const Icon(Icons.notification_add, color: Colors.white),
-            onPressed: _simulateCapacityAlert,
-          ),
-        ],
+        foregroundColor: Colors.white,
       ),
       body: Column(
         children: [

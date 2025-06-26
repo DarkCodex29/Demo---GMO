@@ -136,37 +136,9 @@ class StockReportPageState extends State<StockReportPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.inventory_2, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Reporte de Stock',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+        title: const Text('Reporte de Stock'),
         backgroundColor: Colors.blue,
-        elevation: 2,
-        centerTitle: false,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.file_download, color: Colors.white),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Función de exportación en desarrollo'),
-                  backgroundColor: Colors.blue,
-                ),
-              );
-            },
-            tooltip: 'Exportar reporte',
-          ),
-        ],
+        foregroundColor: Colors.white,
       ),
       body: isLoading
           ? const Center(

@@ -81,10 +81,6 @@ class EquipmentPageState extends State<EquipmentPage> {
           title: const Text('Gestión de Equipos'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -117,10 +113,6 @@ class EquipmentPageState extends State<EquipmentPage> {
         backgroundColor: Colors.orange,
         elevation: 2,
         centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,

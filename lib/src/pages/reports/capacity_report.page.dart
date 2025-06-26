@@ -13,19 +13,13 @@ class CapacityReportPageState extends State<CapacityReportPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.analytics, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Reporte de Capacidades',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
+        title: const Text(
+          'Reporte de Capacidades',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.purple,
         elevation: 2,

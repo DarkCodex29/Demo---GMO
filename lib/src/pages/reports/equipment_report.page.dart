@@ -13,23 +13,9 @@ class EquipmentReportPageState extends State<EquipmentReportPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Row(
-          children: [
-            Icon(Icons.precision_manufacturing, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Reporte de Equipos',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
+        title: const Text('Reporte de Equipos'),
         backgroundColor: Colors.orange,
-        elevation: 2,
-        centerTitle: false,
+        foregroundColor: Colors.white,
       ),
       body: const Center(
         child: Column(

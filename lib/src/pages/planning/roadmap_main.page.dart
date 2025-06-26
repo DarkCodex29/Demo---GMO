@@ -92,10 +92,6 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
           title: const Text('Hoja de Ruta'),
           backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -127,10 +123,6 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         backgroundColor: Colors.orange,
         elevation: 2,
         centerTitle: false,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,
