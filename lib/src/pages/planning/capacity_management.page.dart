@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/services/notification_service.dart';
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
 class CapacityManagementPage extends StatefulWidget {

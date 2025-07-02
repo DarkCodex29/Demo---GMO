@@ -5,10 +5,10 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Inicializar servicio de notificaciones
   await NotificationService.initialize();
-  
+
   runApp(const MyApp());
 }
 
