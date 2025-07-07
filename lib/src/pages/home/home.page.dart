@@ -66,7 +66,8 @@ class HomePageState extends State<HomePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           title: const Row(
             children: [
               Icon(Icons.logout, color: Colors.orange),
@@ -81,19 +82,19 @@ class HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text(
-                'Cancelar', 
-                style: TextStyle(color: Colors.grey, fontSize: 16)
-              ),
+              child: const Text('Cancelar',
+                  style: TextStyle(color: Colors.grey, fontSize: 16)),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
               ),
-              child: const Text('Cerrar sesión', style: TextStyle(fontSize: 16)),
+              child:
+                  const Text('Cerrar sesión', style: TextStyle(fontSize: 16)),
             ),
           ],
         );
@@ -162,7 +163,8 @@ class HomePageState extends State<HomePage> {
             // Banner de notificaciones mejorado y responsivo
             if (_notificationsEnabled) _buildNotificationBanner(),
 
-            SizedBox(height: ResponsiveValue<double>(
+            SizedBox(
+                height: ResponsiveValue<double>(
               context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 8.0),
@@ -171,15 +173,16 @@ class HomePageState extends State<HomePage> {
             ).value),
 
             // Secciones principales con diseño responsive
-            if (isDesktop) 
+            if (isDesktop)
               _buildDesktopLayout()
             else if (isTablet)
               _buildTabletLayout()
             else
               _buildMobileLayout(),
 
-            SizedBox(height: ResponsiveValue<double>(
-                      context,
+            SizedBox(
+                height: ResponsiveValue<double>(
+              context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 12.0),
                 const Condition.largerThan(name: MOBILE, value: 24.0),
@@ -198,7 +201,7 @@ class HomePageState extends State<HomePage> {
       width: double.infinity,
       margin: EdgeInsets.only(
         bottom: ResponsiveValue<double>(
-                      context,
+          context,
           conditionalValues: [
             const Condition.smallerThan(name: TABLET, value: 8.0),
             const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -207,7 +210,7 @@ class HomePageState extends State<HomePage> {
       ),
       padding: EdgeInsets.all(
         ResponsiveValue<double>(
-                      context,
+          context,
           conditionalValues: [
             const Condition.smallerThan(name: TABLET, value: 8.0),
             const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -227,11 +230,13 @@ class HomePageState extends State<HomePage> {
         layout: ResponsiveRowColumnType.ROW,
         children: [
           const ResponsiveRowColumnItem(
-            child: Icon(Icons.notifications_active, color: Colors.orange, size: 24),
+            child: Icon(Icons.notifications_active,
+                color: Colors.orange, size: 24),
           ),
           ResponsiveRowColumnItem(
-            child: SizedBox(width: ResponsiveValue<double>(
-                      context,
+            child: SizedBox(
+                width: ResponsiveValue<double>(
+              context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 6.0),
                 const Condition.largerThan(name: MOBILE, value: 12.0),
@@ -247,9 +252,10 @@ class HomePageState extends State<HomePage> {
                     'Notificaciones Activas',
                     style: TextStyle(
                       fontSize: ResponsiveValue<double>(
-                      context,
+                        context,
                         conditionalValues: [
-                          const Condition.smallerThan(name: TABLET, value: 12.0),
+                          const Condition.smallerThan(
+                              name: TABLET, value: 12.0),
                           const Condition.largerThan(name: MOBILE, value: 14.0),
                         ],
                       ).value,
@@ -262,9 +268,10 @@ class HomePageState extends State<HomePage> {
                     'Recibirás alertas de mantenimiento en tiempo real',
                     style: TextStyle(
                       fontSize: ResponsiveValue<double>(
-                          context,
+                        context,
                         conditionalValues: [
-                          const Condition.smallerThan(name: TABLET, value: 10.0),
+                          const Condition.smallerThan(
+                              name: TABLET, value: 10.0),
                           const Condition.largerThan(name: MOBILE, value: 12.0),
                         ],
                       ).value,
@@ -292,7 +299,7 @@ class HomePageState extends State<HomePage> {
             children: [
               _buildExpansionSection(
                 icon: Icons.engineering,
-                title: 'Datos Maestros para Equipo',
+                title: 'Datos Maestros para Mantenimiento',
                 children: _buildEquipmentMenuItems(),
               ),
               const SizedBox(height: 12),
@@ -300,9 +307,9 @@ class HomePageState extends State<HomePage> {
                 icon: Icons.timeline,
                 title: 'Datos Maestros para Planificación',
                 children: _buildPlanningMenuItems(),
-                    ),
-                  ],
-                ),
+              ),
+            ],
+          ),
         ),
         const ResponsiveRowColumnItem(
           child: SizedBox(width: 16),
@@ -335,7 +342,7 @@ class HomePageState extends State<HomePage> {
       children: [
         _buildExpansionSection(
           icon: Icons.engineering,
-          title: 'Datos Maestros para Equipo',
+          title: 'Datos Maestros para Mantenimiento',
           children: _buildEquipmentMenuItems(),
         ),
         const SizedBox(height: 12),
@@ -380,7 +387,7 @@ class HomePageState extends State<HomePage> {
       children: [
         _buildExpansionSection(
           icon: Icons.engineering,
-          title: 'Datos Maestros para Equipo',
+          title: 'Datos Maestros para Mantenimiento',
           children: _buildEquipmentMenuItems(),
         ),
         const SizedBox(height: 12),
@@ -519,10 +526,14 @@ class HomePageState extends State<HomePage> {
   List<Widget> _buildFullActions() {
     return [
       Tooltip(
-        message: _notificationsEnabled ? 'Desactivar notificaciones' : 'Activar notificaciones',
+        message: _notificationsEnabled
+            ? 'Desactivar notificaciones'
+            : 'Activar notificaciones',
         child: IconButton(
           icon: Icon(
-            _notificationsEnabled ? Icons.notifications_active : Icons.notifications_off,
+            _notificationsEnabled
+                ? Icons.notifications_active
+                : Icons.notifications_off,
             color: Colors.white,
           ),
           onPressed: _toggleNotifications,
@@ -572,9 +583,12 @@ class HomePageState extends State<HomePage> {
           PopupMenuItem(
             value: 'notifications',
             child: _buildPopupMenuItem(
-              icon: _notificationsEnabled ? Icons.notifications_off : Icons.notifications_active,
+              icon: _notificationsEnabled
+                  ? Icons.notifications_off
+                  : Icons.notifications_active,
               text: _notificationsEnabled ? 'Desactivar' : 'Activar',
-              iconColor: _notificationsEnabled ? Colors.grey[600]! : Colors.orange,
+              iconColor:
+                  _notificationsEnabled ? Colors.grey[600]! : Colors.orange,
             ),
           ),
           PopupMenuItem(
@@ -649,14 +663,15 @@ class HomePageState extends State<HomePage> {
             ),
             const SizedBox(width: 8),
             Text(
-              _notificationsEnabled 
-                ? 'Notificaciones activadas' 
-                : 'Notificaciones desactivadas',
+              _notificationsEnabled
+                  ? 'Notificaciones activadas'
+                  : 'Notificaciones desactivadas',
               style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
-        backgroundColor: _notificationsEnabled ? Colors.green : Colors.grey[600],
+        backgroundColor:
+            _notificationsEnabled ? Colors.green : Colors.grey[600],
       ),
     );
   }
@@ -701,7 +716,7 @@ class HomePageState extends State<HomePage> {
             title,
             style: TextStyle(
               fontSize: ResponsiveValue<double>(
-                      context,
+                context,
                 conditionalValues: [
                   const Condition.smallerThan(name: TABLET, value: 13.0),
                   const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -713,7 +728,7 @@ class HomePageState extends State<HomePage> {
           ),
           tilePadding: EdgeInsets.symmetric(
             horizontal: ResponsiveValue<double>(
-                      context,
+              context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 8.0),
                 const Condition.largerThan(name: MOBILE, value: 16.0),
@@ -737,21 +752,21 @@ class HomePageState extends State<HomePage> {
   }) {
     return Container(
       margin: EdgeInsets.symmetric(
-        horizontal: isSubItem ? 
-          ResponsiveValue<double>(
-            context,
-            conditionalValues: [
-              const Condition.smallerThan(name: TABLET, value: 16.0),
-              const Condition.largerThan(name: MOBILE, value: 24.0),
-            ],
-          ).value : 
-          ResponsiveValue<double>(
-            context,
-            conditionalValues: [
-              const Condition.smallerThan(name: TABLET, value: 4.0),
-              const Condition.largerThan(name: MOBILE, value: 8.0),
-            ],
-          ).value,
+        horizontal: isSubItem
+            ? ResponsiveValue<double>(
+                context,
+                conditionalValues: [
+                  const Condition.smallerThan(name: TABLET, value: 16.0),
+                  const Condition.largerThan(name: MOBILE, value: 24.0),
+                ],
+              ).value
+            : ResponsiveValue<double>(
+                context,
+                conditionalValues: [
+                  const Condition.smallerThan(name: TABLET, value: 4.0),
+                  const Condition.largerThan(name: MOBILE, value: 8.0),
+                ],
+              ).value,
         vertical: 2,
       ),
       decoration: BoxDecoration(
@@ -766,8 +781,8 @@ class HomePageState extends State<HomePage> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
-            icon, 
-            color: Colors.orange, 
+            icon,
+            color: Colors.orange,
             size: isSubItem ? 20 : 22,
           ),
         ),
@@ -775,10 +790,12 @@ class HomePageState extends State<HomePage> {
           title,
           style: TextStyle(
             fontSize: ResponsiveValue<double>(
-                      context,
+              context,
               conditionalValues: [
-                Condition.smallerThan(name: TABLET, value: isSubItem ? 12.0 : 13.0),
-                Condition.largerThan(name: MOBILE, value: isSubItem ? 14.0 : 15.0),
+                Condition.smallerThan(
+                    name: TABLET, value: isSubItem ? 12.0 : 13.0),
+                Condition.largerThan(
+                    name: MOBILE, value: isSubItem ? 14.0 : 15.0),
               ],
             ).value,
             fontWeight: FontWeight.w500,
@@ -791,8 +808,10 @@ class HomePageState extends State<HomePage> {
             fontSize: ResponsiveValue<double>(
               context,
               conditionalValues: [
-                Condition.smallerThan(name: TABLET, value: isSubItem ? 9.0 : 10.0),
-                Condition.largerThan(name: MOBILE, value: isSubItem ? 11.0 : 12.0),
+                Condition.smallerThan(
+                    name: TABLET, value: isSubItem ? 9.0 : 10.0),
+                Condition.largerThan(
+                    name: MOBILE, value: isSubItem ? 11.0 : 12.0),
               ],
             ).value,
             color: Colors.grey[600],

@@ -10,7 +10,7 @@ class CreateOrderPage extends StatefulWidget {
 
 class CreateOrderPageState extends State<CreateOrderPage> {
   final _formKey = GlobalKey<FormState>();
-  
+
   // Controladores según los campos del proceso real
   final TextEditingController _claseOrdenController = TextEditingController();
   final TextEditingController _prioridadController = TextEditingController();
@@ -18,19 +18,37 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   final TextEditingController _descripcionController = TextEditingController();
   final TextEditingController _operacionController = TextEditingController();
   final TextEditingController _centroCostoController = TextEditingController();
-  final TextEditingController _cantidadPersonasController = TextEditingController();
+  final TextEditingController _cantidadPersonasController =
+      TextEditingController();
   final TextEditingController _duracionController = TextEditingController();
   final TextEditingController _componentesController = TextEditingController();
   final TextEditingController _trabajoPlanController = TextEditingController();
   final TextEditingController _centroController = TextEditingController();
   final TextEditingController _almacenController = TextEditingController();
   final TextEditingController _tipoMaterialController = TextEditingController();
-  final TextEditingController _ubicacionTecnicaController = TextEditingController();
+  final TextEditingController _ubicacionTecnicaController =
+      TextEditingController();
 
   // Datos para dropdowns
-  final List<String> clasesOrden = ['ZPM1', 'ZPM2', 'ZIA1', 'ZM23', 'ZM24', 'ZM25'];
-  final List<String> prioridades = ['1 URGENTE', '2 PRIORITARIO', '3 NORMAL', '4 BAJO'];
-  final List<String> tiposPlan = ['Plan preventivo', 'Plan correctivo', 'Mantenimiento de 500 km'];
+  final List<String> clasesOrden = [
+    'ZPM1',
+    'ZPM2',
+    'ZIA1',
+    'ZM23',
+    'ZM24',
+    'ZM25'
+  ];
+  final List<String> prioridades = [
+    '1 URGENTE',
+    '2 PRIORITARIO',
+    '3 NORMAL',
+    '4 BAJO'
+  ];
+  final List<String> tiposPlan = [
+    'Plan preventivo',
+    'Plan correctivo',
+    'Mantenimiento de 500 km'
+  ];
 
   String? selectedClaseOrden;
   String? selectedPrioridad;
@@ -82,10 +100,15 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                                 border: OutlineInputBorder(),
                               ),
                               value: selectedClaseOrden,
+                              isExpanded: true,
                               items: clasesOrden.map((clase) {
                                 return DropdownMenuItem(
                                   value: clase,
-                                  child: Text(clase),
+                                  child: Text(
+                                    clase,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (value) {
@@ -109,10 +132,15 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                                 border: OutlineInputBorder(),
                               ),
                               value: selectedPrioridad,
+                              isExpanded: true,
                               items: prioridades.map((prioridad) {
                                 return DropdownMenuItem(
                                   value: prioridad,
-                                  child: Text(prioridad),
+                                  child: Text(
+                                    prioridad,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (value) {
@@ -168,10 +196,15 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                           border: OutlineInputBorder(),
                         ),
                         value: selectedTipoPlan,
+                        isExpanded: true,
                         items: tiposPlan.map((tipo) {
                           return DropdownMenuItem(
                             value: tipo,
-                            child: Text(tipo),
+                            child: Text(
+                              tipo,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           );
                         }).toList(),
                         onChanged: (value) {
@@ -384,8 +417,9 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   void _saveOrder() {
     if (_formKey.currentState!.validate()) {
       // Generar número de orden
-      final orderNumber = 'ZIA1-${DateTime.now().millisecondsSinceEpoch % 10000}';
-      
+      final orderNumber =
+          'ZIA1-${DateTime.now().millisecondsSinceEpoch % 10000}';
+
       // Mostrar confirmación
       showDialog(
         context: context,
@@ -422,7 +456,8 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 _createAnotherOrder();
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              child: const Text('Crear Otra', style: TextStyle(color: Colors.white)),
+              child: const Text('Crear Otra',
+                  style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -452,7 +487,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
       _centroController.clear();
       _almacenController.clear();
       _ubicacionTecnicaController.clear();
-      
+
       selectedClaseOrden = null;
       selectedPrioridad = null;
       selectedTipoPlan = null;
@@ -477,4 +512,4 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     _ubicacionTecnicaController.dispose();
     super.dispose();
   }
-} 
+}

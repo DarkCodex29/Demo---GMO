@@ -24,33 +24,45 @@ class OrdenPageState extends State<OrdenPage> {
 
   Future<void> _loadOrdenes() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/ordenes_pm.json');
+      final String response =
+          await rootBundle.loadString('assets/data/ordenes_pm.json');
       final List<dynamic> data = json.decode(response);
       setState(() {
         // Adaptar los datos reales a la estructura esperada por la aplicación
         ordenes = data.map<Map<String, dynamic>>((orden) {
           return {
             'nroOrden': orden['Equipo']?.toString() ?? 'N/A',
-            'fecha': _formatDateFromSAP(orden['Fecha inicio real']?.toString() ?? ''),
+            'fecha': _formatDateFromSAP(
+                orden['Fecha inicio real']?.toString() ?? ''),
             'claseOrden': orden['Clase de orden']?.toString() ?? '',
             'textoBrave': orden['Texto breve']?.toString() ?? '',
             'statusMensaje': orden['Status del sistema']?.toString() ?? '',
             'equipo': orden['Equipo']?.toString() ?? '',
-            'denominacionEquipo': orden['Denominación de objeto técnico']?.toString() ?? '',
+            'denominacionEquipo':
+                orden['Denominación de objeto técnico']?.toString() ?? '',
             'ubicacionTecnica': orden['Ubicación técnica']?.toString() ?? '',
-            'denominacionUbicacion': orden['Denominación de la ubicación técnica']?.toString() ?? '',
+            'denominacionUbicacion':
+                orden['Denominación de la ubicación técnica']?.toString() ?? '',
             'responsable': {
-              'centroPlanificacion': orden['Centro planificación']?.toString() ?? '',
-              'puestoTrabajoResponsable': orden['Pto.tbjo.responsable']?.toString() ?? '',
+              'centroPlanificacion':
+                  orden['Centro planificación']?.toString() ?? '',
+              'puestoTrabajoResponsable':
+                  orden['Pto.tbjo.responsable']?.toString() ?? '',
               'areaEmpresa': orden['Área de empresa']?.toString() ?? ''
             },
             'fechas': {
-              'inicioExtrema': _formatDateFromSAP(orden['Fecha de inicio extrema']?.toString() ?? ''),
-              'finExtrema': _formatDateFromSAP(orden['Fecha fin extrema']?.toString() ?? ''),
-              'inicioProgramado': _formatDateFromSAP(orden['Inicio programado']?.toString() ?? ''),
-              'fechaReferencia': _formatDateFromSAP(orden['Fecha de referencia']?.toString() ?? ''),
-              'inicioReal': _formatDateFromSAP(orden['Fecha inicio real']?.toString() ?? ''),
-              'finReal': _formatDateFromSAP(orden['Fecha real de fin de la orden']?.toString() ?? ''),
+              'inicioExtrema': _formatDateFromSAP(
+                  orden['Fecha de inicio extrema']?.toString() ?? ''),
+              'finExtrema': _formatDateFromSAP(
+                  orden['Fecha fin extrema']?.toString() ?? ''),
+              'inicioProgramado': _formatDateFromSAP(
+                  orden['Inicio programado']?.toString() ?? ''),
+              'fechaReferencia': _formatDateFromSAP(
+                  orden['Fecha de referencia']?.toString() ?? ''),
+              'inicioReal': _formatDateFromSAP(
+                  orden['Fecha inicio real']?.toString() ?? ''),
+              'finReal': _formatDateFromSAP(
+                  orden['Fecha real de fin de la orden']?.toString() ?? ''),
               'horaInicioReal': orden['Hora inicio real']?.toString() ?? '',
               'horaFinReal': orden['Fin real (hora)']?.toString() ?? ''
             },
@@ -60,7 +72,8 @@ class OrdenPageState extends State<OrdenPage> {
               'moneda': 'PEN'
             },
             'clasificacion': {
-              'campoClasificacion': orden['Campo de clasificación']?.toString() ?? '',
+              'campoClasificacion':
+                  orden['Campo de clasificación']?.toString() ?? '',
               'claseActividadPM': orden['Clase actividad PM']?.toString() ?? ''
             },
             'status': {
@@ -69,17 +82,20 @@ class OrdenPageState extends State<OrdenPage> {
             },
             // Campos adicionales específicos de SAP
             'emplazamiento': orden['Emplazamiento']?.toString() ?? '',
-            'planMantenimientoPreventivo': orden['Plan mant.preventivo']?.toString() ?? '',
+            'planMantenimientoPreventivo':
+                orden['Plan mant.preventivo']?.toString() ?? '',
             'hojaRuta': orden['Hoja de Ruta']?.toString() ?? '',
             'grupoHojasRuta': orden['Grupo hojas ruta']?.toString() ?? '',
-            'fechaEntrada': _formatDateFromSAP(orden['Fecha entrada']?.toString() ?? ''),
-            'fechaModificacion': _formatDateFromSAP(orden['Fecha modific.maestro orden']?.toString() ?? ''),
+            'fechaEntrada':
+                _formatDateFromSAP(orden['Fecha entrada']?.toString() ?? ''),
+            'fechaModificacion': _formatDateFromSAP(
+                orden['Fecha modific.maestro orden']?.toString() ?? ''),
             'horaInicioProgr': orden['Hora de inicio prog.']?.toString() ?? '',
             'horaFinProgr': orden['Hora de fin progr.']?.toString() ?? '',
             'horaFinExtrema': orden['Hora de fin extrema']?.toString() ?? ''
           };
         }).toList();
-        
+
         filteredOrdenes = ordenes;
         isLoading = false;
       });
@@ -121,11 +137,11 @@ class OrdenPageState extends State<OrdenPage> {
   // Función auxiliar para convertir fechas de SAP (YYYY-MM-DD HH:MM:SS) a formato DD.MM.YYYY
   String _formatDateFromSAP(String sapDate) {
     if (sapDate.isEmpty || sapDate == 'null' || sapDate == '') return '';
-    
+
     try {
       // Extraer solo la parte de la fecha (antes del espacio si hay hora)
       String dateOnly = sapDate.trim().split(' ')[0];
-      
+
       // Dividir la fecha YYYY-MM-DD
       List<String> parts = dateOnly.split('-');
       if (parts.length == 3 && parts[0].length == 4) {
@@ -139,7 +155,7 @@ class OrdenPageState extends State<OrdenPage> {
       // Si hay error, devolver fecha vacía
       return '';
     }
-    
+
     return '';
   }
 
@@ -151,16 +167,18 @@ class OrdenPageState extends State<OrdenPage> {
       } else {
         filteredOrdenes = ordenes.where((orden) {
           final nroOrden = orden['nroOrden']?.toString().toLowerCase() ?? '';
-          final textoBrave = orden['textoBrave']?.toString().toLowerCase() ?? '';
+          final textoBrave =
+              orden['textoBrave']?.toString().toLowerCase() ?? '';
           final equipo = orden['equipo']?.toString().toLowerCase() ?? '';
-          final ubicacion = orden['denominacionUbicacion']?.toString().toLowerCase() ?? '';
-          
+          final ubicacion =
+              orden['denominacionUbicacion']?.toString().toLowerCase() ?? '';
+
           final searchLower = query.toLowerCase();
-          
+
           return nroOrden.contains(searchLower) ||
-                 textoBrave.contains(searchLower) ||
-                 equipo.contains(searchLower) ||
-                 ubicacion.contains(searchLower);
+              textoBrave.contains(searchLower) ||
+              equipo.contains(searchLower) ||
+              ubicacion.contains(searchLower);
         }).toList();
       }
     });
@@ -175,7 +193,7 @@ class OrdenPageState extends State<OrdenPage> {
 
   Color _getStatusColor(String? status) {
     if (status == null || status.trim().isEmpty) return Colors.grey;
-    
+
     if (status.contains('NLIQ')) return Colors.blue;
     if (status.contains('PREC')) return Colors.green;
     if (status.contains('JBFI')) return Colors.orange;
@@ -185,7 +203,7 @@ class OrdenPageState extends State<OrdenPage> {
 
   IconData _getStatusIcon(String? status) {
     if (status == null || status.trim().isEmpty) return Icons.help_outline;
-    
+
     if (status.contains('NLIQ')) return Icons.payment;
     if (status.contains('PREC')) return Icons.check_circle;
     if (status.contains('JBFI')) return Icons.engineering;
@@ -291,11 +309,11 @@ class OrdenPageState extends State<OrdenPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar órdenes...' 
+                  hintText: isMobile
+                      ? 'Buscar órdenes...'
                       : 'Buscar por número, descripción, equipo...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -304,7 +322,8 @@ class OrdenPageState extends State<OrdenPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: Icon(Icons.search,
+                      color: Colors.orange.shade600, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
                           icon: Icon(Icons.clear, color: Colors.grey[600]),
@@ -313,7 +332,7 @@ class OrdenPageState extends State<OrdenPage> {
                           },
                         )
                       : null,
-                        border: InputBorder.none,
+                  border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: ResponsiveValue<double>(
                       context,
@@ -335,7 +354,8 @@ class OrdenPageState extends State<OrdenPage> {
               child: isLoading
                   ? const Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.orange),
                       ),
                     )
                   : filteredOrdenes.isEmpty
@@ -357,16 +377,18 @@ class OrdenPageState extends State<OrdenPage> {
                                   fontSize: ResponsiveValue<double>(
                                     context,
                                     conditionalValues: [
-                                      const Condition.smallerThan(name: TABLET, value: 16.0),
-                                      const Condition.largerThan(name: MOBILE, value: 18.0),
+                                      const Condition.smallerThan(
+                                          name: TABLET, value: 16.0),
+                                      const Condition.largerThan(
+                                          name: MOBILE, value: 18.0),
                                     ],
                                   ).value,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       : _buildOrdenList(),
             ),
@@ -482,17 +504,19 @@ class OrdenPageState extends State<OrdenPage> {
               // Información principal compacta
               Expanded(
                 flex: 3,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       _formatValue(orden['nroOrden']),
                       style: TextStyle(
                         fontSize: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 14.0),
-                            const Condition.largerThan(name: MOBILE, value: 15.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 14.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 15.0),
                           ],
                         ).value,
                         fontWeight: FontWeight.w600,
@@ -505,12 +529,14 @@ class OrdenPageState extends State<OrdenPage> {
                     const SizedBox(height: 2),
                     Text(
                       _formatValue(orden['textoBrave']),
-                style: TextStyle(
+                      style: TextStyle(
                         fontSize: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 12.0),
-                            const Condition.largerThan(name: MOBILE, value: 13.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 12.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 13.0),
                           ],
                         ).value,
                         color: Colors.grey[700],
@@ -528,12 +554,14 @@ class OrdenPageState extends State<OrdenPage> {
                         Expanded(
                           child: Text(
                             'Equipo: ${_formatValue(orden['equipo'])}',
-                style: TextStyle(
+                            style: TextStyle(
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 11.0),
-                                  const Condition.largerThan(name: MOBILE, value: 12.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 11.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 12.0),
                                 ],
                               ).value,
                               color: Colors.grey[600],
@@ -548,7 +576,7 @@ class OrdenPageState extends State<OrdenPage> {
                   ],
                 ),
               ),
-              
+
               // Badges y fecha a la derecha
               Expanded(
                 flex: 2,
@@ -559,62 +587,85 @@ class OrdenPageState extends State<OrdenPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Colors.orange.shade50,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.orange.shade300, width: 0.5),
-                          ),
-                          child: Text(
-                            _formatValue(orden['claseOrden']),
-                            style: TextStyle(
-                              fontSize: ResponsiveValue<double>(
-                          context,
-                                conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 9.0),
-                                  const Condition.largerThan(name: MOBILE, value: 10.0),
-                                ],
-                              ).value,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.orange.shade700,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: Colors.orange.shade300, width: 0.5),
+                            ),
+                            child: Text(
+                              _formatValue(orden['claseOrden']),
+                              style: TextStyle(
+                                fontSize: ResponsiveValue<double>(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.smallerThan(
+                                        name: TABLET, value: 9.0),
+                                    const Condition.largerThan(
+                                        name: MOBILE, value: 10.0),
+                                  ],
+                                ).value,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.orange.shade700,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: statusColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: statusColor.withOpacity(0.4), width: 0.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.flag,
-                                size: 10,
-                                color: statusColor,
-                              ),
-                              const SizedBox(width: 2),
-                              Text(
-                                status.contains('PREC') ? 'PREC' : 
-                                status.contains('NLIQ') ? 'NLIQ' :
-                                status.contains('JBFI') ? 'JBFI' : 'CTEC',
-                                style: TextStyle(
-                                  fontSize: ResponsiveValue<double>(
-                                    context,
-                                    conditionalValues: [
-                                      const Condition.smallerThan(name: TABLET, value: 9.0),
-                                      const Condition.largerThan(name: MOBILE, value: 10.0),
-                                    ],
-                                  ).value,
-                                  fontWeight: FontWeight.w600,
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: statusColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: statusColor.withOpacity(0.4),
+                                  width: 0.5),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.flag,
+                                  size: 10,
                                   color: statusColor,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 2),
+                                Flexible(
+                                  child: Text(
+                                    status.contains('PREC')
+                                        ? 'PREC'
+                                        : status.contains('NLIQ')
+                                            ? 'NLIQ'
+                                            : status.contains('JBFI')
+                                                ? 'JBFI'
+                                                : 'CTEC',
+                                    style: TextStyle(
+                                      fontSize: ResponsiveValue<double>(
+                                        context,
+                                        conditionalValues: [
+                                          const Condition.smallerThan(
+                                              name: TABLET, value: 9.0),
+                                          const Condition.largerThan(
+                                              name: MOBILE, value: 10.0),
+                                        ],
+                                      ).value,
+                                      fontWeight: FontWeight.w600,
+                                      color: statusColor,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -624,20 +675,27 @@ class OrdenPageState extends State<OrdenPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(Icons.calendar_today, size: 12, color: Colors.grey[600]),
+                        Icon(Icons.calendar_today,
+                            size: 12, color: Colors.grey[600]),
                         const SizedBox(width: 4),
-                        Text(
-                          _formatValue(orden['fecha']),
-                          style: TextStyle(
-                            fontSize: ResponsiveValue<double>(
-                          context,
-                              conditionalValues: [
-                                const Condition.smallerThan(name: TABLET, value: 11.0),
-                                const Condition.largerThan(name: MOBILE, value: 12.0),
-                              ],
-                            ).value,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w400,
+                        Flexible(
+                          child: Text(
+                            _formatValue(orden['fecha']),
+                            style: TextStyle(
+                              fontSize: ResponsiveValue<double>(
+                                context,
+                                conditionalValues: [
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 11.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 12.0),
+                                ],
+                              ).value,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w400,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
                         ),
                       ],
@@ -690,7 +748,8 @@ class OrdenPageState extends State<OrdenPage> {
             layout: ResponsiveRowColumnType.ROW,
             children: [
               ResponsiveRowColumnItem(
-                child: Icon(Icons.info_outline, color: Colors.orange.shade600, size: 20),
+                child: Icon(Icons.info_outline,
+                    color: Colors.orange.shade600, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),
@@ -713,14 +772,15 @@ class OrdenPageState extends State<OrdenPage> {
               ),
             ],
           ),
-          SizedBox(height: ResponsiveValue<double>(
+          SizedBox(
+              height: ResponsiveValue<double>(
             context,
             conditionalValues: [
               const Condition.smallerThan(name: TABLET, value: 8.0),
               const Condition.largerThan(name: MOBILE, value: 12.0),
             ],
           ).value),
-          
+
           // Tabla de detalles responsive
           if (isDesktop || isTablet)
             _buildTableView(orden)
@@ -741,25 +801,42 @@ class OrdenPageState extends State<OrdenPage> {
       },
       children: [
         _buildTableHeader(),
-        _buildTableRow('Información General', 'Orden', orden['nroOrden'] ?? 'N/A'),
+        _buildTableRow(
+            'Información General', 'Orden', orden['nroOrden'] ?? 'N/A'),
         _buildTableRow('', 'Clase orden', orden['claseOrden'] ?? 'N/A'),
-        _buildTableRow('', 'Equipo', '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
-        _buildTableRow('', 'Ubicación', orden['denominacionUbicacion'] ?? 'N/A'),
-        _buildTableRow('', 'Centro planif.', orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
-        _buildTableRow('', 'Área empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
-        _buildTableRow('Fechas y Tiempos', 'Fecha entrada', orden['fechaEntrada'] ?? 'N/A'),
-        _buildTableRow('', 'Inicio progr.', '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
-        _buildTableRow('', 'Inicio real', '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
-        _buildTableRow('', 'Fin real', '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
-        _buildTableRow('', 'Fecha refer.', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
-        _buildTableRow('Responsable', 'Puesto trabajo', orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
+        _buildTableRow('', 'Equipo',
+            '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
+        _buildTableRow(
+            '', 'Ubicación', orden['denominacionUbicacion'] ?? 'N/A'),
+        _buildTableRow('', 'Centro planif.',
+            orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
+        _buildTableRow(
+            '', 'Área empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
+        _buildTableRow('Fechas y Tiempos', 'Fecha entrada',
+            orden['fechaEntrada'] ?? 'N/A'),
+        _buildTableRow('', 'Inicio progr.',
+            '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
+        _buildTableRow('', 'Inicio real',
+            '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
+        _buildTableRow('', 'Fin real',
+            '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
+        _buildTableRow(
+            '', 'Fecha refer.', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
+        _buildTableRow('Responsable', 'Puesto trabajo',
+            orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
         _buildTableRow('', 'Emplazamiento', orden['emplazamiento'] ?? 'N/A'),
-        _buildTableRow('Costos', 'Costo planif.', '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
-        _buildTableRow('', 'Costo real', '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
-        _buildTableRow('Status', 'Sistema', _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
-        _buildTableRow('', 'Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
-        _buildTableRow('Clasificación', 'Campo clasif.', orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
-        _buildTableRow('', 'Actividad PM', orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
+        _buildTableRow('Costos', 'Costo planif.',
+            '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildTableRow('', 'Costo real',
+            '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildTableRow('Status', 'Sistema',
+            _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
+        _buildTableRow(
+            '', 'Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
+        _buildTableRow('Clasificación', 'Campo clasif.',
+            orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
+        _buildTableRow('', 'Actividad PM',
+            orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
       ],
     );
   }
@@ -777,7 +854,7 @@ class OrdenPageState extends State<OrdenPage> {
 
   TableRow _buildTableRow(String proceso, String campo, dynamic valor) {
     return TableRow(
-          children: [
+      children: [
         _buildTableCell(proceso),
         _buildTableCell(campo),
         _buildTableCell(_formatValue(valor)),
@@ -790,7 +867,7 @@ class OrdenPageState extends State<OrdenPage> {
       padding: const EdgeInsets.all(8),
       child: Text(
         text,
-              style: TextStyle(
+        style: TextStyle(
           fontSize: ResponsiveValue<double>(
             context,
             conditionalValues: [
@@ -810,23 +887,37 @@ class OrdenPageState extends State<OrdenPage> {
       children: [
         _buildDetailRow('Número de Orden', orden['nroOrden'] ?? 'N/A'),
         _buildDetailRow('Clase Orden', orden['claseOrden'] ?? 'N/A'),
-        _buildDetailRow('Equipo', '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
+        _buildDetailRow('Equipo',
+            '${orden['equipo'] ?? 'N/A'} - ${orden['denominacionEquipo'] ?? ''}'),
         _buildDetailRow('Ubicación', orden['denominacionUbicacion'] ?? 'N/A'),
-        _buildDetailRow('Centro Planificación', orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
-        _buildDetailRow('Área Empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
+        _buildDetailRow('Centro Planificación',
+            orden['responsable']?['centroPlanificacion'] ?? 'N/A'),
+        _buildDetailRow(
+            'Área Empresa', orden['responsable']?['areaEmpresa'] ?? 'N/A'),
         _buildDetailRow('Fecha Entrada', orden['fechaEntrada'] ?? 'N/A'),
-        _buildDetailRow('Inicio Programado', '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
-        _buildDetailRow('Inicio Real', '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
-        _buildDetailRow('Fin Real', '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
-        _buildDetailRow('Fecha Referencia', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
-        _buildDetailRow('Puesto Trabajo', orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
+        _buildDetailRow('Inicio Programado',
+            '${orden['fechas']?['inicioProgramado'] ?? 'N/A'} ${orden['horaInicioProgr'] ?? ''}'),
+        _buildDetailRow('Inicio Real',
+            '${orden['fechas']?['inicioReal'] ?? 'N/A'} ${orden['fechas']?['horaInicioReal'] ?? ''}'),
+        _buildDetailRow('Fin Real',
+            '${orden['fechas']?['finReal'] ?? 'N/A'} ${orden['fechas']?['horaFinReal'] ?? ''}'),
+        _buildDetailRow(
+            'Fecha Referencia', orden['fechas']?['fechaReferencia'] ?? 'N/A'),
+        _buildDetailRow('Puesto Trabajo',
+            orden['responsable']?['puestoTrabajoResponsable'] ?? 'N/A'),
         _buildDetailRow('Emplazamiento', orden['emplazamiento'] ?? 'N/A'),
-        _buildDetailRow('Costo Planificado', '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
-        _buildDetailRow('Costo Real', '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
-        _buildDetailRow('Status Sistema', _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
-        _buildDetailRow('Status Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
-        _buildDetailRow('Campo Clasificación', orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
-        _buildDetailRow('Actividad PM', orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
+        _buildDetailRow('Costo Planificado',
+            '${orden['costos']?['costePlan'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildDetailRow('Costo Real',
+            '${orden['costos']?['costeReal'] ?? '0'} ${orden['costos']?['moneda'] ?? ''}'),
+        _buildDetailRow('Status Sistema',
+            _formatStatusShort(orden['status']?['sistemaStatus'] ?? 'N/A')),
+        _buildDetailRow(
+            'Status Usuario', orden['status']?['usuarioStatus'] ?? 'N/A'),
+        _buildDetailRow('Campo Clasificación',
+            orden['clasificacion']?['campoClasificacion'] ?? 'N/A'),
+        _buildDetailRow('Actividad PM',
+            orden['clasificacion']?['claseActividadPM'] ?? 'N/A'),
       ],
     );
   }
@@ -834,7 +925,7 @@ class OrdenPageState extends State<OrdenPage> {
   // Función para formatear status largos a versión corta
   String _formatStatusShort(String status) {
     if (status.isEmpty || status == 'N/A') return status;
-    
+
     // Tomar solo los primeros 3 status codes si hay múltiples
     List<String> statusCodes = status.split(' ').take(3).toList();
     return statusCodes.join(' ');
@@ -844,11 +935,12 @@ class OrdenPageState extends State<OrdenPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
+        border:
+            Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
       ),
       child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Expanded(
             flex: 2,
             child: Text(

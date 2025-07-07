@@ -56,7 +56,8 @@ class ReportsMainPageState extends State<ReportsMainPage> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.orange.shade700, size: 20),
+                      Icon(Icons.info_outline,
+                          color: Colors.orange.shade700, size: 20),
                       const SizedBox(width: 8),
                       Text(
                         'Centro de Reportes',
@@ -121,6 +122,7 @@ class ReportsMainPageState extends State<ReportsMainPage> {
           ),
         ),
         const SizedBox(height: 12),
+        /*
         _buildReportCard(
           title: 'Reporte de Capacidades',
           subtitle: 'Análisis de capacidad por centro de trabajo',
@@ -142,6 +144,7 @@ class ReportsMainPageState extends State<ReportsMainPage> {
             MaterialPageRoute(builder: (context) => const EquipmentReportPage()),
           ),
         ),
+        */
       ],
     );
   }
@@ -192,7 +195,8 @@ class ReportsMainPageState extends State<ReportsMainPage> {
           color: Colors.orange,
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const EquipmentReportPage()),
+            MaterialPageRoute(
+                builder: (context) => const EquipmentReportPage()),
           ),
         ),
       ],
@@ -245,7 +249,8 @@ class ReportsMainPageState extends State<ReportsMainPage> {
           color: Colors.orange,
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const EquipmentReportPage()),
+            MaterialPageRoute(
+                builder: (context) => const EquipmentReportPage()),
           ),
         ),
       ],
@@ -288,9 +293,9 @@ class ReportsMainPageState extends State<ReportsMainPage> {
                 ),
                 child: Icon(icon, color: Colors.white, size: 24),
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Título
               Text(
                 title,
@@ -302,9 +307,9 @@ class ReportsMainPageState extends State<ReportsMainPage> {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              
+
               const SizedBox(height: 8),
-              
+
               // Subtítulo
               Text(
                 subtitle,
@@ -316,9 +321,9 @@ class ReportsMainPageState extends State<ReportsMainPage> {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              
+
               const SizedBox(height: 8),
-              
+
               // Indicador de acción
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -341,4 +346,4 @@ class ReportsMainPageState extends State<ReportsMainPage> {
       ),
     );
   }
-} 
+}
