@@ -25,7 +25,8 @@ class EquipmentPageState extends State<EquipmentPage> {
 
   Future<void> _loadEquipos() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/equipament.json');
+      final String response =
+          await rootBundle.loadString('assets/data/equipament.json');
       final data = await json.decode(response);
       setState(() {
         equipos = (data['equipos'] as List)
@@ -65,7 +66,7 @@ class EquipmentPageState extends State<EquipmentPage> {
         filteredEquipos = equipos;
       } else {
         filteredEquipos = equipos.where((equipo) {
-          return equipo.values.any((value) => 
+          return equipo.values.any((value) =>
               value.toString().toLowerCase().contains(query.toLowerCase()));
         }).toList();
       }
@@ -92,7 +93,7 @@ class EquipmentPageState extends State<EquipmentPage> {
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
-    
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -167,11 +168,11 @@ class EquipmentPageState extends State<EquipmentPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar equipos...' 
+                  hintText: isMobile
+                      ? 'Buscar equipos...'
                       : 'Buscar por código, descripción o ubicación...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -180,7 +181,8 @@ class EquipmentPageState extends State<EquipmentPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: Icon(Icons.search,
+                      color: Colors.orange.shade600, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
                           icon: Icon(Icons.clear, color: Colors.grey[600]),
@@ -215,8 +217,10 @@ class EquipmentPageState extends State<EquipmentPage> {
                         horizontal: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 12.0),
-                            const Condition.largerThan(name: MOBILE, value: 16.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 12.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 16.0),
                           ],
                         ).value,
                       ),
@@ -269,8 +273,9 @@ class EquipmentPageState extends State<EquipmentPage> {
 
   Widget _buildEquipoCard(Map<String, dynamic> equipo) {
     final statusColor = _getStatusColor(equipo['general']['estado']);
-    final criticidadColor = _getCriticidadColor(equipo['general']['criticidad']);
-    
+    final criticidadColor =
+        _getCriticidadColor(equipo['general']['criticidad']);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -312,80 +317,85 @@ class EquipmentPageState extends State<EquipmentPage> {
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 12),
               ),
-               // Información principal
-               ResponsiveRowColumnItem(
-                 child: Expanded(
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                         children: [
-                           Expanded(
-                             child: Text(
-                               equipo['equipo'],
-                               style: const TextStyle(
-                                 fontSize: 15,
-                                 fontWeight: FontWeight.w600,
-                                 color: Colors.black87,
-                               ),
-                             ),
-                           ),
-                           Row(
-                             children: [
-                               Container(
-                                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                 decoration: BoxDecoration(
-                                   color: criticidadColor,
-                                   borderRadius: BorderRadius.circular(4),
-                                 ),
-                                 child: Text(
-                                   equipo['general']['criticidad'],
-                                   style: const TextStyle(
-                                     color: Colors.white,
-                                     fontSize: 9,
-                                     fontWeight: FontWeight.w500,
-                                   ),
-                                 ),
-                               ),
-                               const SizedBox(width: 4),
-                               Container(
-                                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                 decoration: BoxDecoration(
-                                   color: statusColor,
-                                   borderRadius: BorderRadius.circular(4),
-                                 ),
-                                 child: Text(
-                                   equipo['general']['estado'],
-                                   style: const TextStyle(
-                                     color: Colors.white,
-                                     fontSize: 9,
-                                     fontWeight: FontWeight.w500,
-                                   ),
-                                 ),
-                               ),
-                             ],
-                           ),
-                         ],
-                       ),
-                       const SizedBox(height: 6),
-                       Text(
-                         equipo['descripcion'],
-                         style: TextStyle(
-                           fontSize: 12,
-                           color: Colors.grey[700],
-                           fontStyle: FontStyle.italic,
-                         ),
-                       ),
-                       const SizedBox(height: 8),
-                       _buildDetailRow('Tipo', equipo['general']['tipo_equipo']),
-                       _buildDetailRow('Ubicación', equipo['emplazamiento']['ubicacion_tecnica']),
-                       _buildDetailRow('Centro', equipo['organizacion']['centro_costo']),
-                       _buildDetailRow('Responsable', equipo['organizacion']['responsable']),
-                     ],
-                   ),
-                 ),
-               ),
+              // Información principal
+              ResponsiveRowColumnItem(
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              equipo['equipo'],
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: criticidadColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  equipo['general']['criticidad'],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: statusColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  equipo['general']['estado'],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        equipo['descripcion'],
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[700],
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      _buildDetailRow('Tipo', equipo['general']['tipo_equipo']),
+                      _buildDetailRow('Ubicación',
+                          equipo['emplazamiento']['ubicacion_tecnica']),
+                      _buildDetailRow(
+                          'Centro', equipo['organizacion']['centro_costo']),
+                      _buildDetailRow(
+                          'Responsable', equipo['organizacion']['responsable']),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -494,8 +504,9 @@ class EquipmentPageState extends State<EquipmentPage> {
         ],
         rows: filteredEquipos.map((equipo) {
           final statusColor = _getStatusColor(equipo['general']['estado']);
-          final criticidadColor = _getCriticidadColor(equipo['general']['criticidad']);
-          
+          final criticidadColor =
+              _getCriticidadColor(equipo['general']['criticidad']);
+
           return DataRow(
             onSelectChanged: (selected) {
               if (selected == true) {
@@ -559,7 +570,8 @@ class EquipmentPageState extends State<EquipmentPage> {
               ),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -576,7 +588,8 @@ class EquipmentPageState extends State<EquipmentPage> {
               ),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: criticidadColor,
                     borderRadius: BorderRadius.circular(4),
@@ -648,7 +661,8 @@ class EquipmentPageState extends State<EquipmentPage> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             width: ResponsiveValue<double>(
               context,
@@ -658,41 +672,43 @@ class EquipmentPageState extends State<EquipmentPage> {
               ],
             ).value,
             padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                      color: Colors.orange.shade600,
-                      size: 24,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Equipo ${equipo['equipo']}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        _getEquipmentIcon(equipo['general']['tipo_equipo']),
+                        color: Colors.orange.shade600,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Equipo ${equipo['equipo']}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                _buildDetailSection('General', equipo['general']),
-                _buildDetailSection('Emplazamiento', equipo['emplazamiento']),
-                _buildDetailSection('Organización', equipo['organizacion']),
-                _buildDetailSection('Estructura', equipo['estructura']),
-                _buildDetailSection('Garantías', equipo['garantias']),
-              ],
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildDetailSection('General', equipo['general']),
+                  _buildDetailSection('Emplazamiento', equipo['emplazamiento']),
+                  _buildDetailSection('Organización', equipo['organizacion']),
+                  _buildDetailSection('Estructura', equipo['estructura']),
+                  _buildDetailSection('Garantías', equipo['garantias']),
+                ],
+              ),
             ),
           ),
         );
@@ -714,33 +730,33 @@ class EquipmentPageState extends State<EquipmentPage> {
         ),
         const SizedBox(height: 8),
         ...data.entries.map((entry) => Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 120,
-                child: Text(
-                  _formatFieldName(entry.key),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: Text(
+                      _formatFieldName(entry.key),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  entry.value.toString(),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black87,
+                  Expanded(
+                    child: Text(
+                      entry.value.toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        )),
+            )),
         const SizedBox(height: 12),
       ],
     );
@@ -750,7 +766,7 @@ class EquipmentPageState extends State<EquipmentPage> {
     return fieldName
         .replaceAll('_', ' ')
         .split(' ')
-        .map((word) => word.isNotEmpty 
+        .map((word) => word.isNotEmpty
             ? word[0].toUpperCase() + word.substring(1).toLowerCase()
             : word)
         .join(' ');
