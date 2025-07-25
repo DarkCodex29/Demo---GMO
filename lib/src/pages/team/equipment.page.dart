@@ -173,11 +173,10 @@ class EquipmentPageState extends State<EquipmentPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search,
-                      color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterEquipos('');
                           },
