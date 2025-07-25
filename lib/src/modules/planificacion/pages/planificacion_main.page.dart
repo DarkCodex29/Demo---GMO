@@ -39,14 +39,7 @@ class PlanificacionMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryDarkTeal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -86,7 +79,7 @@ class PlanificacionMainPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
+                    color: AppColors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -246,7 +239,7 @@ class PlanificacionMainPage extends StatelessWidget {
         'title': 'Gestión de Capacidad',
         'description': 'Planificación y administración de recursos y capacidades de trabajo',
         'icon': Icons.assessment_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'count': 28,
         'page': const CapacityManagementPage(),
       },
@@ -255,7 +248,7 @@ class PlanificacionMainPage extends StatelessWidget {
         'title': 'Crear Orden de Trabajo',
         'description': 'Creación y configuración de nuevas órdenes de mantenimiento',
         'icon': Icons.add_circle_outline,
-        'color': AppColors.primaryMintGreen,
+        'color': AppColors.primaryMediumTeal,
         'count': 156,
         'page': const CreateOrderPage(),
       },

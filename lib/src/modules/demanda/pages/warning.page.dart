@@ -51,7 +51,7 @@ class AvisoPageState extends State<AvisoPage> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.secondaryCoralRed,
+            backgroundColor: AppColors.neutralTextGray,
           ),
         );
       }
@@ -178,19 +178,19 @@ class AvisoPageState extends State<AvisoPage> {
         'title': 'Prioridad Alta',
         'value': avisos.where((a) => a['averiaParada']?['prioridad'] == 'Alta').length.toString(),
         'icon': Icons.priority_high,
-        'color': AppColors.secondaryCoralRed,
+        'color': AppColors.neutralTextGray,
       },
       {
         'title': 'En Proceso',
         'value': avisos.where((a) => a['statusMensaje'] == 'En proceso').length.toString(),
         'icon': Icons.pending_actions,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.primaryMediumTeal,
       },
       {
         'title': 'Completados',
         'value': avisos.where((a) => a['statusMensaje'] == 'Completado').length.toString(),
         'icon': Icons.check_circle_outline,
-        'color': AppColors.secondaryAquaGreen,
+        'color': AppColors.primaryMintGreen,
       },
     ];
 

@@ -62,7 +62,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de capacidades: $e');
+      debugPrint('Error al cargar datos de capacidades: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -75,7 +75,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.secondaryCoralRed,
+            backgroundColor: AppColors.neutralTextGray,
           ),
         );
       }
@@ -99,11 +99,11 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   Color _getEstadoColor(String estado) {
     switch (estado.toLowerCase()) {
       case 'normal':
-        return AppColors.secondaryAquaGreen;
+        return AppColors.primaryMintGreen;
       case 'crítico':
-        return AppColors.secondaryCoralRed;
+        return AppColors.neutralTextGray;
       case 'sobrecargado':
-        return AppColors.secondaryCoralRed;
+        return AppColors.neutralTextGray;
       default:
         return AppColors.neutralTextGray;
     }
@@ -112,11 +112,11 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   Color _getPrioridadColor(String prioridad) {
     switch (prioridad.toLowerCase()) {
       case 'alta':
-        return AppColors.secondaryCoralRed;
+        return AppColors.neutralTextGray;
       case 'media':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'baja':
-        return AppColors.secondaryAquaGreen;
+        return AppColors.primaryMintGreen;
       default:
         return AppColors.neutralTextGray;
     }
@@ -173,7 +173,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.orange[100],
+                            color: AppColors.primaryDarkTeal.withOpacity(0.05),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(Icons.assessment, size: 24),
@@ -276,7 +276,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.orange[50],
+                color: AppColors.neutralLightBackground,
                 border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
               ),
               child: Row(
@@ -429,7 +429,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.orange,
+            color: AppColors.primaryDarkTeal,
           ),
         ),
         const SizedBox(height: 8),
@@ -440,8 +440,8 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
 
   Widget _buildInfoRow(String label, String value, {bool isNegative = false, bool isPositive = false}) {
     Color? valueColor;
-    if (isNegative) valueColor = Colors.red;
-    if (isPositive) valueColor = Colors.green;
+    if (isNegative) valueColor = AppColors.neutralTextGray;
+    if (isPositive) valueColor = AppColors.primaryMintGreen;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -572,7 +572,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: capacidad.containsKey('deficit') ? Colors.red : Colors.green,
+                          color: capacidad.containsKey('deficit') ? AppColors.neutralTextGray : AppColors.primaryMintGreen,
                         ),
                       ),
                   ],
@@ -600,7 +600,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue[100],
+                    color: AppColors.primaryDarkTeal.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.schedule, size: 20),
@@ -706,7 +706,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
         customTitle: 'Gestión de Capacidad',
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryDarkTeal),
           ),
         ),
       );

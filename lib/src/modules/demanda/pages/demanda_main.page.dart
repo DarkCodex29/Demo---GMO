@@ -40,14 +40,7 @@ class DemandaMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryDarkTeal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -87,7 +80,7 @@ class DemandaMainPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
+                    color: AppColors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -247,7 +240,7 @@ class DemandaMainPage extends StatelessWidget {
         'title': 'Avisos',
         'description': 'Gestión de avisos de mantenimiento y alertas de fallas en equipos',
         'icon': Icons.warning_outlined,
-        'color': AppColors.secondaryCoralRed,
+        'color': AppColors.primaryDarkTeal,
         'count': 45,
         'page': const AvisoPage(),
       },
@@ -256,7 +249,7 @@ class DemandaMainPage extends StatelessWidget {
         'title': 'Gestión de Demanda',
         'description': 'Procesamiento y análisis de demandas de mantenimiento',
         'icon': Icons.assignment_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryMediumTeal,
         'count': 32,
         'page': const DemandManagementPage(),
       },
@@ -265,7 +258,7 @@ class DemandaMainPage extends StatelessWidget {
         'title': 'Notificaciones',
         'description': 'Sistema de notificaciones y alertas del sistema de mantenimiento',
         'icon': Icons.notifications_outlined,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.primaryDarkTeal,
         'count': 12,
         'page': const NotificationPage(),
       },

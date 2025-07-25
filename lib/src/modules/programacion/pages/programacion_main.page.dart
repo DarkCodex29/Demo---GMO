@@ -41,14 +41,7 @@ class ProgramacionMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryDarkTeal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -88,7 +81,7 @@ class ProgramacionMainPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
+                    color: AppColors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -165,21 +158,21 @@ class ProgramacionMainPage extends StatelessWidget {
         'title': 'Programación de Recursos',
         'subtitle': 'Asignación y gestión de recursos',
         'icon': Icons.schedule_send,
-        'color': AppColors.primaryMintGreen,
+        'color': AppColors.primaryMediumTeal,
         'page': const SchedulingPage(),
       },
       {
         'title': 'Recursos Disponibles',
         'subtitle': 'Gestión de personal y equipamiento',
         'icon': Icons.group_work,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'page': const ResourcesPage(),
       },
       {
         'title': 'Carga de Trabajo',
         'subtitle': 'Análisis de capacidad y distribución',
         'icon': Icons.analytics,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.primaryMediumTeal,
         'page': const WorkloadPage(),
       },
     ];

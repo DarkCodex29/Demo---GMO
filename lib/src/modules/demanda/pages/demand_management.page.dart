@@ -51,7 +51,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.secondaryCoralRed,
+            backgroundColor: AppColors.neutralTextGray,
           ),
         );
       }
@@ -178,19 +178,19 @@ class DemandManagementPageState extends State<DemandManagementPage> {
         'title': 'Ruido',
         'value': demandas.where((d) => d['sintoma'] == 'Ruido').length.toString(),
         'icon': Icons.volume_up,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.primaryMediumTeal,
       },
       {
         'title': 'Vibración',
         'value': demandas.where((d) => d['sintoma'] == 'Vibración').length.toString(),
         'icon': Icons.vibration,
-        'color': AppColors.secondaryCoralRed,
+        'color': AppColors.neutralTextGray,
       },
       {
         'title': 'Temperatura',
         'value': demandas.where((d) => d['sintoma']?.toLowerCase()?.contains('temperatura') ?? false).length.toString(),
         'icon': Icons.thermostat,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
       },
     ];
 

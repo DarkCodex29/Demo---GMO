@@ -146,7 +146,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryDarkTealLight,
+                    color: AppColors.primaryDarkTeal.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -224,7 +224,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryMintGreenLight,
+                    color: AppColors.primaryMintGreen.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -293,7 +293,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.secondaryAquaGreen.withOpacity(0.1),
+                    color: AppColors.primaryMintGreen.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -422,7 +422,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
             icon: const Icon(Icons.save_outlined, size: 18),
             label: Text('Guardar Borrador',
                 style:
-                    AppTextStyles.bodyMedium.copyWith(color: AppColors.black)),
+                    AppTextStyles.bodyMedium.copyWith(color: AppColors.neutralTextGray)),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
@@ -494,12 +494,12 @@ class CreateOrderPageState extends State<CreateOrderPage> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
+                  color: AppColors.primaryMintGreen.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(
                   Icons.check_circle,
-                  color: AppColors.success,
+                  color: AppColors.primaryMintGreen,
                 ),
               ),
               const SizedBox(width: 12),
@@ -518,7 +518,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
+                  color: AppColors.primaryMintGreen.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -594,13 +594,13 @@ class CreateOrderPageState extends State<CreateOrderPage> {
           const Icon(
             Icons.check_circle,
             size: 16,
-            color: AppColors.success,
+            color: AppColors.primaryMintGreen,
           ),
           const SizedBox(width: 8),
           Text(
             text,
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.success,
+              color: AppColors.primaryMintGreen,
             ),
           ),
         ],

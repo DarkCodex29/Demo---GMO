@@ -203,13 +203,13 @@ class ResourcesPageState extends State<ResourcesPage>
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: AppColors.secondaryBrightBlue.withOpacity(0.1),
+              color: AppColors.primaryDarkTeal.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
-                color: AppColors.secondaryBrightBlue,
+                color: AppColors.primaryDarkTeal,
                 borderRadius: BorderRadius.circular(8),
               ),
               labelColor: AppColors.white,
@@ -273,7 +273,7 @@ class ResourcesPageState extends State<ResourcesPage>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.secondaryBrightBlue.withOpacity(0.1),
+        color: AppColors.primaryDarkTeal.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -284,14 +284,14 @@ class ResourcesPageState extends State<ResourcesPage>
                 Text(
                   '${filteredMaterials.length}',
                   style: AppTextStyles.heading4.copyWith(
-                    color: AppColors.secondaryBrightBlue,
+                    color: AppColors.primaryDarkTeal,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
                   'Total Items',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.secondaryBrightBlue,
+                    color: AppColors.primaryDarkTeal,
                   ),
                 ),
               ],
@@ -383,7 +383,7 @@ class ResourcesPageState extends State<ResourcesPage>
     final stockColor = cantidad < 10
         ? AppColors.secondaryCoralRed
         : cantidad < 50
-            ? AppColors.secondaryGoldenYellow
+            ? AppColors.primaryMediumTeal
             : AppColors.secondaryAquaGreen;
 
     return Container(
@@ -412,13 +412,13 @@ class ResourcesPageState extends State<ResourcesPage>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.secondaryBrightBlue.withOpacity(0.1),
+                    color: AppColors.primaryDarkTeal.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     material['codigo'] ?? '',
                     style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.secondaryBrightBlue,
+                      color: AppColors.primaryDarkTeal,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -796,7 +796,7 @@ class ResourcesPageState extends State<ResourcesPage>
       case 'operativo':
         return AppColors.secondaryAquaGreen;
       case 'mantenimiento':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'fuera de servicio':
         return AppColors.secondaryCoralRed;
       default:
@@ -809,7 +809,7 @@ class ResourcesPageState extends State<ResourcesPage>
       case 'alta':
         return AppColors.secondaryCoralRed;
       case 'media':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'baja':
         return AppColors.secondaryAquaGreen;
       default:
@@ -893,14 +893,14 @@ class ResourcesPageState extends State<ResourcesPage>
                 Text(
                   '$totalMiembros',
                   style: AppTextStyles.heading4.copyWith(
-                    color: AppColors.secondaryBrightBlue,
+                    color: AppColors.primaryDarkTeal,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
                   'Personal',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.secondaryBrightBlue,
+                    color: AppColors.primaryDarkTeal,
                   ),
                 ),
               ],
@@ -1110,7 +1110,7 @@ class ResourcesPageState extends State<ResourcesPage>
       case 'activo':
         return AppColors.secondaryAquaGreen;
       case 'en formación':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'inactivo':
         return AppColors.secondaryCoralRed;
       default:
@@ -1123,10 +1123,10 @@ class ResourcesPageState extends State<ResourcesPage>
       case 'mantenimiento mecánico':
         return AppColors.primaryDarkTeal;
       case 'mantenimiento eléctrico':
-        return AppColors.secondaryBrightBlue;
+        return AppColors.primaryDarkTeal;
       case 'instrumentación y control':
       case 'instrumentación':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'soldadura':
         return AppColors.secondaryCoralRed;
       default:
@@ -1139,7 +1139,7 @@ class ResourcesPageState extends State<ResourcesPage>
       case 'mañana':
         return AppColors.primaryMintGreen;
       case 'tarde':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'noche':
         return AppColors.primaryDarkTeal;
       default:

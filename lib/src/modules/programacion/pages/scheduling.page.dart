@@ -185,14 +185,14 @@ class SchedulingPageState extends State<SchedulingPage> {
                     Text(
                       '$activos',
                       style: AppTextStyles.heading4.copyWith(
-                        color: AppColors.secondaryAquaGreen,
+                        color: AppColors.primaryMintGreen,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       'Activos',
                       style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.secondaryAquaGreen,
+                        color: AppColors.primaryMintGreen,
                       ),
                     ),
                   ],
@@ -209,14 +209,14 @@ class SchedulingPageState extends State<SchedulingPage> {
                     Text(
                       '$turnoManana',
                       style: AppTextStyles.heading5.copyWith(
-                        color: AppColors.secondaryBrightBlue,
+                        color: AppColors.primaryDarkTeal,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       'Turno Mañana',
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.secondaryBrightBlue,
+                        color: AppColors.primaryDarkTeal,
                       ),
                     ),
                   ],
@@ -228,14 +228,14 @@ class SchedulingPageState extends State<SchedulingPage> {
                     Text(
                       '$turnoTarde',
                       style: AppTextStyles.heading5.copyWith(
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryMediumTeal,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       'Turno Tarde',
                       style: AppTextStyles.labelSmall.copyWith(
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryMediumTeal,
                       ),
                     ),
                   ],
@@ -431,9 +431,9 @@ class SchedulingPageState extends State<SchedulingPage> {
       case 'mantenimiento mecánico':
         return AppColors.primaryDarkTeal;
       case 'mantenimiento eléctrico':
-        return AppColors.secondaryBrightBlue;
+        return AppColors.primaryDarkTeal;
       case 'instrumentación':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'soldadura':
         return AppColors.secondaryCoralRed;
       default:
@@ -444,11 +444,11 @@ class SchedulingPageState extends State<SchedulingPage> {
   Color _getEstadoColor(String? estado) {
     switch (estado?.toLowerCase()) {
       case 'activo':
-        return AppColors.secondaryAquaGreen;
+        return AppColors.primaryMintGreen;
       case 'inactivo':
         return AppColors.secondaryCoralRed;
       case 'mantenimiento':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       default:
         return AppColors.neutralTextGray;
     }

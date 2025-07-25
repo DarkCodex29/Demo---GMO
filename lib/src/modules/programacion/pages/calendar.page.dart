@@ -199,8 +199,11 @@ class CalendarPageState extends State<CalendarPage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.primaryDarkTeal.withOpacity(0.1),
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.neutralMediumBorder.withOpacity(0.3),
+        ),
       ),
       child: Row(
         children: [
@@ -217,11 +220,16 @@ class CalendarPageState extends State<CalendarPage> {
                 Text(
                   'Total Órdenes',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.primaryDarkTeal,
+                    color: AppColors.neutralTextGray,
                   ),
                 ),
               ],
             ),
+          ),
+          Container(
+            width: 1,
+            height: 40,
+            color: AppColors.neutralMediumBorder.withOpacity(0.3),
           ),
           Expanded(
             child: Column(
@@ -229,14 +237,14 @@ class CalendarPageState extends State<CalendarPage> {
                 Text(
                   '$thisWeek',
                   style: AppTextStyles.heading4.copyWith(
-                    color: AppColors.primaryMintGreen,
+                    color: AppColors.primaryMediumTeal,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
                   'Esta Semana',
                   style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.primaryMintGreen,
+                    color: AppColors.neutralTextGray,
                   ),
                 ),
               ],
@@ -277,7 +285,7 @@ class CalendarPageState extends State<CalendarPage> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: AppColors.secondaryBrightBlue.withOpacity(0.1),
+            color: AppColors.neutralLightBackground,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
@@ -285,13 +293,13 @@ class CalendarPageState extends State<CalendarPage> {
               const Icon(
                 Icons.calendar_today,
                 size: 16,
-                color: AppColors.secondaryBrightBlue,
+                color: AppColors.primaryDarkTeal,
               ),
               const SizedBox(width: 8),
               Text(
                 fecha,
                 style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.secondaryBrightBlue,
+                  color: AppColors.neutralTextGray,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -299,7 +307,7 @@ class CalendarPageState extends State<CalendarPage> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: AppColors.secondaryBrightBlue,
+                  color: AppColors.primaryDarkTeal,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -436,7 +444,7 @@ class CalendarPageState extends State<CalendarPage> {
       case 'ZPM2':
         return {
           'label': 'Predictivo',
-          'color': AppColors.secondaryBrightBlue,
+          'color': AppColors.primaryMediumTeal,
         };
       default:
         return {

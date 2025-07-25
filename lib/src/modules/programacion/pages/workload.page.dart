@@ -69,7 +69,7 @@ class WorkloadPageState extends State<WorkloadPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            color: AppColors.secondaryGoldenYellow,
+            color: AppColors.primaryMediumTeal,
           ),
         ),
       );
@@ -111,7 +111,7 @@ class WorkloadPageState extends State<WorkloadPage> {
                   ),
                   prefixIcon: const Icon(
                     Icons.search,
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.primaryMediumTeal,
                     size: 24,
                   ),
                   suffixIcon: searchQuery.isNotEmpty
@@ -154,7 +154,7 @@ class WorkloadPageState extends State<WorkloadPage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.secondaryGoldenYellow.withOpacity(0.1),
+        color: AppColors.primaryMediumTeal.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -167,14 +167,14 @@ class WorkloadPageState extends State<WorkloadPage> {
                     Text(
                       '${filteredCapacidades.length}',
                       style: AppTextStyles.heading4.copyWith(
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryMediumTeal,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       'Total Puestos',
                       style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryMediumTeal,
                       ),
                     ),
                   ],
@@ -186,14 +186,14 @@ class WorkloadPageState extends State<WorkloadPage> {
                     Text(
                       '$normales',
                       style: AppTextStyles.heading4.copyWith(
-                        color: AppColors.secondaryAquaGreen,
+                        color: AppColors.primaryMintGreen,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       'Normales',
                       style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.secondaryAquaGreen,
+                        color: AppColors.primaryMintGreen,
                       ),
                     ),
                   ],
@@ -232,14 +232,14 @@ class WorkloadPageState extends State<WorkloadPage> {
               children: [
                 const Icon(
                   Icons.analytics,
-                  color: AppColors.secondaryBrightBlue,
+                  color: AppColors.primaryDarkTeal,
                   size: 20,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Utilización Promedio: $utilizacionPromedio%',
                   style: AppTextStyles.bodyLarge.copyWith(
-                    color: AppColors.secondaryBrightBlue,
+                    color: AppColors.primaryDarkTeal,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -431,7 +431,7 @@ class WorkloadPageState extends State<WorkloadPage> {
                 decoration: BoxDecoration(
                   color: capacidad.containsKey('deficit') 
                       ? AppColors.secondaryCoralRed.withOpacity(0.1)
-                      : AppColors.secondaryAquaGreen.withOpacity(0.1),
+                      : AppColors.primaryMintGreen.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Row(
@@ -443,7 +443,7 @@ class WorkloadPageState extends State<WorkloadPage> {
                       size: 16,
                       color: capacidad.containsKey('deficit') 
                           ? AppColors.secondaryCoralRed
-                          : AppColors.secondaryAquaGreen,
+                          : AppColors.primaryMintGreen,
                     ),
                     const SizedBox(width: 6),
                     Text(
@@ -453,7 +453,7 @@ class WorkloadPageState extends State<WorkloadPage> {
                       style: AppTextStyles.labelMedium.copyWith(
                         color: capacidad.containsKey('deficit') 
                             ? AppColors.secondaryCoralRed
-                            : AppColors.secondaryAquaGreen,
+                            : AppColors.primaryMintGreen,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -490,7 +490,7 @@ class WorkloadPageState extends State<WorkloadPage> {
   Color _getEstadoColor(String estado) {
     switch (estado.toLowerCase()) {
       case 'normal':
-        return AppColors.secondaryAquaGreen;
+        return AppColors.primaryMintGreen;
       case 'crítico':
       case 'sobrecargado':
         return AppColors.secondaryCoralRed;
@@ -506,8 +506,8 @@ class WorkloadPageState extends State<WorkloadPage> {
 
   Color _getUtilizacionColor(double value) {
     if (value >= 90) return AppColors.secondaryCoralRed;
-    if (value >= 75) return AppColors.secondaryGoldenYellow;
+    if (value >= 75) return AppColors.primaryMediumTeal;
     if (value >= 50) return AppColors.primaryMintGreen;
-    return AppColors.secondaryAquaGreen;
+    return AppColors.primaryMintGreen;
   }
 }

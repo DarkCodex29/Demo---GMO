@@ -58,11 +58,11 @@ class NotificationPageState extends State<NotificationPage> {
   Color _getNotificationColor(String type) {
     switch (type) {
       case 'order':
-        return AppColors.secondaryBrightBlue;
+        return AppColors.primaryDarkTeal;
       case 'capacity':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'failure':
-        return AppColors.secondaryCoralRed;
+        return AppColors.neutralTextGray;
       default:
         return AppColors.neutralTextGray;
     }
@@ -180,7 +180,7 @@ class NotificationPageState extends State<NotificationPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isRead ? Colors.grey.shade300 : notificationColor,
+            color: isRead ? AppColors.neutralMediumBorder.withOpacity(0.5) : notificationColor,
             width: isRead ? 0.5 : 2,
           ),
         ),
@@ -206,7 +206,7 @@ class NotificationPageState extends State<NotificationPage> {
             notification['title'] ?? 'Sin t�tulo',
             style: TextStyle(
               fontWeight: isRead ? FontWeight.w500 : FontWeight.w700,
-              color: isRead ? Colors.grey[700] : Colors.black87,
+              color: isRead ? AppColors.neutralTextGray.withOpacity(0.7) : AppColors.neutralTextGray,
             ),
           ),
           subtitle: Column(
@@ -216,7 +216,7 @@ class NotificationPageState extends State<NotificationPage> {
               Text(
                 notification['message'] ?? 'Sin mensaje',
                 style: TextStyle(
-                  color: isRead ? Colors.grey[600] : Colors.black54,
+                  color: isRead ? AppColors.neutralTextGray.withOpacity(0.6) : AppColors.neutralTextGray.withOpacity(0.8),
                   fontSize: 13,
                 ),
                 maxLines: 2,
@@ -289,13 +289,13 @@ class NotificationPageState extends State<NotificationPage> {
   Color _getPriorityColor(String? priority) {
     switch (priority?.toLowerCase()) {
       case 'critica':
-        return AppColors.secondaryCoralRed;
+        return AppColors.neutralTextGray;
       case 'alta':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'media':
-        return AppColors.secondaryBrightBlue;
+        return AppColors.primaryDarkTeal;
       case 'baja':
-        return AppColors.secondaryAquaGreen;
+        return AppColors.primaryMintGreen;
       default:
         return AppColors.neutralTextGray;
     }
@@ -328,7 +328,7 @@ class NotificationPageState extends State<NotificationPage> {
               'Mensaje:',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Colors.grey[700],
+                color: AppColors.neutralTextGray,
               ),
             ),
             const SizedBox(height: 8),
@@ -338,7 +338,7 @@ class NotificationPageState extends State<NotificationPage> {
               'Fecha y hora:',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Colors.grey[700],
+                color: AppColors.neutralTextGray,
               ),
             ),
             const SizedBox(height: 4),
@@ -348,7 +348,7 @@ class NotificationPageState extends State<NotificationPage> {
               'Prioridad:',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Colors.grey[700],
+                color: AppColors.neutralTextGray,
               ),
             ),
             const SizedBox(height: 4),
