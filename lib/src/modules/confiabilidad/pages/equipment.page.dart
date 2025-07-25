@@ -128,11 +128,11 @@ class EquipmentPageState extends State<EquipmentPage> {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: Colors.grey.shade300,
+                    color: AppColors.neutralTextGray,
                     blurRadius: 6,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
@@ -152,7 +152,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                       ? 'Buscar equipos...'
                       : 'Buscar por código, descripción o ubicación...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500],
+                    color: AppColors.neutralTextGray,
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -219,19 +219,19 @@ class EquipmentPageState extends State<EquipmentPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.precision_manufacturing_outlined,
             size: 64,
-            color: Colors.grey[400],
+            color: AppColors.neutralTextGray,
           ),
           const SizedBox(height: 16),
           Text(
             searchQuery.isEmpty
                 ? 'No hay equipos disponibles'
                 : 'No se encontraron equipos',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
-              color: Colors.grey[600],
+              color: AppColors.neutralTextGray,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -259,12 +259,12 @@ class EquipmentPageState extends State<EquipmentPage> {
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
+        border: Border.all(color: AppColors.neutralTextGray),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: AppColors.neutralTextGray,
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -310,7 +310,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black87,
+                                color: AppColors.neutralTextGray,
                               ),
                             ),
                           ),
@@ -356,9 +356,9 @@ class EquipmentPageState extends State<EquipmentPage> {
                       const SizedBox(height: 6),
                       Text(
                         equipo['descripcion'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
-                          color: Colors.grey[700],
+                          color: AppColors.neutralTextGray,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -390,9 +390,9 @@ class EquipmentPageState extends State<EquipmentPage> {
             width: 80,
             child: Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 11,
-                color: Colors.grey[600],
+                color: AppColors.neutralTextGray,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -402,7 +402,7 @@ class EquipmentPageState extends State<EquipmentPage> {
               value,
               style: const TextStyle(
                 fontSize: 11,
-                color: Colors.black87,
+                color: AppColors.neutralTextGray,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -418,7 +418,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       child: DataTable(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: AppColors.neutralTextGray),
         ),
         columnSpacing: ResponsiveValue<double>(
           context,
@@ -428,7 +428,7 @@ class EquipmentPageState extends State<EquipmentPage> {
           ],
         ).value,
         dataRowMaxHeight: 60,
-        headingRowColor: WidgetStateProperty.all(Colors.grey.shade50),
+        headingRowColor: WidgetStateProperty.all(AppColors.neutralTextGray),
         columns: const [
           DataColumn(
             label: Text(
@@ -496,7 +496,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   children: [
                     Icon(
                       _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                      color: AppColors.secondaryGoldenYellow,
+                      color: AppColors.primaryMediumTeal,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -608,13 +608,13 @@ class EquipmentPageState extends State<EquipmentPage> {
   Color _getStatusColor(String estado) {
     switch (estado.toLowerCase()) {
       case 'operativo':
-        return Colors.green;
+        return AppColors.primaryMintGreen;
       case 'en mantenimiento':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'fuera de servicio':
         return Colors.red;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 
@@ -623,11 +623,11 @@ class EquipmentPageState extends State<EquipmentPage> {
       case 'alta':
         return Colors.red;
       case 'media':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'baja':
-        return Colors.green;
+        return AppColors.primaryMintGreen;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 
@@ -656,7 +656,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                     children: [
                       Icon(
                         _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryMediumTeal,
                         size: 24,
                       ),
                       const SizedBox(width: 12),
@@ -666,7 +666,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black87,
+                            color: AppColors.neutralTextGray,
                           ),
                         ),
                       ),
@@ -700,7 +700,7 @@ class EquipmentPageState extends State<EquipmentPage> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: AppColors.secondaryGoldenYellow,
+            color: AppColors.primaryMediumTeal,
           ),
         ),
         const SizedBox(height: 8),
@@ -713,9 +713,9 @@ class EquipmentPageState extends State<EquipmentPage> {
                     width: 120,
                     child: Text(
                       _formatFieldName(entry.key),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.grey[600],
+                        color: AppColors.neutralTextGray,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -725,7 +725,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                       entry.value.toString(),
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.black87,
+                        color: AppColors.neutralTextGray,
                       ),
                     ),
                   ),

@@ -53,7 +53,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.neutralTextGray,
           ),
         );
       }
@@ -96,7 +96,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
         child: Center(
           child: CircularProgressIndicator(
             valueColor:
-                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
+                AlwaysStoppedAnimation<Color>(AppColors.primaryMediumTeal),
           ),
         ),
       );
@@ -141,11 +141,11 @@ class _StrategiesPageState extends State<StrategiesPage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: Colors.grey.shade300,
+                    color: AppColors.neutralTextGray,
                     blurRadius: 6,
-                    offset: const Offset(0, 2),
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
@@ -165,7 +165,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                       ? 'Buscar procesos...'
                       : 'Buscar por proceso, campo o valor...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500],
+                    color: AppColors.neutralTextGray,
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -207,10 +207,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.stacked_line_chart_outlined,
                             size: 64,
-                            color: Colors.grey[400],
+                            color: AppColors.neutralTextGray,
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -227,7 +227,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                                       name: MOBILE, value: 18.0),
                                 ],
                               ).value,
-                              color: Colors.grey[600],
+                              color: AppColors.neutralTextGray,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -266,7 +266,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
     final tipo = proceso['tipo']?.toString() ?? '';
     final isPrincipal = tipo == 'proceso_principal';
     final statusColor =
-        isPrincipal ? AppColors.secondaryGoldenYellow : Colors.blue;
+        isPrincipal ? AppColors.primaryMediumTeal : AppColors.primaryDarkTeal;
     final statusIcon = isPrincipal ? Icons.engineering : Icons.storage;
 
     return Container(
@@ -282,14 +282,14 @@ class _StrategiesPageState extends State<StrategiesPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: AppColors.neutralTextGray,
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
-        border: Border.all(color: Colors.grey.shade300, width: 0.5),
+        border: Border.all(color: AppColors.neutralTextGray, width: 0.5),
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -297,10 +297,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
           expansionTileTheme: const ExpansionTileThemeData(
             backgroundColor: Colors.transparent,
             collapsedBackgroundColor: Colors.transparent,
-            iconColor: AppColors.secondaryGoldenYellow,
-            textColor: AppColors.secondaryGoldenYellow,
-            collapsedTextColor: Colors.black87,
-            collapsedIconColor: AppColors.secondaryGoldenYellow,
+            iconColor: AppColors.primaryMediumTeal,
+            textColor: AppColors.primaryMediumTeal,
+            collapsedTextColor: AppColors.neutralTextGray,
+            collapsedIconColor: AppColors.primaryMediumTeal,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
@@ -365,7 +365,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                           ],
                         ).value,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: AppColors.neutralTextGray,
                         height: 1.2,
                       ),
                       maxLines: 2,
@@ -391,7 +391,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                                       name: MOBILE, value: 12.0),
                                 ],
                               ).value,
-                              color: Colors.grey[600],
+                              color: AppColors.neutralTextGray,
                               fontWeight: FontWeight.w400,
                             ),
                             maxLines: 1,
@@ -487,9 +487,9 @@ class _StrategiesPageState extends State<StrategiesPage> {
         ).value,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: AppColors.neutralTextGray,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.neutralTextGray),
       ),
       child: Column(
         children: [
@@ -515,7 +515,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                       ],
                     ).value,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: AppColors.neutralTextGray,
                   ),
                 ),
               ),
@@ -542,7 +542,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
 
   Widget _buildTableView(List<Map<String, dynamic>> campos) {
     return Table(
-      border: TableBorder.all(color: Colors.grey.shade300, width: 0.5),
+      border: TableBorder.all(color: AppColors.neutralTextGray, width: 0.5),
       columnWidths: const {
         0: FlexColumnWidth(2),
         1: FlexColumnWidth(3),
@@ -560,7 +560,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
 
   TableRow _buildTableHeader() {
     return TableRow(
-      decoration: BoxDecoration(color: Colors.grey.shade100),
+      decoration: const BoxDecoration(color: AppColors.neutralTextGray),
       children: [
         _buildTableCell('Campo', isHeader: true),
         _buildTableCell('Valor', isHeader: true),
@@ -593,7 +593,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
             ],
           ).value,
           fontWeight: isHeader ? FontWeight.w600 : FontWeight.w400,
-          color: isHeader ? Colors.black87 : Colors.black54,
+          color: isHeader ? AppColors.neutralTextGray : Colors.black54,
         ),
       ),
     );
@@ -613,9 +613,9 @@ class _StrategiesPageState extends State<StrategiesPage> {
   Widget _buildDetailRow(String label, String value, String referencia) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6),
-      decoration: BoxDecoration(
-        border:
-            Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
+      decoration: const BoxDecoration(
+        border: Border(
+            bottom: BorderSide(color: AppColors.neutralTextGray, width: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -636,7 +636,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                       ],
                     ).value,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+                    color: AppColors.neutralTextGray,
                   ),
                 ),
               ),
@@ -674,7 +674,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                         const Condition.largerThan(name: MOBILE, value: 11.0),
                       ],
                     ).value,
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.primaryMediumTeal,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

@@ -46,14 +46,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryDarkTeal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -93,7 +86,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
+                    color: AppColors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -262,7 +255,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Ubicaciones Técnicas',
         'description': 'Jerarquía de ubicaciones y estructura organizacional de planta',
         'icon': Icons.location_on_outlined,
-        'color': AppColors.primaryMintGreen,
+        'color': AppColors.primaryMediumTeal,
         'count': 89,
         'page': const LocationsPage(),
       },
@@ -271,7 +264,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Clases',
         'description': 'Clasificación y categorización de equipos por tipos y características',
         'icon': Icons.category_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'count': 24,
         'page': const ClasesPage(),
       },
@@ -280,7 +273,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Características',
         'description': 'Atributos técnicos y parámetros operacionales de equipos',
         'icon': Icons.tune,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.primaryMediumTeal,
         'count': 156,
         'page': const CaracteristicsPage(),
       },
@@ -298,7 +291,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Puestos de Trabajo',
         'description': 'Centros de trabajo y responsabilidades del personal técnico',
         'icon': Icons.work_outline,
-        'color': AppColors.secondaryAquaGreen,
+        'color': AppColors.primaryDarkTeal,
         'count': 18,
         'page': const JobPage(),
       },
@@ -307,7 +300,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Estrategias de Mantenimiento',
         'description': 'Planes y metodologías para el mantenimiento preventivo y correctivo',
         'icon': Icons.psychology_outlined,
-        'color': AppColors.secondaryCoralRed,
+        'color': AppColors.primaryMediumTeal,
         'count': 15,
         'page': const StrategiesPage(),
       },
@@ -316,7 +309,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
         'title': 'Ciclos de Mantenimiento',
         'description': 'Programación temporal y frecuencias de mantenimiento',
         'icon': Icons.refresh,
-        'color': AppColors.primaryLightGreen,
+        'color': AppColors.primaryDarkTeal,
         'count': 32,
         'page': const CyclePage(),
       },

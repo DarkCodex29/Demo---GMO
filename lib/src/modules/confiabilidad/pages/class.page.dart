@@ -51,7 +51,7 @@ class ClasesPageState extends State<ClasesPage> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.secondaryCoralRed,
+            backgroundColor: AppColors.neutralTextGray,
           ),
         );
       }
