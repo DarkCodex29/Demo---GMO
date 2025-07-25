@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:demo/src/shared/layouts/main_layout.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -37,7 +35,7 @@ class NotificationPageState extends State<NotificationPage> {
         {
           'id': 'NOT-002',
           'title': 'Alerta de capacidad',
-          'message': 'La capacidad de trabajo está al 85% esta semana',
+          'message': 'La capacidad de trabajo estï¿½ al 85% esta semana',
           'type': 'capacity',
           'timestamp': '2024-01-15 12:15:00',
           'isRead': true,
@@ -153,7 +151,7 @@ class NotificationPageState extends State<NotificationPage> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Las notificaciones aparecerán aquí cuando estén disponibles',
+            'Las notificaciones aparecerï¿½n aquï¿½ cuando estï¿½n disponibles',
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[500],
@@ -203,7 +201,7 @@ class NotificationPageState extends State<NotificationPage> {
             ),
           ),
           title: Text(
-            notification['title'] ?? 'Sin título',
+            notification['title'] ?? 'Sin tï¿½tulo',
             style: TextStyle(
               fontWeight: isRead ? FontWeight.w500 : FontWeight.w700,
               color: isRead ? Colors.grey[700] : Colors.black87,
@@ -314,7 +312,7 @@ class NotificationPageState extends State<NotificationPage> {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                notification['title'] ?? 'Sin título',
+                notification['title'] ?? 'Sin tï¿½tulo',
                 style: const TextStyle(fontSize: 18),
               ),
             ),

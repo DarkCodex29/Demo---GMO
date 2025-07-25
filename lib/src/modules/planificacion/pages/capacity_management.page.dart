@@ -711,7 +711,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
       );
     }
 
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    //final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     
     return MainLayout(
       currentModule: 'planificacion',

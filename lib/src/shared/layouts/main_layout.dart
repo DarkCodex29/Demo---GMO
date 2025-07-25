@@ -29,11 +29,11 @@ class MainLayout extends StatefulWidget {
 }
 
 class MainLayoutState extends State<MainLayout> {
-  final bool _isDrawerOpen = false;
+  // final bool _isDrawerOpen = false; // Not used currently
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    // final isDesktop = ResponsiveBreakpoints.of(context).isDesktop; // Not used currently
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 

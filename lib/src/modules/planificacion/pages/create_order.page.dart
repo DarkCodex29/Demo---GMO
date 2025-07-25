@@ -61,7 +61,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
   @override
   Widget build(BuildContext context) {
     final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
-    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    //final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return MainLayout(

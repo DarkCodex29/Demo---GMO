@@ -131,7 +131,7 @@ class StockReportPageState extends State<StockReportPage> {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    //final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Scaffold(
       

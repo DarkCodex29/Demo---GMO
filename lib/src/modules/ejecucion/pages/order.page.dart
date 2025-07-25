@@ -415,7 +415,7 @@ class OrdenPageState extends State<OrdenPage> {
     final status = orden['statusMensaje']?.toString() ?? '';
     final statusColor = _getStatusColor(status);
     final statusIcon = _getStatusIcon(status);
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    //final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Container(
       margin: EdgeInsets.only(
