@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:demo/src/app.dart';
-import 'package:demo/src/services/notification_service.dart';
+import 'package:demo/src/core/services/notification_service.dart';
 import 'package:demo/src/theme/app_theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 

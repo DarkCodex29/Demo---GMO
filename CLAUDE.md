@@ -237,3 +237,6 @@ flutter test test/widget_test.dart  # Run specific test file
 - Notifications configured primarily for Android
 - Web build targets Chrome for optimal performance
 - Windows build includes native window management
+
+## Memories
+- This is a demo project for an Industrial Maintenance Management System created for GMO by Gianpierre Mio
