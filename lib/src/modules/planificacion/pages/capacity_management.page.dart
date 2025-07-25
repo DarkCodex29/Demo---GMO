@@ -491,10 +491,10 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
+                        color: AppColors.primaryDarkTeal,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.assessment, size: 20),
+                      child: const Icon(Icons.assessment, size: 20, color: Colors.white),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -717,6 +717,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
     return MainLayout(
       currentModule: 'planificacion',
       customTitle: 'Gestión de Capacidad',
+      showBackButton: true,
       child: Column(
         children: [
           // Barra de búsqueda

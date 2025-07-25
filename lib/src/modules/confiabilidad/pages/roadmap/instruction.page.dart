@@ -49,14 +49,14 @@ class InstructionPageState extends State<InstructionPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline),
+                const Icon(Icons.error_outline, color: AppColors.white),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.secondaryCoralRed,
           ),
         );
       }
@@ -249,7 +249,7 @@ class InstructionPageState extends State<InstructionPage> {
                     color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.assignment, size: 24),
+                  child: const Icon(Icons.assignment, color: AppColors.primaryDarkTeal, size: 24),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
@@ -510,7 +510,7 @@ class InstructionPageState extends State<InstructionPage> {
       case 'vigente':
         return Colors.green;
       case 'en revisión':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'obsoleto':
         return Colors.red;
       default:

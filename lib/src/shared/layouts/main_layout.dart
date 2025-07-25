@@ -314,7 +314,7 @@ class MainLayoutState extends State<MainLayout> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColors.primaryDarkTealLight,
+                  backgroundColor: AppColors.primaryDarkTeal.withOpacity(0.1),
                   child: Text(
                     'GM',
                     style: AppTextStyles.labelMedium.copyWith(
@@ -388,7 +388,7 @@ class MainLayoutState extends State<MainLayout> {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: widget.currentModule == module['id']
-                ? AppColors.primaryDarkTealLight
+                ? AppColors.primaryDarkTeal.withOpacity(0.1)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),
@@ -429,7 +429,7 @@ class MainLayoutState extends State<MainLayout> {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryDarkTealLight : null,
+          color: isSelected ? AppColors.primaryDarkTeal.withOpacity(0.1) : null,
           borderRadius: BorderRadius.circular(8),
         ),
         child: ListTile(
@@ -575,8 +575,8 @@ class MainLayoutState extends State<MainLayout> {
         // Por ahora llevamos a capacity management
         return const CapacityManagementPage();
       case 'ejecucion':
-        // Llevamos a órdenes de trabajo
-        return const OrdenPage();
+        // Llevamos a la página principal del módulo Ejecución
+        return const EjecucionMainPage();
       case 'seguimiento_control':
         // Llevamos a reportes principales
         return const ReportsMainPage();
@@ -712,7 +712,7 @@ class MainLayoutState extends State<MainLayout> {
           children: [
             ListTile(
               leading: CircleAvatar(
-                backgroundColor: AppColors.primaryDarkTealLight,
+                backgroundColor: AppColors.primaryDarkTeal.withOpacity(0.1),
                 child: Text(
                   'GM',
                   style: AppTextStyles.labelLarge.copyWith(

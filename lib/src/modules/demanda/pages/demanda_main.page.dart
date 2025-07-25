@@ -17,209 +17,265 @@ class DemandaMainPage extends StatelessWidget {
 
     return MainLayout(
       currentModule: 'demanda',
-      customTitle: 'Demanda',
-      showBackButton: true,
-      child: Padding(
-        padding: EdgeInsets.all(isMobile ? 12 : 16),
+      showBackButton: false,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(isMobile ? 16 : 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.secondaryCoralRed.withOpacity(0.8),
-                    AppColors.secondaryGoldenYellow.withOpacity(0.6),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: AppColors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.notification_important_outlined,
-                          color: AppColors.white,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Demanda',
-                              style: AppTextStyles.heading4.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              'Gestión de avisos y notificaciones',
-                              style: AppTextStyles.bodyMedium.copyWith(
-                                color: AppColors.white.withOpacity(0.9),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(
-              'Módulos de Demanda',
-              style: AppTextStyles.heading5.copyWith(
-                color: AppColors.neutralTextGray,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: ResponsiveRowColumn(
-                layout: isMobile
-                    ? ResponsiveRowColumnType.COLUMN
-                    : ResponsiveRowColumnType.ROW,
-                rowSpacing: 16,
-                rowCrossAxisAlignment: CrossAxisAlignment.start,
-                children: _buildSectionCards(context, isMobile, isTablet),
-              ),
-            ),
+            // Header section
+            _buildHeader(isMobile),
+            SizedBox(height: isMobile ? 20 : 32),
+
+            // Sections grid
+            _buildSectionsGrid(context, isMobile, isTablet),
           ],
         ),
       ),
     );
   }
 
-  List<ResponsiveRowColumnItem> _buildSectionCards(
-      BuildContext context, bool isMobile, bool isTablet) {
-    final sections = [
-      {
-        'title': 'Gestión de Demanda',
-        'subtitle': 'Procesamiento de avisos y demandas',
-        'icon': Icons.assignment_outlined,
-        'color': AppColors.secondaryBrightBlue,
-        'page': const DemandManagementPage(),
-      },
-      {
-        'title': 'Notificaciones',
-        'subtitle': 'Sistema de notificaciones y alertas',
-        'icon': Icons.notifications_outlined,
-        'color': AppColors.secondaryGoldenYellow,
-        'page': const NotificationPage(),
-      },
-      {
-        'title': 'Avisos',
-        'subtitle': 'Gestión de avisos de mantenimiento',
-        'icon': Icons.warning_outlined,
-        'color': AppColors.secondaryCoralRed,
-        'page': const AvisoPage(),
-      },
-    ];
-
-    return sections.map((section) {
-      return ResponsiveRowColumnItem(
-        rowFlex: isMobile ? 1 : (isTablet ? 1 : 1),
-        child: Container(
-          margin: EdgeInsets.only(bottom: isMobile ? 16 : 0),
-          child: _buildSectionCard(context, section, isMobile),
+  Widget _buildHeader(bool isMobile) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(isMobile ? 20 : 32),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            AppColors.primaryDarkTeal,
+            AppColors.primaryMediumTeal,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-      );
-    }).toList();
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Demanda',
+                      style: AppTextStyles.heading3.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Gestión de avisos, notificaciones y demandas de mantenimiento',
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        color: AppColors.white.withOpacity(0.9),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Administra avisos de fallas, procesa demandas y gestiona notificaciones del sistema',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!isMobile)
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.notification_important_outlined,
+                    size: 48,
+                    color: AppColors.white,
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget _buildSectionCard(
-      BuildContext context, Map<String, dynamic> section, bool isMobile) {
+  Widget _buildSectionsGrid(BuildContext context, bool isMobile, bool isTablet) {
+    final sections = _getSections();
+    
+    if (isMobile) {
+      // En móvil: 1 columna
+      return Column(
+        children: sections.map((section) => 
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: _buildSectionCard(context, section, isMobile),
+          ),
+        ).toList(),
+      );
+    } else if (isTablet) {
+      // En tablet: 2 columnas
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 1.2,
+        ),
+        itemCount: sections.length,
+        itemBuilder: (context, index) {
+          return _buildSectionCard(context, sections[index], isMobile);
+        },
+      );
+    } else {
+      // En desktop: 3 columnas
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          childAspectRatio: 1.1,
+        ),
+        itemCount: sections.length,
+        itemBuilder: (context, index) {
+          return _buildSectionCard(context, sections[index], isMobile);
+        },
+      );
+    }
+  }
+
+  Widget _buildSectionCard(BuildContext context, Map<String, dynamic> section, bool isMobile) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => section['page'],
-            ),
-          );
-        },
+        onTap: () => _navigateToSection(context, section),
         borderRadius: BorderRadius.circular(16),
-        child: Container(
-          height: isMobile ? 120 : 140,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: LinearGradient(
-              colors: [
-                AppColors.white,
-                (section['color'] as Color).withOpacity(0.05),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+        child: Padding(
+          padding: EdgeInsets.all(isMobile ? 16 : 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
+              // Icon and title row
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: EdgeInsets.all(isMobile ? 12 : 14),
                     decoration: BoxDecoration(
                       color: (section['color'] as Color).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
-                      section['icon'],
-                      color: section['color'],
-                      size: 24,
+                      section['icon'] as IconData,
+                      color: section['color'] as Color,
+                      size: isMobile ? 24 : 28,
                     ),
                   ),
                   const Spacer(),
                   Icon(
                     Icons.arrow_forward_ios,
-                    color: AppColors.neutralTextGray.withOpacity(0.5),
                     size: 16,
+                    color: AppColors.neutralTextGray.withOpacity(0.5),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: isMobile ? 16 : 20),
+              
+              // Title
               Text(
-                section['title'],
+                section['title'] as String,
                 style: AppTextStyles.heading6.copyWith(
-                  color: AppColors.neutralTextGray,
                   fontWeight: FontWeight.w600,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                section['subtitle'],
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.neutralTextGray.withOpacity(0.7),
+                  fontSize: isMobile ? 16 : 18,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
+              const SizedBox(height: 8),
+              
+              // Description
+              Text(
+                section['description'] as String,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.neutralTextGray.withOpacity(0.8),
+                  fontSize: isMobile ? 13 : 14,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              
+              // Count badge if available
+              if (section['count'] != null) ...[
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutralLightBackground,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    '${section['count']} registros',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.neutralTextGray,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  List<Map<String, dynamic>> _getSections() {
+    return [
+      {
+        'id': 'avisos',
+        'title': 'Avisos',
+        'description': 'Gestión de avisos de mantenimiento y alertas de fallas en equipos',
+        'icon': Icons.warning_outlined,
+        'color': AppColors.secondaryCoralRed,
+        'count': 45,
+        'page': const AvisoPage(),
+      },
+      {
+        'id': 'gestion_demanda',
+        'title': 'Gestión de Demanda',
+        'description': 'Procesamiento y análisis de demandas de mantenimiento',
+        'icon': Icons.assignment_outlined,
+        'color': AppColors.secondaryBrightBlue,
+        'count': 32,
+        'page': const DemandManagementPage(),
+      },
+      {
+        'id': 'notificaciones',
+        'title': 'Notificaciones',
+        'description': 'Sistema de notificaciones y alertas del sistema de mantenimiento',
+        'icon': Icons.notifications_outlined,
+        'color': AppColors.secondaryGoldenYellow,
+        'count': 12,
+        'page': const NotificationPage(),
+      },
+    ];
+  }
+
+  void _navigateToSection(BuildContext context, Map<String, dynamic> section) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => section['page'] as Widget,
       ),
     );
   }

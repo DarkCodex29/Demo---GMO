@@ -82,33 +82,53 @@ flutter build windows
 - Simulates real-time maintenance alerts
 - Three notification channels: orders, capacity alerts, and failure alerts
 
-### Module Organization
+### Module Organization (Based on C:\Users\gianx\Desktop\EMPRESAS\EBIM\GMO\Documento de Capacitacion)
 
-#### Maintenance Management (`lib/src/pages/maintenance/`)
-- **Warnings**: `warning.page.dart` - Maintenance alert management
-- **Orders**: `order.page.dart` - Work order management
-- **Create Order**: `create_order.page.dart` - New work order creation
-- **Demand Management**: `demand_management.page.dart` - Processing warnings and demands
+The application follows a modular architecture with main navigation pages for each module and individual section pages. Each module uses a consistent pattern with a main navigation page showing section cards in a responsive grid layout.
 
-#### Team/Equipment Management (`lib/src/pages/team/`)
-- **Classes**: `class.page.dart` - Equipment classification
-- **Locations**: `locations.page.dart` - Technical location hierarchy
-- **Jobs**: `job.page.dart` - Work centers and responsibilities
-- **Equipment**: `equipment.page.dart` - Master equipment registry
-- **Materials**: `materials.page.dart` - Materials and spare parts catalog
+#### 1. Confiabilidad Module (`lib/src/modules/confiabilidad/`)
+**Main Page**: `confiabilidad_main.page.dart` - Shows 9 section cards in responsive grid
+- **Clases**: `pages/class.page.dart` - Equipment classification management
+- **Ubicaciones**: `pages/locations.page.dart` - Technical location hierarchy
+- **Puestos de Trabajo**: `pages/job.page.dart` - Work centers and responsibilities  
+- **Equipos**: `pages/equipment.page.dart` - Master equipment registry
+- **Materiales**: `pages/materials.page.dart` - Materials and spare parts catalog
+- **Características**: `pages/characteristics.page.dart` - Equipment characteristics
+- **Hojas de Ruta**: `pages/roadmap_main.page.dart` - Main navigation for roadmap subsections
+  - **Instrucciones**: `pages/roadmap/instruction.page.dart` - Work instructions
+  - **Equipos de Trabajo**: `pages/roadmap/team.page.dart` - Work teams
+  - **UBTs**: `pages/roadmap/ubt.page.dart` - Basic work units
+- **Estrategias**: `pages/strategies.page.dart` - Maintenance strategies
+- **Ciclos**: `pages/cycle.page.dart` - Maintenance cycles
 
-#### Planning (`lib/src/pages/planning/`)
-- **Strategies**: `strategies.page.dart` - Preventive maintenance strategies
-- **Capacity Management**: `capacity_management.page.dart` - Resource planning and scheduling
-- **Roadmap**: `roadmap_main.page.dart` - Route sheets and work team management
-- **Maintenance Cycles**: `maintenance/cycle.page.dart` - Individual maintenance cycle scheduling
+#### 2. Demanda Module (`lib/src/modules/demanda/`)
+**Main Page**: `demanda_main.page.dart` - Shows 3 section cards
+- **Avisos**: `pages/warning.page.dart` - Maintenance notifications
+- **Gestión de Demanda**: `pages/demand_management.page.dart` - Demand processing
+- **Notificaciones**: `pages/notification.page.dart` - System notifications
 
-#### Reports (`lib/src/pages/reports/`)
-- **Reports Hub**: `reports_main.page.dart` - Central access to all system reports
-- **Capacity Reports**: `capacity_report.page.dart`
-- **Equipment Reports**: `equipment_report.page.dart`
-- **Orders Reports**: `orders_report.page.dart`
-- **Stock Reports**: `stock_report.page.dart`
+#### 3. Planificación Module (`lib/src/modules/planificacion/`)
+**Main Page**: `planificacion_main.page.dart` - Shows 2 section cards
+- **Crear Orden**: `pages/create_order.page.dart` - Create work orders
+- **Gestión de Capacidades**: `pages/capacity_management.page.dart` - Capacity planning
+
+#### 4. Programación Module (`lib/src/modules/programacion/`)
+**Status**: Pending implementation - currently redirects to capacity management
+
+#### 5. Ejecución Module (`lib/src/modules/ejecucion/`)
+**Main Page**: Pending implementation
+- **Órdenes**: `pages/order.page.dart` - Work order execution
+- **Ejecución**: `pages/execution.page.dart` - Field work execution
+- **Cierre**: `pages/closing.page.dart` - Work order closing
+
+#### 6. Seguimiento y Control Module (`lib/src/modules/seguimiento_control/`)
+**Main Page**: `seguimiento_control_main.page.dart` - Pending implementation
+- **Reportes**: `pages/reports_main.page.dart` - Reports hub
+- **Reporte de Capacidades**: `pages/capacity_report.page.dart`
+- **Reporte de Equipos**: `pages/equipment_report.page.dart`
+- **Reporte de Órdenes**: `pages/orders_report.page.dart`
+- **Reporte de Stock**: `pages/stock_report.page.dart`
+- **Log de Fallas**: `pages/fault.log.page.dart`
 
 ## Theme and Design System
 
@@ -150,9 +170,16 @@ The application uses a comprehensive corporate color palette defined in `lib/src
 - **4K**: 1921px+
 
 ### Design Patterns
-- **Expansion Tiles**: Primary navigation method for grouping related functions
-- **Card-based Layout**: All content sections use Material Design cards
-- **Responsive Grid**: Desktop uses 2-column layout, tablet and mobile stack vertically
+- **Module Navigation Pages**: Each module has a main page with section cards in responsive grid
+- **Card-based Layout**: All content sections use Material Design cards with consistent styling
+- **No Gradients**: Formal business application without gradient backgrounds
+- **Responsive Grid**: Desktop uses multi-column layout, tablet and mobile stack vertically
+- **Consistent Navigation**: MainLayout wrapper with showBackButton for hierarchical navigation
+- **Color Usage**:
+  - Primary headers use `AppColors.primaryDarkTeal`
+  - Section cards have colored headers matching their theme
+  - Icons on colored backgrounds use contrasting colors for visibility
+  - Status indicators use semantic colors (green/red/teal)
 - **Consistent theming** using `AppTheme.lightTheme` from `lib/src/theme/app_theme.dart`
 
 ## Authentication System
@@ -170,12 +197,19 @@ The application uses a comprehensive corporate color palette defined in `lib/src
 ## Development Guidelines
 
 ### Adding New Pages
-1. Create page in appropriate module directory under `lib/src/pages/`
+1. Create page in appropriate module directory under `lib/src/modules/[module_name]/pages/`
 2. Follow existing naming convention: `feature_name.page.dart`
-3. Add navigation route in `home.page.dart`
-4. Ensure responsive design using `ResponsiveBreakpoints`
-5. **Use theme colors**: Import `AppColors` from `lib/src/theme/app_colors.dart` and use theme colors instead of hardcoded colors
-6. **Use theme text styles**: Import `AppTextStyles` from `lib/src/theme/app_text_styles.dart` for consistent typography
+3. Add navigation in module's main page or parent navigation page
+4. Wrap all pages with `MainLayout` providing:
+   - `currentModule`: Module identifier
+   - `customTitle`: Page title for AppBar
+   - `showBackButton`: true for sub-pages
+5. Use `ResponsiveRowColumn` for responsive layouts
+6. **Use theme colors**: Import `AppColors` from `lib/src/theme/app_colors.dart`
+7. **Use theme text styles**: Import `AppTextStyles` from `lib/src/theme/app_text_styles.dart`
+8. **Avoid gradients**: Keep design formal and professional
+9. **Color contrast**: Ensure icons are visible on colored backgrounds
+10. **Use debugPrint** instead of print for console output
 
 ### Data Integration
 - Add new JSON files to `assets/data/` for demo data
@@ -238,5 +272,163 @@ flutter test test/widget_test.dart  # Run specific test file
 - Web build targets Chrome for optimal performance
 - Windows build includes native window management
 
+## Implementation Standards (Based on Confiabilidad Module)
+
+### Page Structure Pattern
+```dart
+class PageName extends StatefulWidget {
+  const PageName({super.key});
+  
+  @override
+  PageNameState createState() => PageNameState();
+}
+
+class PageNameState extends State<PageName> {
+  // State variables
+  List<Map<String, dynamic>> items = [];
+  List<Map<String, dynamic>> filteredItems = [];
+  bool isLoading = true;
+  String searchQuery = '';
+  
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+  
+  // Load data from JSON
+  Future<void> _loadData() async {
+    try {
+      final String response = await rootBundle.loadString('assets/data/file.json');
+      final data = await json.decode(response);
+      setState(() {
+        items = List<Map<String, dynamic>>.from(data['items']);
+        filteredItems = items;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() => isLoading = false);
+      debugPrint('Error: $e');
+      // Show error snackbar
+    }
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return MainLayout(
+      currentModule: 'module_name',
+      customTitle: 'Page Title',
+      showBackButton: true,
+      child: ResponsiveRowColumn(
+        layout: ResponsiveRowColumnType.COLUMN,
+        children: [
+          // Search bar
+          // Content area with responsive layout
+        ],
+      ),
+    );
+  }
+}
+```
+
+### Module Main Page Pattern
+```dart
+// Grid of section cards with navigation
+Widget _buildSectionCard(BuildContext context, Map<String, dynamic> section) {
+  return Card(
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16),
+    ),
+    child: InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => section['page'],
+          ),
+        );
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: section['color'].withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                section['icon'],
+                size: 32,
+                color: section['color'],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              section['title'],
+              style: AppTextStyles.heading6,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              section['description'],
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.neutralTextGray,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+```
+
+### Common UI Components
+
+#### Search Bar
+- White background with shadow
+- Teal search icon
+- Gray clear icon
+- Responsive hint text
+
+#### Data Cards (Mobile)
+- White background with border
+- Header with ID badge and title
+- Status indicator with semantic colors
+- Detail rows with consistent spacing
+
+#### Data Tables (Desktop)
+- Horizontal scroll for wide tables
+- Consistent column spacing
+- Status badges with colors
+- Hover states on rows
+
+#### Empty States
+- Centered icon and message
+- Contextual messaging
+- Consistent styling
+
+### Color Usage Guidelines
+1. **Headers**: Primary color (teal) for main headers
+2. **Section Cards**: Different colors per section with 0.1 opacity backgrounds
+3. **Icons on Colored Backgrounds**: Use contrasting colors (teal on yellow, not yellow on yellow)
+4. **Status Colors**:
+   - Active/Success: `Colors.green`
+   - In Progress/Review: `AppColors.primaryMediumTeal`
+   - Inactive/Error: `AppColors.secondaryCoralRed`
+   - Pending: `AppColors.neutralTextGray`
+5. **Text**: `AppColors.neutralTextGray` for body text
+6. **Backgrounds**: `AppColors.white` for cards, `AppColors.neutralLightBackground` for page background
+
 ## Memories
-- This is a demo project for an Industrial Maintenance Management System created for GMO by Gianpierre Mio
+- This is a demo project for an Industrial Maintenance Management System created for GMO by Gianpierre Mio for Ebim
+- The project follows the structure from C:\Users\gianx\Desktop\EMPRESAS\EBIM\GMO\Documento de Capacitacion
+- No gradients are used - this is a formal business application
+- All modules follow the same pattern established in the Confiabilidad module

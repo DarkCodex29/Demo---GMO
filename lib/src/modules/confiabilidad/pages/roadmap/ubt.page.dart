@@ -48,14 +48,14 @@ class UbtPageState extends State<UbtPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline),
+                const Icon(Icons.error_outline, color: AppColors.white),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.secondaryCoralRed,
           ),
         );
       }
@@ -129,11 +129,11 @@ class UbtPageState extends State<UbtPage> {
                 8,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade300,
+                    color: AppColors.neutralMediumBorder.withOpacity(0.3),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -155,7 +155,7 @@ class UbtPageState extends State<UbtPage> {
                       ? 'Buscar UBTs...'
                       : 'Buscar por código, nombre o categoría...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500],
+                    color: AppColors.neutralTextGray.withOpacity(0.6),
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -164,10 +164,12 @@ class UbtPageState extends State<UbtPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: const Icon(Icons.search, size: 24),
+                  prefixIcon: const Icon(Icons.search,
+                      color: AppColors.primaryDarkTeal, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: const Icon(Icons.clear),
+                          icon: const Icon(Icons.clear,
+                              color: AppColors.neutralTextGray),
                           onPressed: () {
                             _filterUbts('');
                           },
@@ -220,11 +222,11 @@ class UbtPageState extends State<UbtPage> {
   Widget _buildUbtsCard() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: AppColors.neutralMediumBorder.withOpacity(0.2),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -233,38 +235,6 @@ class UbtPageState extends State<UbtPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header del card
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: AppColors.secondaryGoldenYellow,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryGoldenYellow,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.work_outline, size: 24),
-                ),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'Unidades Básicas de Trabajo (UBTs)',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
           // Contenido del card
           Padding(
             padding: const EdgeInsets.all(16),
@@ -287,7 +257,7 @@ class UbtPageState extends State<UbtPage> {
           Icon(
             Icons.work_outline,
             size: 64,
-            color: Colors.grey[400],
+            color: AppColors.neutralTextGray.withOpacity(0.5),
           ),
           const SizedBox(height: 16),
           Text(
@@ -296,7 +266,7 @@ class UbtPageState extends State<UbtPage> {
                 : 'No se encontraron UBTs',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.grey[600],
+              color: AppColors.neutralTextGray.withOpacity(0.7),
               fontWeight: FontWeight.w500,
             ),
           ),

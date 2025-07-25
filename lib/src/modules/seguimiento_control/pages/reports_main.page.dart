@@ -1,348 +1,301 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
+import 'package:demo/src/theme/app_text_styles.dart';
 import 'stock_report.page.dart';
 import 'orders_report.page.dart';
 import 'capacity_report.page.dart';
 import 'equipment_report.page.dart';
+import 'fault.log.page.dart';
 
-class ReportsMainPage extends StatefulWidget {
+class ReportsMainPage extends StatelessWidget {
   const ReportsMainPage({super.key});
 
-  @override
-  ReportsMainPageState createState() => ReportsMainPageState();
-}
-
-class ReportsMainPageState extends State<ReportsMainPage> {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
-    return Scaffold(
-      
-      appBar: AppBar(
-        title: const Text(
-          'Reportes y Análisis',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
-        
-        elevation: 2,
-        centerTitle: false,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 12.0 : 16.0),
+    return MainLayout(
+      currentModule: 'seguimiento_control',
+      showBackButton: false,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(isMobile ? 16 : 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header con información
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.orange.shade100, Colors.orange.shade50],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.orange.shade200),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.info_outline,
-                          color: Colors.orange.shade700, size: 20),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Centro de Reportes',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.orange.shade800,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Accede a reportes detallados de stock, órdenes de mantenimiento, capacidades y equipos. Información actualizada en tiempo real.',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.orange.shade700,
-                      height: 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Header section
+            _buildHeader(isMobile),
+            SizedBox(height: isMobile ? 20 : 32),
 
-            const SizedBox(height: 20),
-
-            // Grid de reportes
-            if (isMobile)
-              _buildMobileReportsGrid()
-            else if (isTablet)
-              _buildTabletReportsGrid()
-            else
-              _buildDesktopReportsGrid(),
+            // Sections grid
+            _buildSectionsGrid(context, isMobile, isTablet),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMobileReportsGrid() {
-    return Column(
-      children: [
-        _buildReportCard(
-          title: 'Reporte de Stock',
-          subtitle: 'Inventario y disponibilidad de materiales',
-          icon: Icons.inventory_2,
-          color: Colors.blue,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const StockReportPage()),
-          ),
+  Widget _buildHeader(bool isMobile) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(isMobile ? 20 : 32),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            AppColors.primaryDarkTeal,
+            AppColors.primaryMediumTeal,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        const SizedBox(height: 12),
-        _buildReportCard(
-          title: 'Reporte de Órdenes',
-          subtitle: 'Órdenes de mantenimiento y su estado',
-          icon: Icons.assignment,
-          color: Colors.green,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OrdersReportPage()),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Seguimiento y Control',
+                      style: AppTextStyles.heading3.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Reportes, análisis y control de operaciones de mantenimiento',
+                      style: AppTextStyles.bodyLarge.copyWith(
+                        color: AppColors.white.withOpacity(0.9),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Accede a reportes detallados, indicadores de gestión y análisis de rendimiento',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!isMobile)
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.analytics_outlined,
+                    size: 48,
+                    color: AppColors.white,
+                  ),
+                ),
+            ],
           ),
-        ),
-        const SizedBox(height: 12),
-        /*
-        _buildReportCard(
-          title: 'Reporte de Capacidades',
-          subtitle: 'Análisis de capacidad por centro de trabajo',
-          icon: Icons.analytics,
-          color: Colors.purple,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CapacityReportPage()),
-          ),
-        ),
-        const SizedBox(height: 12),
-        _buildReportCard(
-          title: 'Reporte de Equipos',
-          subtitle: 'Estado y ubicación de equipos',
-          icon: Icons.precision_manufacturing,
-          color: Colors.orange,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const EquipmentReportPage()),
-          ),
-        ),
-        */
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildTabletReportsGrid() {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      childAspectRatio: 1.2,
-      children: [
-        _buildReportCard(
-          title: 'Reporte de Stock',
-          subtitle: 'Inventario y disponibilidad de materiales',
-          icon: Icons.inventory_2,
-          color: Colors.blue,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const StockReportPage()),
+  Widget _buildSectionsGrid(BuildContext context, bool isMobile, bool isTablet) {
+    final sections = _getSections();
+    
+    if (isMobile) {
+      // En móvil: 1 columna
+      return Column(
+        children: sections.map((section) => 
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: _buildSectionCard(context, section, isMobile),
           ),
+        ).toList(),
+      );
+    } else if (isTablet) {
+      // En tablet: 2 columnas
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 1.2,
         ),
-        _buildReportCard(
-          title: 'Reporte de Órdenes',
-          subtitle: 'Órdenes de mantenimiento y su estado',
-          icon: Icons.assignment,
-          color: Colors.green,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OrdersReportPage()),
-          ),
+        itemCount: sections.length,
+        itemBuilder: (context, index) {
+          return _buildSectionCard(context, sections[index], isMobile);
+        },
+      );
+    } else {
+      // En desktop: 3 columnas
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          childAspectRatio: 1.1,
         ),
-        _buildReportCard(
-          title: 'Reporte de Capacidades',
-          subtitle: 'Análisis de capacidad por centro de trabajo',
-          icon: Icons.analytics,
-          color: Colors.purple,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CapacityReportPage()),
-          ),
-        ),
-        _buildReportCard(
-          title: 'Reporte de Equipos',
-          subtitle: 'Estado y ubicación de equipos',
-          icon: Icons.precision_manufacturing,
-          color: Colors.orange,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const EquipmentReportPage()),
-          ),
-        ),
-      ],
-    );
+        itemCount: sections.length,
+        itemBuilder: (context, index) {
+          return _buildSectionCard(context, sections[index], isMobile);
+        },
+      );
+    }
   }
 
-  Widget _buildDesktopReportsGrid() {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisCount: 4,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 20,
-      childAspectRatio: 1.1,
-      children: [
-        _buildReportCard(
-          title: 'Reporte de Stock',
-          subtitle: 'Inventario y disponibilidad de materiales',
-          icon: Icons.inventory_2,
-          color: Colors.blue,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const StockReportPage()),
-          ),
-        ),
-        _buildReportCard(
-          title: 'Reporte de Órdenes',
-          subtitle: 'Órdenes de mantenimiento y su estado',
-          icon: Icons.assignment,
-          color: Colors.green,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OrdersReportPage()),
-          ),
-        ),
-        _buildReportCard(
-          title: 'Reporte de Capacidades',
-          subtitle: 'Análisis de capacidad por centro de trabajo',
-          icon: Icons.analytics,
-          color: Colors.purple,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CapacityReportPage()),
-          ),
-        ),
-        _buildReportCard(
-          title: 'Reporte de Equipos',
-          subtitle: 'Estado y ubicación de equipos',
-          icon: Icons.precision_manufacturing,
-          color: Colors.orange,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const EquipmentReportPage()),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReportCard({
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
+  Widget _buildSectionCard(BuildContext context, Map<String, dynamic> section, bool isMobile) {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+        onTap: () => _navigateToSection(context, section),
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: EdgeInsets.all(isMobile ? 16 : 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Icono
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(icon, size: 24),
+              // Icon and title row
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(isMobile ? 12 : 14),
+                    decoration: BoxDecoration(
+                      color: (section['color'] as Color).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      section['icon'] as IconData,
+                      color: section['color'] as Color,
+                      size: isMobile ? 24 : 28,
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16,
+                    color: AppColors.neutralTextGray.withOpacity(0.5),
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 16),
-
-              // Título
+              SizedBox(height: isMobile ? 16 : 20),
+              
+              // Title
               Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
+                section['title'] as String,
+                style: AppTextStyles.heading6.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  fontSize: isMobile ? 16 : 18,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-
               const SizedBox(height: 8),
-
-              // Subtítulo
+              
+              // Description
               Text(
-                subtitle,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                  height: 1.3,
+                section['description'] as String,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.neutralTextGray.withOpacity(0.8),
+                  fontSize: isMobile ? 13 : 14,
                 ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-
-              const SizedBox(height: 8),
-
-              // Indicador de acción
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Ver reporte',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: color,
+              
+              // Count badge if available
+              if (section['count'] != null) ...[
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutralLightBackground,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    '${section['count']} registros',
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.neutralTextGray,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_ios, color: color, size: 12),
-                ],
-              ),
+                ),
+              ],
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  List<Map<String, dynamic>> _getSections() {
+    return [
+      {
+        'id': 'reporte_stock',
+        'title': 'Reporte de Stock',
+        'description': 'Inventario y disponibilidad de materiales y repuestos',
+        'icon': Icons.inventory_2_outlined,
+        'color': AppColors.secondaryBrightBlue,
+        'count': 342,
+        'page': const StockReportPage(),
+      },
+      {
+        'id': 'reporte_ordenes',
+        'title': 'Reporte de Órdenes',
+        'description': 'Estado y seguimiento de órdenes de mantenimiento',
+        'icon': Icons.assignment_outlined,
+        'color': AppColors.primaryMintGreen,
+        'count': 156,
+        'page': const OrdersReportPage(),
+      },
+      {
+        'id': 'reporte_capacidades',
+        'title': 'Reporte de Capacidades',
+        'description': 'Análisis de capacidad por centro de trabajo y recursos',
+        'icon': Icons.analytics_outlined,
+        'color': AppColors.secondaryGoldenYellow,
+        'count': 28,
+        'page': const CapacityReportPage(),
+      },
+      {
+        'id': 'reporte_equipos',
+        'title': 'Reporte de Equipos',
+        'description': 'Estado, ubicación y rendimiento de equipos industriales',
+        'icon': Icons.precision_manufacturing_outlined,
+        'color': AppColors.primaryMediumTeal,
+        'count': 125,
+        'page': const EquipmentReportPage(),
+      },
+      {
+        'id': 'log_fallas',
+        'title': 'Log de Fallas',
+        'description': 'Registro histórico de fallas y eventos críticos del sistema',
+        'icon': Icons.bug_report_outlined,
+        'color': AppColors.secondaryCoralRed,
+        'count': 89,
+        'page': const FaultLogPage(),
+      },
+    ];
+  }
+
+  void _navigateToSection(BuildContext context, Map<String, dynamic> section) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => section['page'] as Widget,
       ),
     );
   }

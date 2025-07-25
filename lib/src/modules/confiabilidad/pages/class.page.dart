@@ -38,7 +38,7 @@ class ClasesPageState extends State<ClasesPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de clases: $e');
+      debugPrint('Error al cargar datos de clases: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

@@ -3,11 +3,12 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
-import 'package:demo/src/modules/planificacion/pages/capacity_management.page.dart';
-import 'package:demo/src/modules/planificacion/pages/create_order.page.dart';
+import 'package:demo/src/modules/ejecucion/pages/order.page.dart';
+import 'package:demo/src/modules/ejecucion/pages/execution.page.dart';
+import 'package:demo/src/modules/ejecucion/pages/closing.page.dart';
 
-class PlanificacionMainPage extends StatelessWidget {
-  const PlanificacionMainPage({super.key});
+class EjecucionMainPage extends StatelessWidget {
+  const EjecucionMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class PlanificacionMainPage extends StatelessWidget {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return MainLayout(
-      currentModule: 'planificacion',
+      currentModule: 'ejecucion',
       showBackButton: false,
       child: SingleChildScrollView(
         padding: EdgeInsets.all(isMobile ? 16 : 24),
@@ -59,7 +60,7 @@ class PlanificacionMainPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Planificación',
+                      'Ejecución',
                       style: AppTextStyles.heading3.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.w700,
@@ -67,14 +68,14 @@ class PlanificacionMainPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Gestión de órdenes de trabajo y planificación de recursos',
+                      'Ejecución de trabajos de mantenimiento en campo',
                       style: AppTextStyles.bodyLarge.copyWith(
                         color: AppColors.white.withOpacity(0.9),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Crea y gestiona órdenes de mantenimiento y administra la capacidad de recursos',
+                      'Gestiona la ejecución de órdenes de trabajo y cierre de actividades de mantenimiento',
                       style: AppTextStyles.bodyMedium.copyWith(
                         color: AppColors.white.withOpacity(0.8),
                       ),
@@ -90,7 +91,7 @@ class PlanificacionMainPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
-                    Icons.calendar_today_outlined,
+                    Icons.engineering_outlined,
                     size: 48,
                     color: AppColors.white,
                   ),
@@ -102,18 +103,21 @@ class PlanificacionMainPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionsGrid(BuildContext context, bool isMobile, bool isTablet) {
+  Widget _buildSectionsGrid(
+      BuildContext context, bool isMobile, bool isTablet) {
     final sections = _getSections();
-    
+
     if (isMobile) {
       // En móvil: 1 columna
       return Column(
-        children: sections.map((section) => 
-          Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            child: _buildSectionCard(context, section, isMobile),
-          ),
-        ).toList(),
+        children: sections
+            .map(
+              (section) => Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: _buildSectionCard(context, section, isMobile),
+              ),
+            )
+            .toList(),
       );
     } else if (isTablet) {
       // En tablet: 2 columnas
@@ -150,7 +154,8 @@ class PlanificacionMainPage extends StatelessWidget {
     }
   }
 
-  Widget _buildSectionCard(BuildContext context, Map<String, dynamic> section, bool isMobile) {
+  Widget _buildSectionCard(
+      BuildContext context, Map<String, dynamic> section, bool isMobile) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -189,7 +194,7 @@ class PlanificacionMainPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: isMobile ? 16 : 20),
-              
+
               // Title
               Text(
                 section['title'] as String,
@@ -201,7 +206,7 @@ class PlanificacionMainPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 8),
-              
+
               // Description
               Text(
                 section['description'] as String,
@@ -212,12 +217,13 @@ class PlanificacionMainPage extends StatelessWidget {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              
+
               // Count badge if available
               if (section['count'] != null) ...[
                 const SizedBox(height: 12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.neutralLightBackground,
                     borderRadius: BorderRadius.circular(6),
@@ -242,22 +248,33 @@ class PlanificacionMainPage extends StatelessWidget {
   List<Map<String, dynamic>> _getSections() {
     return [
       {
-        'id': 'gestion_capacidad',
-        'title': 'Gestión de Capacidad',
-        'description': 'Planificación y administración de recursos y capacidades de trabajo',
-        'icon': Icons.assessment_outlined,
-        'color': AppColors.secondaryBrightBlue,
-        'count': 28,
-        'page': const CapacityManagementPage(),
+        'id': 'ordenes',
+        'title': 'Órdenes de Trabajo',
+        'description':
+            'Gestión y seguimiento de órdenes de trabajo en ejecución',
+        'icon': Icons.assignment_outlined,
+        'color': AppColors.primaryDarkTeal,
+        'count': 67,
+        'page': const OrdenPage(),
       },
       {
-        'id': 'crear_orden',
-        'title': 'Crear Orden de Trabajo',
-        'description': 'Creación y configuración de nuevas órdenes de mantenimiento',
-        'icon': Icons.add_circle_outline,
+        'id': 'ejecucion',
+        'title': 'Ejecución de Trabajos',
+        'description': 'Registro de actividades y tiempo de ejecución en campo',
+        'icon': Icons.engineering,
         'color': AppColors.primaryMintGreen,
-        'count': 156,
-        'page': const CreateOrderPage(),
+        'count': 43,
+        'page': const ExecutionPage(),
+      },
+      {
+        'id': 'cierre',
+        'title': 'Cierre de Órdenes',
+        'description':
+            'Finalización y cierre técnico de órdenes de mantenimiento',
+        'icon': Icons.check_circle_outline,
+        'color': AppColors.secondaryAquaGreen,
+        'count': 89,
+        'page': const ClosingPage(),
       },
     ];
   }

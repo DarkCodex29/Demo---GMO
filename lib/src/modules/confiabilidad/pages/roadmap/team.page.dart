@@ -48,14 +48,14 @@ class TeamPageState extends State<TeamPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline),
+                const Icon(Icons.error_outline, color: AppColors.white),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.secondaryCoralRed,
           ),
         );
       }
@@ -248,7 +248,7 @@ class TeamPageState extends State<TeamPage> {
                     color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.groups, size: 24),
+                  child: const Icon(Icons.groups, color: AppColors.primaryDarkTeal, size: 24),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
@@ -492,7 +492,7 @@ class TeamPageState extends State<TeamPage> {
       case 'activo':
         return Colors.green;
       case 'en formación':
-        return AppColors.secondaryGoldenYellow;
+        return AppColors.primaryMediumTeal;
       case 'inactivo':
         return Colors.red;
       default:

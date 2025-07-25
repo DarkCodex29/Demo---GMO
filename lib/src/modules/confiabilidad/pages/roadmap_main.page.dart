@@ -177,7 +177,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   ),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.primaryDarkTeal,
                     size: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -704,7 +704,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         columnSpacing: 24,
-        dataRowHeight: 56,
+        dataRowMinHeight: 56,
+        dataRowMaxHeight: 56,
         headingRowColor: WidgetStateProperty.all(Colors.grey.shade50),
         columns: const [
           DataColumn(
