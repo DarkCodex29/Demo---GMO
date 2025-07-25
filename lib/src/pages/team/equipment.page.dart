@@ -45,14 +45,13 @@ class EquipmentPageState extends State<EquipmentPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
           ),
         );
       }
@@ -77,15 +76,11 @@ class EquipmentPageState extends State<EquipmentPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
         appBar: AppBar(
           title: const Text('Gestión de Equipos'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
         ),
         body: const Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
         ),
       );
@@ -95,7 +90,7 @@ class EquipmentPageState extends State<EquipmentPage> {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: Text(
           'Gestión de Equipos',
@@ -108,11 +103,9 @@ class EquipmentPageState extends State<EquipmentPage> {
               ],
             ).value,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+                      ),
         ),
-        backgroundColor: Colors.orange,
-        elevation: 2,
+                elevation: 2,
         centerTitle: false,
       ),
       body: ResponsiveRowColumn(
@@ -146,8 +139,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                 8,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
@@ -279,8 +271,7 @@ class EquipmentPageState extends State<EquipmentPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
@@ -348,8 +339,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['criticidad'],
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 9,
+                                                                        fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -365,8 +355,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['estado'],
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 9,
+                                                                        fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -439,8 +428,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.grey.shade200),
         ),
         columnSpacing: ResponsiveValue<double>(
@@ -579,8 +567,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   child: Text(
                     equipo['general']['estado'],
                     style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
+                                            fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -597,8 +584,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   child: Text(
                     equipo['general']['criticidad'],
                     style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
+                                            fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

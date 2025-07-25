@@ -47,7 +47,7 @@ class StrategyPageState extends State<StrategyPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
@@ -79,11 +79,11 @@ class StrategyPageState extends State<StrategyPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Estrategias de Mantenimiento'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -96,11 +96,11 @@ class StrategyPageState extends State<StrategyPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Estrategias de Mantenimiento'),
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
+        
+        
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,
@@ -168,10 +168,10 @@ class StrategyPageState extends State<StrategyPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterEstrategias('');
                           },
@@ -252,7 +252,7 @@ class StrategyPageState extends State<StrategyPage> {
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.psychology, color: Colors.white, size: 24),
+                  child: const Icon(Icons.psychology, size: 24),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(

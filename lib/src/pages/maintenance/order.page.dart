@@ -109,14 +109,14 @@ class OrdenPageState extends State<OrdenPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar órdenes: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).colorScheme.error,
             duration: const Duration(seconds: 5),
           ),
         );
@@ -216,13 +216,12 @@ class OrdenPageState extends State<OrdenPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: ResponsiveRowColumn(
           layout: ResponsiveRowColumnType.ROW,
           children: [
             const ResponsiveRowColumnItem(
-              child: Icon(Icons.assignment_turned_in, color: Colors.white),
+              child: const Icon(Icons.assignment_turned_in),
             ),
             const ResponsiveRowColumnItem(
               child: SizedBox(width: 8),
@@ -241,18 +240,16 @@ class OrdenPageState extends State<OrdenPage> {
                       ],
                     ).value,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        backgroundColor: Colors.orange,
         elevation: 2,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -287,7 +284,6 @@ class OrdenPageState extends State<OrdenPage> {
                 8,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -313,7 +309,6 @@ class OrdenPageState extends State<OrdenPage> {
                       ? 'Buscar órdenes...'
                       : 'Buscar por número, descripción, equipo...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -323,10 +318,10 @@ class OrdenPageState extends State<OrdenPage> {
                     ).value,
                   ),
                   prefixIcon: Icon(Icons.search,
-                      color: Colors.orange.shade600, size: 24),
+                      color: Theme.of(context).primaryColor, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterOrdenes('');
                           },
@@ -354,8 +349,6 @@ class OrdenPageState extends State<OrdenPage> {
               child: isLoading
                   ? const Center(
                       child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.orange),
                       ),
                     )
                   : filteredOrdenes.isEmpty
@@ -450,12 +443,6 @@ class OrdenPageState extends State<OrdenPage> {
         data: Theme.of(context).copyWith(
           dividerColor: Colors.transparent,
           expansionTileTheme: const ExpansionTileThemeData(
-            backgroundColor: Colors.transparent,
-            collapsedBackgroundColor: Colors.transparent,
-            iconColor: Colors.orange,
-            textColor: Colors.orange,
-            collapsedTextColor: Colors.black87,
-            collapsedIconColor: Colors.orange,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
@@ -549,7 +536,7 @@ class OrdenPageState extends State<OrdenPage> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.settings, size: 12, color: Colors.grey[600]),
+                        const Icon(Icons.settings, size: 12),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -675,8 +662,7 @@ class OrdenPageState extends State<OrdenPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(Icons.calendar_today,
-                            size: 12, color: Colors.grey[600]),
+                        const Icon(Icons.calendar_today, size: 12),
                         const SizedBox(width: 4),
                         Flexible(
                           child: Text(
@@ -737,7 +723,6 @@ class OrdenPageState extends State<OrdenPage> {
         ).value,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
       ),
@@ -749,7 +734,7 @@ class OrdenPageState extends State<OrdenPage> {
             children: [
               ResponsiveRowColumnItem(
                 child: Icon(Icons.info_outline,
-                    color: Colors.orange.shade600, size: 20),
+                    color: Theme.of(context).primaryColor, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),

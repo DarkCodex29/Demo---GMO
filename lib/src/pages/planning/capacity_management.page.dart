@@ -66,14 +66,14 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       }
@@ -125,14 +125,14 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle_outline, color: Colors.white),
+            const Icon(Icons.check_circle_outline),
             const SizedBox(width: 8),
             Expanded(
               child: Text('Programa generado para orden ${_ordenController.text}'),
             ),
           ],
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         duration: const Duration(seconds: 3),
       ),
     );
@@ -174,7 +174,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                             color: Colors.orange[100],
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(Icons.assessment, color: Colors.orange, size: 24),
+                          child: const Icon(Icons.assessment, size: 24),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -207,7 +207,6 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                           child: Text(
                             capacidad['estado'],
                             style: const TextStyle(
-                              color: Colors.white,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                             ),
@@ -280,7 +279,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.calendar_today, color: Colors.orange),
+                  const Icon(Icons.calendar_today),
                   const SizedBox(width: 12),
                   Text(
                     'Programa de Órdenes Semana ${programacionOrdenes['semana'] ?? '20'}',
@@ -340,8 +339,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                                 child: Text(
                                   orden['prioridad'] ?? 'Media',
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
+                                          fontSize: 10,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -491,10 +489,10 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.assessment, color: Colors.white, size: 20),
+                      child: const Icon(Icons.assessment, size: 20),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -603,7 +601,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                     color: Colors.blue[100],
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.schedule, color: Colors.blue, size: 20),
+                  child: const Icon(Icons.schedule, size: 20),
                 ),
                 const SizedBox(width: 12),
                 const Text(
@@ -661,8 +659,8 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
               child: ElevatedButton(
                 onPressed: _generarPrograma,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
+                  
+                  
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
@@ -688,12 +686,12 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
       const SnackBar(
         content: Row(
           children: [
-            Icon(Icons.warning, color: Colors.white),
+            const Icon(Icons.warning),
             SizedBox(width: 8),
             Expanded(child: Text('Alerta de capacidad enviada')),
           ],
         ),
-        backgroundColor: Colors.orange,
+        
       ),
     );
   }
@@ -702,11 +700,11 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Gestión de Capacidades'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -719,11 +717,11 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Gestión de Capacidades'),
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
+        
+        
       ),
       body: Column(
         children: [
@@ -747,10 +745,10 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
               decoration: InputDecoration(
                 hintText: 'Buscar por puesto, centro, estado...',
                 hintStyle: TextStyle(color: Colors.grey[500], fontSize: 14),
-                prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+                prefixIcon: const Icon(Icons.search),
                 suffixIcon: searchQuery.isNotEmpty
                     ? IconButton(
-                        icon: Icon(Icons.clear, color: Colors.grey[500]),
+                        icon: const Icon(Icons.clear),
                         onPressed: () {
                           setState(() {
                             searchQuery = '';
@@ -775,7 +773,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.assessment, size: 64, color: Colors.grey[400]),
+                        const Icon(Icons.assessment, size: 64),
                         const SizedBox(height: 16),
                         Text(
                           searchQuery.isEmpty 

@@ -43,7 +43,7 @@ class LocationsPageState extends State<LocationsPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
@@ -75,11 +75,11 @@ class LocationsPageState extends State<LocationsPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Gestión de Ubicaciones'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -93,7 +93,7 @@ class LocationsPageState extends State<LocationsPage> {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: Text(
           'Ubicaciones Técnicas',
@@ -109,11 +109,11 @@ class LocationsPageState extends State<LocationsPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange,
+        
         elevation: 2,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -183,10 +183,10 @@ class LocationsPageState extends State<LocationsPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterUbicaciones('');
                           },

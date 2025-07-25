@@ -19,7 +19,7 @@ class ReportsMainPageState extends State<ReportsMainPage> {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text(
           'Reportes y Análisis',
@@ -29,7 +29,7 @@ class ReportsMainPageState extends State<ReportsMainPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange,
+        
         elevation: 2,
         centerTitle: false,
       ),
@@ -291,7 +291,7 @@ class ReportsMainPageState extends State<ReportsMainPage> {
                   color: color,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, color: Colors.white, size: 24),
+                child: Icon(icon, size: 24),
               ),
 
               const SizedBox(height: 16),

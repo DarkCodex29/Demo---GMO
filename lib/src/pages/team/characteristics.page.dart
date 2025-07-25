@@ -8,7 +8,7 @@ class CaracteristicsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Características'),
-        backgroundColor: Colors.orange,
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

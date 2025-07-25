@@ -33,7 +33,7 @@ class ClasesPageState extends State<ClasesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Clases de Equipo'),
-        backgroundColor: Colors.orange,
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -154,7 +154,7 @@ class ClaseDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.orange,
+        
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

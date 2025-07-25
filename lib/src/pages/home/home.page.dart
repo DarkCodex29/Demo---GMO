@@ -1,5 +1,6 @@
 import 'package:demo/src/pages/auth/auth.page.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/pages/maintenance/order.page.dart';
 import 'package:demo/src/pages/maintenance/warning.page.dart';
 import 'package:demo/src/pages/maintenance/create_order.page.dart';
@@ -70,7 +71,7 @@ class HomePageState extends State<HomePage> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           title: const Row(
             children: [
-              Icon(Icons.logout, color: Colors.orange),
+              Icon(Icons.logout, color: AppColors.primaryDarkTeal),
               SizedBox(width: 8),
               Text('Cerrar sesión'),
             ],
@@ -83,13 +84,13 @@ class HomePageState extends State<HomePage> {
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancelar',
-                  style: TextStyle(color: Colors.grey, fontSize: 16)),
+                  style: TextStyle(color: AppColors.neutralTextGray, fontSize: 16)),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primaryDarkTeal,
+                foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
               ),
@@ -122,7 +123,7 @@ class HomePageState extends State<HomePage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.neutralLightBackground,
       appBar: AppBar(
         title: Text(
           'Sistema GMO - Demo',
@@ -135,10 +136,10 @@ class HomePageState extends State<HomePage> {
               ],
             ).value,
             fontWeight: FontWeight.w600,
-            color: Colors.white,
+            color: AppColors.white,
           ),
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: AppColors.primaryDarkTeal,
         elevation: 2,
         centerTitle: false,
         actions: [
@@ -219,19 +220,19 @@ class HomePageState extends State<HomePage> {
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.orange.shade50, Colors.orange.shade100],
+          colors: [AppColors.primaryDarkTealLight, AppColors.primaryMintGreenLight],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.orange.shade200),
+        border: Border.all(color: AppColors.neutralMediumBorder),
       ),
       child: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.ROW,
         children: [
           const ResponsiveRowColumnItem(
             child: Icon(Icons.notifications_active,
-                color: Colors.orange, size: 24),
+                color: AppColors.primaryDarkTeal, size: 24),
           ),
           ResponsiveRowColumnItem(
             child: SizedBox(
@@ -260,7 +261,7 @@ class HomePageState extends State<HomePage> {
                         ],
                       ).value,
                       fontWeight: FontWeight.w600,
-                      color: Colors.orange,
+                      color: AppColors.primaryDarkTeal,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -275,7 +276,7 @@ class HomePageState extends State<HomePage> {
                           const Condition.largerThan(name: MOBILE, value: 12.0),
                         ],
                       ).value,
-                      color: Colors.orange,
+                      color: AppColors.primaryDarkTeal,
                     ),
                   ),
                 ],
@@ -534,7 +535,7 @@ class HomePageState extends State<HomePage> {
             _notificationsEnabled
                 ? Icons.notifications_active
                 : Icons.notifications_off,
-            color: Colors.white,
+            color: AppColors.white,
           ),
           onPressed: _toggleNotifications,
         ),
@@ -542,14 +543,14 @@ class HomePageState extends State<HomePage> {
       Tooltip(
         message: 'Enviar notificación de prueba',
         child: IconButton(
-          icon: const Icon(Icons.notification_add, color: Colors.white),
+          icon: const Icon(Icons.notification_add, color: AppColors.white),
           onPressed: _sendTestNotification,
         ),
       ),
       Tooltip(
         message: 'Cerrar sesión',
         child: IconButton(
-          icon: const Icon(Icons.logout, color: Colors.white),
+          icon: const Icon(Icons.logout, color: AppColors.white),
           onPressed: () => _confirmLogout(context),
         ),
       ),
@@ -560,7 +561,7 @@ class HomePageState extends State<HomePage> {
   List<Widget> _buildCompactActions() {
     return [
       PopupMenuButton<String>(
-        icon: const Icon(Icons.more_vert, color: Colors.white),
+        icon: const Icon(Icons.more_vert, color: AppColors.white),
         offset: const Offset(0, 45),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -588,7 +589,7 @@ class HomePageState extends State<HomePage> {
                   : Icons.notifications_active,
               text: _notificationsEnabled ? 'Desactivar' : 'Activar',
               iconColor:
-                  _notificationsEnabled ? Colors.grey[600]! : Colors.orange,
+                  _notificationsEnabled ? AppColors.neutralTextGray : AppColors.primaryDarkTeal,
             ),
           ),
           PopupMenuItem(
@@ -596,7 +597,7 @@ class HomePageState extends State<HomePage> {
             child: _buildPopupMenuItem(
               icon: Icons.notification_add,
               text: 'Probar',
-              iconColor: Colors.blue,
+              iconColor: AppColors.secondaryBrightBlue,
             ),
           ),
           PopupMenuItem(
@@ -604,7 +605,7 @@ class HomePageState extends State<HomePage> {
             child: _buildPopupMenuItem(
               icon: Icons.logout,
               text: 'Cerrar sesión',
-              iconColor: Colors.red,
+              iconColor: AppColors.secondaryCoralRed,
             ),
           ),
         ],
@@ -640,7 +641,7 @@ class HomePageState extends State<HomePage> {
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
-                color: Colors.black87,
+                color: AppColors.neutralTextGray,
               ),
             ),
           ),
@@ -659,7 +660,7 @@ class HomePageState extends State<HomePage> {
           children: [
             Icon(
               _notificationsEnabled ? Icons.check_circle : Icons.cancel,
-              color: Colors.white,
+              color: AppColors.white,
             ),
             const SizedBox(width: 8),
             Text(
@@ -671,7 +672,7 @@ class HomePageState extends State<HomePage> {
           ],
         ),
         backgroundColor:
-            _notificationsEnabled ? Colors.green : Colors.grey[600],
+            _notificationsEnabled ? AppColors.success : AppColors.neutralTextGray,
       ),
     );
   }
@@ -694,14 +695,14 @@ class HomePageState extends State<HomePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Theme(
         data: Theme.of(context).copyWith(
-          dividerColor: Colors.transparent,
+          dividerColor: AppColors.transparent,
           expansionTileTheme: const ExpansionTileThemeData(
-            backgroundColor: Colors.transparent,
-            collapsedBackgroundColor: Colors.transparent,
-            iconColor: Colors.orange,
-            textColor: Colors.orange,
-            collapsedTextColor: Colors.black87,
-            collapsedIconColor: Colors.orange,
+            backgroundColor: AppColors.transparent,
+            collapsedBackgroundColor: AppColors.transparent,
+            iconColor: AppColors.primaryDarkTeal,
+            textColor: AppColors.neutralTextGray,
+            collapsedTextColor: AppColors.neutralTextGray,
+            collapsedIconColor: AppColors.primaryDarkTeal,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
@@ -711,7 +712,7 @@ class HomePageState extends State<HomePage> {
           ),
         ),
         child: ExpansionTile(
-          leading: Icon(icon, color: Colors.orange, size: 24),
+          leading: Icon(icon, color: AppColors.primaryDarkTeal, size: 24),
           title: Text(
             title,
             style: TextStyle(
@@ -723,7 +724,7 @@ class HomePageState extends State<HomePage> {
                 ],
               ).value,
               fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              color: AppColors.neutralTextGray,
             ),
           ),
           tilePadding: EdgeInsets.symmetric(
@@ -771,18 +772,18 @@ class HomePageState extends State<HomePage> {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.transparent,
+        color: AppColors.transparent,
       ),
       child: ListTile(
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.orange.shade50,
+            color: AppColors.primaryDarkTealLight,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
             icon,
-            color: Colors.orange,
+            color: AppColors.primaryDarkTeal,
             size: isSubItem ? 20 : 22,
           ),
         ),
@@ -814,7 +815,7 @@ class HomePageState extends State<HomePage> {
                     name: MOBILE, value: isSubItem ? 11.0 : 12.0),
               ],
             ).value,
-            color: Colors.grey[600],
+            color: AppColors.neutralTextGray,
           ),
           maxLines: ResponsiveBreakpoints.of(context).isDesktop ? 2 : 1,
           overflow: TextOverflow.ellipsis,
@@ -822,7 +823,7 @@ class HomePageState extends State<HomePage> {
         trailing: Icon(
           Icons.arrow_forward_ios,
           size: 16,
-          color: Colors.grey[400],
+          color: AppColors.neutralMediumBorder,
         ),
         contentPadding: EdgeInsets.symmetric(
           horizontal: ResponsiveValue<double>(
@@ -848,18 +849,18 @@ class HomePageState extends State<HomePage> {
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Colors.grey[50],
+        color: AppColors.neutralLightBackground,
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
-          dividerColor: Colors.transparent,
+          dividerColor: AppColors.transparent,
           expansionTileTheme: const ExpansionTileThemeData(
-            backgroundColor: Colors.transparent,
-            collapsedBackgroundColor: Colors.transparent,
-            iconColor: Colors.orange,
-            textColor: Colors.orange,
-            collapsedTextColor: Colors.black87,
-            collapsedIconColor: Colors.orange,
+            backgroundColor: AppColors.transparent,
+            collapsedBackgroundColor: AppColors.transparent,
+            iconColor: AppColors.primaryDarkTeal,
+            textColor: AppColors.neutralTextGray,
+            collapsedTextColor: AppColors.neutralTextGray,
+            collapsedIconColor: AppColors.primaryDarkTeal,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
@@ -872,10 +873,10 @@ class HomePageState extends State<HomePage> {
           leading: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.orange.shade50,
+              color: AppColors.primaryDarkTealLight,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: Colors.orange, size: 22),
+            child: Icon(icon, color: AppColors.primaryDarkTeal, size: 22),
           ),
           title: Text(
             title,
@@ -888,7 +889,7 @@ class HomePageState extends State<HomePage> {
                 ],
               ).value,
               fontWeight: FontWeight.w500,
-              color: Colors.black87,
+              color: AppColors.neutralTextGray,
             ),
           ),
           tilePadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),

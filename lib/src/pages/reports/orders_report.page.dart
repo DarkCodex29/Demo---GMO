@@ -85,7 +85,7 @@ class OrdersReportPageState extends State<OrdersReportPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar órdenes: ${e.toString()}'),
@@ -180,11 +180,11 @@ class OrdersReportPageState extends State<OrdersReportPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Reporte de Órdenes'),
         backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
+        
       ),
       body: isLoading
           ? const Center(
@@ -229,7 +229,7 @@ class OrdersReportPageState extends State<OrdersReportPage> {
           TextField(
             decoration: InputDecoration(
               hintText: 'Buscar por equipo, descripción o ubicación...',
-              prefixIcon: const Icon(Icons.search, color: Colors.green),
+              prefixIcon: const Icon(Icons.search),
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.clear),

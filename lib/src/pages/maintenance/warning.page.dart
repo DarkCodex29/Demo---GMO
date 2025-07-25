@@ -33,7 +33,6 @@ class AvisoPageState extends State<AvisoPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Aviso'),
-        backgroundColor: Colors.orange,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -102,7 +101,7 @@ class AvisoPageState extends State<AvisoPage> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
-        leading: Icon(icon, color: Colors.orange),
+        leading: Icon(icon, color: Theme.of(context).primaryColor),
         title: Text(title),
         trailing: const Icon(Icons.arrow_forward),
         onTap: () {
@@ -140,7 +139,6 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.orange,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -149,10 +147,10 @@ class DetailPage extends StatelessWidget {
           children: [
             Text(
               'Detalles de $title',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(height: 16),

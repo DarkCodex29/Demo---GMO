@@ -45,7 +45,7 @@ class InstructionPageState extends State<InstructionPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
@@ -77,11 +77,11 @@ class InstructionPageState extends State<InstructionPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Instrucciones de Trabajo'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -94,11 +94,11 @@ class InstructionPageState extends State<InstructionPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Instrucciones de Trabajo'),
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
+        
+        
       ),
       body: ResponsiveRowColumn(
         layout: ResponsiveRowColumnType.COLUMN,
@@ -166,10 +166,10 @@ class InstructionPageState extends State<InstructionPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterInstrucciones('');
                           },
@@ -250,7 +250,7 @@ class InstructionPageState extends State<InstructionPage> {
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.assignment, color: Colors.white, size: 24),
+                  child: const Icon(Icons.assignment, size: 24),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(

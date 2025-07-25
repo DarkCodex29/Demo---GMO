@@ -76,16 +76,8 @@ class AuthPageState extends State<AuthPage> {
             const SizedBox(height: 40),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Ingresa tu usuario',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               ),
             ),
             const SizedBox(height: 16),
@@ -94,14 +86,6 @@ class AuthPageState extends State<AuthPage> {
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 labelText: 'Contraseña',
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _isPasswordVisible
@@ -123,32 +107,24 @@ class AuthPageState extends State<AuthPage> {
                 onPressed: () {},
                 child: const Text(
                   '¿Olvidaste tu contraseña?',
-                  style: TextStyle(color: Colors.blue),
                 ),
               ),
             ),
             const SizedBox(height: 30),
             _isLoading
-                ? const CircularProgressIndicator(
-                    color: Colors.orange,
-                  )
+                ? const CircularProgressIndicator()
                 : SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _login,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                       ),
                       child: const Text(
                         'Iniciar sesión',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

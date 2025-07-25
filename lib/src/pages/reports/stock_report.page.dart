@@ -61,7 +61,7 @@ class StockReportPageState extends State<StockReportPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar materiales: ${e.toString()}'),
@@ -134,11 +134,11 @@ class StockReportPageState extends State<StockReportPage> {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Reporte de Stock'),
         backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
+        
       ),
       body: isLoading
           ? const Center(
@@ -183,7 +183,7 @@ class StockReportPageState extends State<StockReportPage> {
           TextField(
             decoration: InputDecoration(
               hintText: 'Buscar por material o descripción...',
-              prefixIcon: const Icon(Icons.search, color: Colors.blue),
+              prefixIcon: const Icon(Icons.search),
               suffixIcon: searchQuery.isNotEmpty
                   ? IconButton(
                       icon: const Icon(Icons.clear),

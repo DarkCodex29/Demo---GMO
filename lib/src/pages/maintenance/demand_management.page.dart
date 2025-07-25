@@ -25,12 +25,19 @@ class DemandManagementPageState extends State<DemandManagementPage> {
   final TextEditingController _autorController = TextEditingController();
   final TextEditingController _sintomaController = TextEditingController();
   final TextEditingController _causaController = TextEditingController();
-  final TextEditingController _tiempoReparacionController = TextEditingController();
-  
+  final TextEditingController _tiempoReparacionController =
+      TextEditingController();
+
   final List<String> clasesAviso = ['m1', 'm2', 'm3', 'm4'];
   final List<String> prioridades = ['BAJA', 'MEDIA', 'ALTA', 'CRITICA'];
-  final List<String> sintomas = ['Ruido', 'Fuga', 'Vibración', 'Temperatura alta', 'Otros'];
-  
+  final List<String> sintomas = [
+    'Ruido',
+    'Fuga',
+    'Vibración',
+    'Temperatura alta',
+    'Otros'
+  ];
+
   String? selectedClaseAviso;
   String? selectedPrioridad;
   String? selectedSintoma;
@@ -44,7 +51,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
 
   Future<void> _loadDemandas() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/demandas.json');
+      final String response =
+          await rootBundle.loadString('assets/data/demandas.json');
       final data = json.decode(response);
       setState(() {
         demandas = data['demandas'] ?? [];
@@ -60,14 +68,14 @@ class DemandManagementPageState extends State<DemandManagementPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       }
@@ -82,18 +90,20 @@ class DemandManagementPageState extends State<DemandManagementPage> {
       } else {
         filteredDemandas = demandas.where((demanda) {
           final titulo = demanda['tituloAviso']?.toString().toLowerCase() ?? '';
-          final descripcion = demanda['descripcionAviso']?.toString().toLowerCase() ?? '';
-          final claseAviso = demanda['claseAviso']?.toString().toLowerCase() ?? '';
+          final descripcion =
+              demanda['descripcionAviso']?.toString().toLowerCase() ?? '';
+          final claseAviso =
+              demanda['claseAviso']?.toString().toLowerCase() ?? '';
           final autor = demanda['autor']?.toString().toLowerCase() ?? '';
           final sintoma = demanda['sintoma']?.toString().toLowerCase() ?? '';
-          
+
           final searchLower = query.toLowerCase();
-          
+
           return titulo.contains(searchLower) ||
-                 descripcion.contains(searchLower) ||
-                 claseAviso.contains(searchLower) ||
-                 autor.contains(searchLower) ||
-                 sintoma.contains(searchLower);
+              descripcion.contains(searchLower) ||
+              claseAviso.contains(searchLower) ||
+              autor.contains(searchLower) ||
+              sintoma.contains(searchLower);
         }).toList();
       }
     });
@@ -108,7 +118,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
 
   Color _getPriorityColor(String? sintoma) {
     if (sintoma == null || sintoma.trim().isEmpty) return Colors.grey;
-    
+
     switch (sintoma.toLowerCase()) {
       case 'ruido':
         return Colors.orange;
@@ -125,7 +135,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
 
   IconData _getPriorityIcon(String? sintoma) {
     if (sintoma == null || sintoma.trim().isEmpty) return Icons.help_outline;
-    
+
     switch (sintoma.toLowerCase()) {
       case 'ruido':
         return Icons.volume_up;
@@ -143,17 +153,14 @@ class DemandManagementPageState extends State<DemandManagementPage> {
   @override
   Widget build(BuildContext context) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
-    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: ResponsiveRowColumn(
           layout: ResponsiveRowColumnType.ROW,
           children: [
             const ResponsiveRowColumnItem(
-              child: Icon(Icons.report_problem, color: Colors.white),
+              child: Icon(Icons.report_problem),
             ),
             const ResponsiveRowColumnItem(
               child: SizedBox(width: 8),
@@ -172,18 +179,16 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       ],
                     ).value,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
                   ),
                 ),
               ),
             ),
           ],
         ),
-        backgroundColor: Colors.orange,
         elevation: 2,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -218,7 +223,6 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                 8,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
@@ -240,11 +244,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar demandas...' 
+                  hintText: isMobile
+                      ? 'Buscar demandas...'
                       : 'Buscar por título, descripción, clase, autor...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -253,10 +256,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () => _filterDemandas(''),
                         )
                       : null,
@@ -265,7 +268,6 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: Colors.white,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: ResponsiveValue<double>(
                       context,
@@ -295,7 +297,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                   ).value,
                   vertical: 4,
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.orange.shade50,
                   borderRadius: BorderRadius.circular(20),
@@ -306,7 +309,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                   rowMainAxisSize: MainAxisSize.min,
                   children: [
                     ResponsiveRowColumnItem(
-                      child: Icon(Icons.filter_list, color: Colors.orange.shade700, size: 18),
+                      child: Icon(Icons.filter_list,
+                          color: Colors.orange.shade700, size: 18),
                     ),
                     const ResponsiveRowColumnItem(
                       child: SizedBox(width: 6),
@@ -322,8 +326,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                             fontSize: ResponsiveValue<double>(
                               context,
                               conditionalValues: [
-                                const Condition.smallerThan(name: TABLET, value: 11.0),
-                                const Condition.largerThan(name: MOBILE, value: 13.0),
+                                const Condition.smallerThan(
+                                    name: TABLET, value: 11.0),
+                                const Condition.largerThan(
+                                    name: MOBILE, value: 13.0),
                               ],
                             ).value,
                           ),
@@ -343,12 +349,15 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircularProgressIndicator(color: Colors.orange.shade600),
-                          SizedBox(height: ResponsiveValue<double>(
+                          const CircularProgressIndicator(),
+                          SizedBox(
+                              height: ResponsiveValue<double>(
                             context,
                             conditionalValues: [
-                              const Condition.smallerThan(name: TABLET, value: 12.0),
-                              const Condition.largerThan(name: MOBILE, value: 16.0),
+                              const Condition.smallerThan(
+                                  name: TABLET, value: 12.0),
+                              const Condition.largerThan(
+                                  name: MOBILE, value: 16.0),
                             ],
                           ).value),
                           Text(
@@ -357,8 +366,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 14.0),
-                                  const Condition.largerThan(name: MOBILE, value: 16.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 14.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 16.0),
                                 ],
                               ).value,
                               color: Colors.grey[600],
@@ -404,7 +415,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               ).value,
               color: Colors.grey[400],
             ),
-            SizedBox(height: ResponsiveValue<double>(
+            SizedBox(
+                height: ResponsiveValue<double>(
               context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 12.0),
@@ -412,7 +424,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               ],
             ).value),
             Text(
-              searchQuery.isNotEmpty 
+              searchQuery.isNotEmpty
                   ? 'No se encontraron resultados'
                   : 'No hay demandas disponibles',
               style: TextStyle(
@@ -428,7 +440,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: ResponsiveValue<double>(
+            SizedBox(
+                height: ResponsiveValue<double>(
               context,
               conditionalValues: [
                 const Condition.smallerThan(name: TABLET, value: 6.0),
@@ -436,7 +449,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               ],
             ).value),
             Text(
-              searchQuery.isNotEmpty 
+              searchQuery.isNotEmpty
                   ? 'Intenta con otros términos de búsqueda'
                   : 'Las demandas aparecerán aquí cuando estén disponibles',
               style: TextStyle(
@@ -452,7 +465,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               textAlign: TextAlign.center,
             ),
             if (searchQuery.isNotEmpty) ...[
-              SizedBox(height: ResponsiveValue<double>(
+              SizedBox(
+                  height: ResponsiveValue<double>(
                 context,
                 conditionalValues: [
                   const Condition.smallerThan(name: TABLET, value: 12.0),
@@ -464,9 +478,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                 icon: const Icon(Icons.clear_all),
                 label: const Text('Limpiar búsqueda'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
                 ),
               ),
             ],
@@ -528,12 +541,6 @@ class DemandManagementPageState extends State<DemandManagementPage> {
         data: Theme.of(context).copyWith(
           dividerColor: Colors.transparent,
           expansionTileTheme: const ExpansionTileThemeData(
-            backgroundColor: Colors.transparent,
-            collapsedBackgroundColor: Colors.transparent,
-            iconColor: Colors.orange,
-            textColor: Colors.orange,
-            collapsedTextColor: Colors.black87,
-            collapsedIconColor: Colors.orange,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
@@ -568,7 +575,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
             decoration: BoxDecoration(
               color: priorityColor.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: priorityColor.withOpacity(0.4), width: 1),
+              border:
+                  Border.all(color: priorityColor.withOpacity(0.4), width: 1),
             ),
             child: Icon(
               priorityIcon,
@@ -591,8 +599,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                         fontSize: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 14.0),
-                            const Condition.largerThan(name: MOBILE, value: 15.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 14.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 15.0),
                           ],
                         ).value,
                         fontWeight: FontWeight.w600,
@@ -605,7 +615,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.person, size: 12, color: Colors.grey[600]),
+                        const Icon(Icons.person, size: 12),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -614,8 +624,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 11.0),
-                                  const Condition.largerThan(name: MOBILE, value: 12.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 11.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 12.0),
                                 ],
                               ).value,
                               color: Colors.grey[600],
@@ -630,7 +642,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                   ],
                 ),
               ),
-              
+
               // Badges y fecha a la derecha
               Expanded(
                 flex: 2,
@@ -642,11 +654,13 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.orange.shade50,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.orange.shade300, width: 0.5),
+                            border: Border.all(
+                                color: Colors.orange.shade300, width: 0.5),
                           ),
                           child: Text(
                             _formatValue(demanda['claseAviso']),
@@ -654,8 +668,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 9.0),
-                                  const Condition.largerThan(name: MOBILE, value: 10.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 9.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 10.0),
                                 ],
                               ).value,
                               fontWeight: FontWeight.w600,
@@ -665,11 +681,14 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                         ),
                         const SizedBox(width: 4),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             color: priorityColor.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: priorityColor.withOpacity(0.4), width: 0.5),
+                            border: Border.all(
+                                color: priorityColor.withOpacity(0.4),
+                                width: 0.5),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -681,13 +700,18 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                               ),
                               const SizedBox(width: 2),
                               Text(
-                                sintoma.isNotEmpty ? sintoma.substring(0, sintoma.length > 4 ? 4 : sintoma.length) : 'N/A',
+                                sintoma.isNotEmpty
+                                    ? sintoma.substring(0,
+                                        sintoma.length > 4 ? 4 : sintoma.length)
+                                    : 'N/A',
                                 style: TextStyle(
                                   fontSize: ResponsiveValue<double>(
                                     context,
                                     conditionalValues: [
-                                      const Condition.smallerThan(name: TABLET, value: 9.0),
-                                      const Condition.largerThan(name: MOBILE, value: 10.0),
+                                      const Condition.smallerThan(
+                                          name: TABLET, value: 9.0),
+                                      const Condition.largerThan(
+                                          name: MOBILE, value: 10.0),
                                     ],
                                   ).value,
                                   fontWeight: FontWeight.w600,
@@ -704,7 +728,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(Icons.calendar_today, size: 12, color: Colors.grey[600]),
+                        const Icon(Icons.calendar_today, size: 12),
                         const SizedBox(width: 4),
                         Text(
                           _formatValue(demanda['fechaInicio']),
@@ -712,8 +736,10 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                             fontSize: ResponsiveValue<double>(
                               context,
                               conditionalValues: [
-                                const Condition.smallerThan(name: TABLET, value: 11.0),
-                                const Condition.largerThan(name: MOBILE, value: 12.0),
+                                const Condition.smallerThan(
+                                    name: TABLET, value: 11.0),
+                                const Condition.largerThan(
+                                    name: MOBILE, value: 12.0),
                               ],
                             ).value,
                             color: Colors.grey[600],
@@ -759,7 +785,6 @@ class DemandManagementPageState extends State<DemandManagementPage> {
         ).value,
       ),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
       ),
@@ -770,7 +795,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
             layout: ResponsiveRowColumnType.ROW,
             children: [
               ResponsiveRowColumnItem(
-                child: Icon(Icons.info_outline, color: Colors.orange.shade600, size: 20),
+                child: const Icon(Icons.info_outline, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),
@@ -793,14 +818,15 @@ class DemandManagementPageState extends State<DemandManagementPage> {
               ),
             ],
           ),
-          SizedBox(height: ResponsiveValue<double>(
+          SizedBox(
+              height: ResponsiveValue<double>(
             context,
             conditionalValues: [
               const Condition.smallerThan(name: TABLET, value: 8.0),
               const Condition.largerThan(name: MOBILE, value: 12.0),
             ],
           ).value),
-          
+
           // Tabla de detalles responsive
           if (isDesktop || isTablet)
             _buildTableView(demanda)
@@ -877,12 +903,12 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                   const Condition.largerThan(name: MOBILE, value: 13.0),
                 ],
               ).value,
-              color: value == null || value.toString().trim().isEmpty 
-                  ? Colors.grey[500] 
+              color: value == null || value.toString().trim().isEmpty
+                  ? Colors.grey[500]
                   : Colors.black87,
               fontWeight: FontWeight.w400,
-              fontStyle: value == null || value.toString().trim().isEmpty 
-                  ? FontStyle.italic 
+              fontStyle: value == null || value.toString().trim().isEmpty
+                  ? FontStyle.italic
                   : FontStyle.normal,
             ),
           ),
@@ -932,12 +958,12 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                     const Condition.largerThan(name: MOBILE, value: 13.0),
                   ],
                 ).value,
-                color: value == null || value.toString().trim().isEmpty 
-                    ? Colors.grey[500] 
+                color: value == null || value.toString().trim().isEmpty
+                    ? Colors.grey[500]
                     : Colors.black87,
                 fontWeight: FontWeight.w400,
-                fontStyle: value == null || value.toString().trim().isEmpty 
-                    ? FontStyle.italic 
+                fontStyle: value == null || value.toString().trim().isEmpty
+                    ? FontStyle.italic
                     : FontStyle.normal,
               ),
             ),
@@ -989,7 +1015,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                         selectedClaseAviso = value;
                       });
                     },
-                    validator: (value) => value == null ? 'Seleccione una clase' : null,
+                    validator: (value) =>
+                        value == null ? 'Seleccione una clase' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
@@ -998,8 +1025,9 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       labelText: 'Título de aviso',
                       border: OutlineInputBorder(),
                     ),
-                    validator: (value) => 
-                      value == null || value.isEmpty ? 'Ingrese un título' : null,
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Ingrese un título'
+                        : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
@@ -1009,8 +1037,9 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                       border: OutlineInputBorder(),
                     ),
                     maxLines: 3,
-                    validator: (value) => 
-                      value == null || value.isEmpty ? 'Ingrese una descripción' : null,
+                    validator: (value) => value == null || value.isEmpty
+                        ? 'Ingrese una descripción'
+                        : null,
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
@@ -1058,7 +1087,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
                         selectedPrioridad = value;
                       });
                     },
-                    validator: (value) => value == null ? 'Seleccione una prioridad' : null,
+                    validator: (value) =>
+                        value == null ? 'Seleccione una prioridad' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
@@ -1081,10 +1111,7 @@ class DemandManagementPageState extends State<DemandManagementPage> {
           ),
           ElevatedButton(
             onPressed: _createDemand,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
-            ),
+            style: ElevatedButton.styleFrom(),
             child: const Text('Crear'),
           ),
         ],
@@ -1101,10 +1128,14 @@ class DemandManagementPageState extends State<DemandManagementPage> {
         'tituloAviso': _tituloController.text,
         'descripcionAviso': _descripcionController.text,
         'fechaInicio': DateFormat('dd.MM.yyyy').format(now),
-        'autor': _autorController.text.isEmpty ? 'usuario_actual' : _autorController.text,
+        'autor': _autorController.text.isEmpty
+            ? 'usuario_actual'
+            : _autorController.text,
         'sintoma': selectedSintoma ?? '',
         'causa': _causaController.text.isEmpty ? '' : _causaController.text,
-        'tiempoReparacion': _tiempoReparacionController.text.isEmpty ? '' : _tiempoReparacionController.text,
+        'tiempoReparacion': _tiempoReparacionController.text.isEmpty
+            ? ''
+            : _tiempoReparacionController.text,
         'equipo': '2000${(100 + demandas.length).toString()}',
         'denominacionEquipo': 'Equipo ${demandas.length + 1}',
         'ubicacionTecnica': 'VAN-018-XXX-XXX-XXXXX',
@@ -1130,11 +1161,11 @@ class DemandManagementPageState extends State<DemandManagementPage> {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Demanda creada exitosamente'),
-          backgroundColor: Colors.green,
+        SnackBar(
+          content: const Text('Demanda creada exitosamente'),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
     }
   }
-} 
+}

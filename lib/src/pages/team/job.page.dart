@@ -32,7 +32,7 @@ class JobPageState extends State<JobPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Puestos de Trabajo'),
-        backgroundColor: Colors.orange,
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -144,7 +144,7 @@ class JobDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.orange,
+        
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

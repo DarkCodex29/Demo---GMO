@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demo/src/app.dart';
 import 'package:demo/src/services/notification_service.dart';
+import 'package:demo/src/theme/app_theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() async {
@@ -20,37 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Sistema de Gestión de Mantenimiento',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-        expansionTileTheme: const ExpansionTileThemeData(
-          iconColor: Colors.orange,
-          textColor: Colors.orange,
-          collapsedTextColor: Colors.black,
-        ),
-        useMaterial3: true,
-        // Configuración adicional del tema
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
-          elevation: 4,
-        ),
-        cardTheme: CardTheme(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-        ),
-      ),
+      theme: AppTheme.lightTheme,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [

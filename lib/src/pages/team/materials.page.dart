@@ -77,7 +77,7 @@ class MaterialsPageState extends State<MaterialsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Materiales'),
-        backgroundColor: Colors.orange,
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -207,7 +207,7 @@ class MaterialsPageState extends State<MaterialsPage> {
           child: ElevatedButton(
             onPressed: _filterMaterials,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
+              
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),

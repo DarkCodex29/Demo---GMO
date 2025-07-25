@@ -11,11 +11,11 @@ class EquipmentReportPageState extends State<EquipmentReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: const Text('Reporte de Equipos'),
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
+        
+        
       ),
       body: const Center(
         child: Column(

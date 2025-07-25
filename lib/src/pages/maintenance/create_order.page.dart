@@ -59,8 +59,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crear Órdenes de Mantenimiento'),
-        backgroundColor: Colors.orange,
-        actions: [
+                actions: [
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: _saveOrder,
@@ -87,8 +86,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
+                                                  ),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -233,8 +231,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
+                                                  ),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -319,8 +316,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
+                                                  ),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -383,18 +379,14 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                     icon: const Icon(Icons.save_outlined),
                     label: const Text('Guardar Borrador'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      foregroundColor: Colors.white,
-                    ),
+                                                                ),
                   ),
                   ElevatedButton.icon(
                     onPressed: _saveOrder,
                     icon: const Icon(Icons.check_circle),
                     label: const Text('Crear Orden'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      foregroundColor: Colors.white,
-                    ),
+                                                                ),
                   ),
                 ],
               ),
@@ -409,8 +401,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Borrador guardado exitosamente'),
-        backgroundColor: Colors.green,
-      ),
+              ),
     );
   }
 
@@ -438,8 +429,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 '✓ Orden creada exitosamente\n'
                 '✓ Notificaciones enviadas\n'
                 '✓ Programación actualizada',
-                style: TextStyle(color: Colors.green),
-              ),
+                              ),
             ],
           ),
           actions: [
@@ -455,9 +445,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
                 Navigator.pop(context);
                 _createAnotherOrder();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              child: const Text('Crear Otra',
-                  style: TextStyle(color: Colors.white)),
+              child: const Text('Crear Otra'),
             ),
           ],
         ),

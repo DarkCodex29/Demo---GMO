@@ -45,7 +45,7 @@ class CyclePageState extends State<CyclePage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar datos: ${e.toString()}'),
@@ -77,11 +77,11 @@ class CyclePageState extends State<CyclePage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Ciclo Individual'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -94,7 +94,7 @@ class CyclePageState extends State<CyclePage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: Text(
           'Ciclos de Mantenimiento',
@@ -110,11 +110,11 @@ class CyclePageState extends State<CyclePage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange,
+        
         elevation: 2,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -184,10 +184,10 @@ class CyclePageState extends State<CyclePage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterCiclos('');
                           },
@@ -268,7 +268,7 @@ class CyclePageState extends State<CyclePage> {
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.refresh, color: Colors.white, size: 24),
+                  child: const Icon(Icons.refresh, size: 24),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(

@@ -45,14 +45,14 @@ class _RoadmapPageState extends State<RoadmapPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar hojas de ruta: ${e.toString()}'),
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       }
@@ -87,13 +87,10 @@ class _RoadmapPageState extends State<RoadmapPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
         appBar: AppBar(
           title: const Text('Hoja de Ruta'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -108,13 +105,13 @@ class _RoadmapPageState extends State<RoadmapPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: ResponsiveRowColumn(
           layout: ResponsiveRowColumnType.ROW,
           children: [
             const ResponsiveRowColumnItem(
-              child: Icon(Icons.route, color: Colors.white),
+              child: const Icon(Icons.route),
             ),
             const ResponsiveRowColumnItem(
               child: SizedBox(width: 8),
@@ -140,11 +137,11 @@ class _RoadmapPageState extends State<RoadmapPage> {
             ),
           ],
         ),
-        backgroundColor: Colors.orange,
+        
         elevation: 2,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -340,7 +337,7 @@ class _RoadmapPageState extends State<RoadmapPage> {
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(Icons.route, color: Colors.white, size: 24),
+                            child: const Icon(Icons.route, size: 24),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -454,7 +451,7 @@ class _RoadmapPageState extends State<RoadmapPage> {
                       color: Colors.orange,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(item['icon'], color: Colors.white, size: 20),
+                    child: Icon(item['icon'], size: 20),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -541,7 +538,7 @@ class _RoadmapPageState extends State<RoadmapPage> {
                         color: Colors.orange,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Icon(item['icon'], color: Colors.white, size: 24),
+                      child: Icon(item['icon'], size: 24),
                     ),
                     const SizedBox(height: 12),
                     Text(

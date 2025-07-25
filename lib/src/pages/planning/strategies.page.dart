@@ -42,7 +42,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.white),
+                const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Error al cargar procesos de planificación: ${e.toString()}'),
@@ -85,11 +85,11 @@ class _StrategiesPageState extends State<StrategiesPage> {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Scaffold(
-        backgroundColor: Colors.grey[50],
+        
         appBar: AppBar(
           title: const Text('Planificación de Mantenimiento'),
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          
+          
         ),
         body: const Center(
           child: CircularProgressIndicator(
@@ -102,7 +102,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      
       appBar: AppBar(
         title: Text(
           'Planificación de Mantenimiento',
@@ -118,7 +118,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange,
+        
         elevation: 2,
         centerTitle: false,
       ),
@@ -188,10 +188,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
                       ],
                     ).value,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.orange.shade600, size: 24),
+                  prefixIcon: const Icon(Icons.search, size: 24),
                   suffixIcon: searchQuery.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey[600]),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _filterProcesos('');
                           },
@@ -383,7 +383,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.category, size: 12, color: Colors.grey[600]),
+                        const Icon(Icons.category, size: 12),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -499,7 +499,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
             layout: ResponsiveRowColumnType.ROW,
             children: [
               ResponsiveRowColumnItem(
-                child: Icon(Icons.info_outline, color: Colors.orange.shade600, size: 20),
+                child: const Icon(Icons.info_outline, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),
@@ -661,7 +661,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.link, size: 12, color: Colors.grey[600]),
+                const Icon(Icons.link, size: 12),
                 const SizedBox(width: 4),
                 Text(
                   'Ref: $referencia',
