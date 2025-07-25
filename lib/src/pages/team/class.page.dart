@@ -109,7 +109,7 @@ class ClasesPageState extends State<ClasesPage> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
-        leading: Icon(icon, color: Colors.orange),
+        leading: Icon(icon),
         title: Text(title),
         trailing: const Icon(Icons.arrow_forward),
         onTap: () {
@@ -187,7 +187,7 @@ class ClaseDetailPage extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading:
-                        const Icon(Icons.check_circle, color: Colors.orange),
+                        const Icon(Icons.check_circle),
                     title: Text(caracteristica),
                   ),
                 );

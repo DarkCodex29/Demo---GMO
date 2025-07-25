@@ -909,7 +909,7 @@ class _RoadmapPageState extends State<RoadmapPage> {
                           color: Colors.orange,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.route, color: Colors.white, size: 24),
+                        child: const Icon(Icons.route, size: 24),
                       ),
                       const SizedBox(width: 16),
                       Expanded(

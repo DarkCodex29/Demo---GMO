@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:demo/src/services/notification_service.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:demo/src/theme/app_colors.dart';
+import 'package:demo/src/theme/app_text_styles.dart';
 
 class CreateOrderPage extends StatefulWidget {
   const CreateOrderPage({super.key});
@@ -56,339 +59,79 @@ class CreateOrderPageState extends State<CreateOrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = ResponsiveBreakpoints.of(context).isDesktop;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear Órdenes de Mantenimiento'),
-                actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveOrder,
+        title: Text(
+          'Crear Orden de Mantenimiento',
+          style: AppTextStyles.appBarTitle.copyWith(
+            fontSize: isMobile ? 16 : 20,
           ),
+        ),
+        actions: [
+          if (!isMobile)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: ElevatedButton.icon(
+                onPressed: _saveOrder,
+                icon: const Icon(Icons.save, size: 18),
+                label: Text('Guardar', style: AppTextStyles.buttonMedium),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                ),
+              ),
+            ),
+          if (isMobile)
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _saveOrder,
+            ),
         ],
       ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: EdgeInsets.all(isMobile ? 12 : 16),
+          child: ResponsiveRowColumn(
+            layout: isDesktop
+                ? ResponsiveRowColumnType.ROW
+                : ResponsiveRowColumnType.COLUMN,
+            rowCrossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Información General
-              Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Información General de la Orden',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                                                  ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                labelText: 'Clase de orden',
-                                border: OutlineInputBorder(),
-                              ),
-                              value: selectedClaseOrden,
-                              isExpanded: true,
-                              items: clasesOrden.map((clase) {
-                                return DropdownMenuItem(
-                                  value: clase,
-                                  child: Text(
-                                    clase,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedClaseOrden = value;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Seleccione una clase de orden';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                labelText: 'Prioridad',
-                                border: OutlineInputBorder(),
-                              ),
-                              value: selectedPrioridad,
-                              isExpanded: true,
-                              items: prioridades.map((prioridad) {
-                                return DropdownMenuItem(
-                                  value: prioridad,
-                                  child: Text(
-                                    prioridad,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedPrioridad = value;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Seleccione una prioridad';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _equipoController,
-                        decoration: const InputDecoration(
-                          labelText: 'Equipo',
-                          border: OutlineInputBorder(),
-                          hintText: 'Ej: 10000001',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ingrese el código del equipo';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _descripcionController,
-                        decoration: const InputDecoration(
-                          labelText: 'Descripción de la orden',
-                          border: OutlineInputBorder(),
-                          hintText: 'Describa el trabajo a realizar',
-                        ),
-                        maxLines: 3,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ingrese una descripción';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                          labelText: 'Tipo de plan',
-                          border: OutlineInputBorder(),
-                        ),
-                        value: selectedTipoPlan,
-                        isExpanded: true,
-                        items: tiposPlan.map((tipo) {
-                          return DropdownMenuItem(
-                            value: tipo,
-                            child: Text(
-                              tipo,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedTipoPlan = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+              if (isDesktop) ...[
+                ResponsiveRowColumnItem(
+                  rowFlex: 1,
+                  child: _buildLeftColumn(),
                 ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Operaciones
-              Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Detalles de Operación',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                                                  ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _operacionController,
-                              decoration: const InputDecoration(
-                                labelText: 'Operación',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 0010',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _centroCostoController,
-                              decoration: const InputDecoration(
-                                labelText: 'Centro de costo',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 10000001',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _cantidadPersonasController,
-                              decoration: const InputDecoration(
-                                labelText: 'Cantidad de personas',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 2',
-                              ),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _duracionController,
-                              decoration: const InputDecoration(
-                                labelText: 'Duración',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 2h',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _trabajoPlanController,
-                        decoration: const InputDecoration(
-                          labelText: 'Trabajo plan',
-                          border: OutlineInputBorder(),
-                          hintText: 'Descripción del trabajo planificado',
-                        ),
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
+                const ResponsiveRowColumnItem(
+                  child: SizedBox(width: 24),
                 ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Materiales
-              Card(
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Materiales y Recursos',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                                                  ),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: _centroController,
-                              decoration: const InputDecoration(
-                                labelText: 'Centro',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 1001',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _almacenController,
-                              decoration: const InputDecoration(
-                                labelText: 'Almacén',
-                                border: OutlineInputBorder(),
-                                hintText: 'Ej: 2001',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _componentesController,
-                        decoration: const InputDecoration(
-                          labelText: 'Componentes',
-                          border: OutlineInputBorder(),
-                          hintText: 'Lista de componentes necesarios',
-                        ),
-                        maxLines: 2,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _ubicacionTecnicaController,
-                        decoration: const InputDecoration(
-                          labelText: 'Ubicación técnica',
-                          border: OutlineInputBorder(),
-                          hintText: 'Ej: PERU-CHI-PCBN-RA-',
-                        ),
-                      ),
-                    ],
-                  ),
+                ResponsiveRowColumnItem(
+                  rowFlex: 1,
+                  child: _buildRightColumn(),
                 ),
+              ] else ...[
+                ResponsiveRowColumnItem(
+                  child: _buildLeftColumn(),
+                ),
+                ResponsiveRowColumnItem(
+                  child: SizedBox(height: isMobile ? 16 : 24),
+                ),
+                ResponsiveRowColumnItem(
+                  child: _buildRightColumn(),
+                ),
+              ],
+              ResponsiveRowColumnItem(
+                child: SizedBox(height: isMobile ? 16 : 24),
               ),
-
-              const SizedBox(height: 24),
-
-              // Botones de acción
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: _saveDraft,
-                    icon: const Icon(Icons.save_outlined),
-                    label: const Text('Guardar Borrador'),
-                    style: ElevatedButton.styleFrom(
-                                                                ),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: _saveOrder,
-                    icon: const Icon(Icons.check_circle),
-                    label: const Text('Crear Orden'),
-                    style: ElevatedButton.styleFrom(
-                                                                ),
-                  ),
-                ],
+              ResponsiveRowColumnItem(
+                child: _buildActionButtons(),
               ),
             ],
           ),
@@ -397,11 +140,364 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     );
   }
 
+  Widget _buildLeftColumn() {
+    return Column(
+      children: [
+        _buildInfoGeneralCard(),
+        const SizedBox(height: 16),
+        _buildOperacionCard(),
+      ],
+    );
+  }
+
+  Widget _buildRightColumn() {
+    return Column(
+      children: [
+        _buildMaterialesCard(),
+      ],
+    );
+  }
+
+  Widget _buildInfoGeneralCard() {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(isMobile ? 12 : 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryDarkTealLight,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.info_outline,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Información General',
+                  style: AppTextStyles.heading6,
+                ),
+              ],
+            ),
+            SizedBox(height: isMobile ? 16 : 20),
+            _buildResponsiveRow([
+              _buildDropdownField(
+                label: 'Clase de orden',
+                value: selectedClaseOrden,
+                items: clasesOrden,
+                onChanged: (value) => setState(() => selectedClaseOrden = value),
+                validator: (value) => value == null ? 'Requerido' : null,
+              ),
+              _buildDropdownField(
+                label: 'Prioridad',
+                value: selectedPrioridad,
+                items: prioridades,
+                onChanged: (value) => setState(() => selectedPrioridad = value),
+                validator: (value) => value == null ? 'Requerido' : null,
+              ),
+            ]),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _equipoController,
+              label: 'Equipo',
+              hint: 'Ej: 10000001',
+              validator: (value) => 
+                  value?.isEmpty == true ? 'Ingrese el código del equipo' : null,
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _descripcionController,
+              label: 'Descripción de la orden',
+              hint: 'Describa el trabajo a realizar',
+              maxLines: 3,
+              validator: (value) => 
+                  value?.isEmpty == true ? 'Ingrese una descripción' : null,
+            ),
+            const SizedBox(height: 16),
+            _buildDropdownField(
+              label: 'Tipo de plan',
+              value: selectedTipoPlan,
+              items: tiposPlan,
+              onChanged: (value) => setState(() => selectedTipoPlan = value),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOperacionCard() {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(isMobile ? 12 : 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryMintGreenLight,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.settings,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Detalles de Operación',
+                  style: AppTextStyles.heading6,
+                ),
+              ],
+            ),
+            SizedBox(height: isMobile ? 16 : 20),
+            _buildResponsiveRow([
+              _buildTextField(
+                controller: _operacionController,
+                label: 'Operación',
+                hint: 'Ej: 0010',
+              ),
+              _buildTextField(
+                controller: _centroCostoController,
+                label: 'Centro de costo',
+                hint: 'Ej: 10000001',
+              ),
+            ]),
+            const SizedBox(height: 16),
+            _buildResponsiveRow([
+              _buildTextField(
+                controller: _cantidadPersonasController,
+                label: 'Cantidad de personas',
+                hint: 'Ej: 2',
+                keyboardType: TextInputType.number,
+              ),
+              _buildTextField(
+                controller: _duracionController,
+                label: 'Duración',
+                hint: 'Ej: 2h',
+              ),
+            ]),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _trabajoPlanController,
+              label: 'Trabajo plan',
+              hint: 'Descripción del trabajo planificado',
+              maxLines: 2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMaterialesCard() {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(isMobile ? 12 : 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondaryAquaGreen.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.inventory_2,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Materiales y Recursos',
+                  style: AppTextStyles.heading6,
+                ),
+              ],
+            ),
+            SizedBox(height: isMobile ? 16 : 20),
+            _buildResponsiveRow([
+              _buildTextField(
+                controller: _centroController,
+                label: 'Centro',
+                hint: 'Ej: 1001',
+              ),
+              _buildTextField(
+                controller: _almacenController,
+                label: 'Almacén',
+                hint: 'Ej: 2001',
+              ),
+            ]),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _componentesController,
+              label: 'Componentes',
+              hint: 'Lista de componentes necesarios',
+              maxLines: 2,
+            ),
+            const SizedBox(height: 16),
+            _buildTextField(
+              controller: _ubicacionTecnicaController,
+              label: 'Ubicación técnica',
+              hint: 'Ej: PERU-CHI-PCBN-RA-',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResponsiveRow(List<Widget> children) {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    if (isMobile) {
+      return Column(
+        children: children
+            .expand((widget) => [widget, const SizedBox(height: 16)])
+            .take(children.length * 2 - 1)
+            .toList(),
+      );
+    }
+
+    return Row(
+      children: children
+          .expand((widget) => [Expanded(child: widget), const SizedBox(width: 16)])
+          .take(children.length * 2 - 1)
+          .toList(),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    String? hint,
+    int maxLines = 1,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+      ),
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      validator: validator,
+    );
+  }
+
+  Widget _buildDropdownField({
+    required String label,
+    required String? value,
+    required List<String> items,
+    required ValueChanged<String?> onChanged,
+    String? Function(String?)? validator,
+  }) {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(
+        labelText: label,
+      ),
+      value: value,
+      isExpanded: true,
+      items: items.map((item) {
+        return DropdownMenuItem(
+          value: item,
+          child: Text(
+            item,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        );
+      }).toList(),
+      onChanged: onChanged,
+      validator: validator,
+    );
+  }
+
+  Widget _buildActionButtons() {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+
+    if (isMobile) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          OutlinedButton.icon(
+            onPressed: _saveDraft,
+            icon: const Icon(Icons.save_outlined, size: 18),
+            label: Text('Guardar Borrador', style: AppTextStyles.buttonMedium),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+            ),
+          ),
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: _saveOrder,
+            icon: const Icon(Icons.check_circle, size: 18),
+            label: Text('Crear Orden', style: AppTextStyles.buttonMedium),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: isTablet 
+          ? MainAxisAlignment.center 
+          : MainAxisAlignment.end,
+      children: [
+        OutlinedButton.icon(
+          onPressed: _saveDraft,
+          icon: const Icon(Icons.save_outlined, size: 18),
+          label: Text('Guardar Borrador', style: AppTextStyles.buttonMedium),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        ElevatedButton.icon(
+          onPressed: _saveOrder,
+          icon: const Icon(Icons.check_circle, size: 18),
+          label: Text('Crear Orden', style: AppTextStyles.buttonMedium),
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 12,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   void _saveDraft() {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Borrador guardado exitosamente'),
-              ),
+      ),
     );
   }
 
@@ -415,30 +511,56 @@ class CreateOrderPageState extends State<CreateOrderPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Orden Creada'),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.success.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.check_circle,
+                  color: AppColors.success,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text('Orden Creada'),
+            ],
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Número de orden: $orderNumber'),
-              Text('Clase: ${selectedClaseOrden ?? 'N/A'}'),
-              Text('Prioridad: ${selectedPrioridad ?? 'N/A'}'),
-              Text('Equipo: ${_equipoController.text}'),
+              _buildInfoRow('Número de orden:', orderNumber),
+              _buildInfoRow('Clase:', selectedClaseOrden ?? 'N/A'),
+              _buildInfoRow('Prioridad:', selectedPrioridad ?? 'N/A'),
+              _buildInfoRow('Equipo:', _equipoController.text),
               const SizedBox(height: 16),
-              const Text(
-                '✓ Orden creada exitosamente\n'
-                '✓ Notificaciones enviadas\n'
-                '✓ Programación actualizada',
-                              ),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.success.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildSuccessItem('Orden creada exitosamente'),
+                    _buildSuccessItem('Notificaciones enviadas'),
+                    _buildSuccessItem('Programación actualizada'),
+                  ],
+                ),
+              ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pop(context); // Volver a la página anterior
+                Navigator.pop(context);
               },
-              child: const Text('OK'),
+              child: const Text('Cerrar'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -458,6 +580,54 @@ class CreateOrderPageState extends State<CreateOrderPage> {
         priority: selectedPrioridad ?? 'NORMAL',
       );
     }
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120,
+            child: Text(
+              label,
+              style: AppTextStyles.labelMedium.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: AppTextStyles.bodyMedium,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSuccessItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_circle,
+            size: 16,
+            color: AppColors.success,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.success,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _createAnotherOrder() {
