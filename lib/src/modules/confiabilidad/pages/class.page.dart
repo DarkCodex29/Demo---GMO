@@ -341,7 +341,7 @@ class ClasesPageState extends State<ClasesPage> {
                       .toList(),
                 ),
               ],
-              const Spacer(),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

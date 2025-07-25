@@ -99,7 +99,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         child: Center(
           child: CircularProgressIndicator(
             valueColor:
-                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
+                AlwaysStoppedAnimation<Color>(AppColors.primaryDarkTeal),
           ),
         ),
       );
@@ -293,7 +293,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: const BoxDecoration(
-                        color: AppColors.secondaryGoldenYellow,
+                        color: AppColors.primaryDarkTeal,
                         borderRadius:
                             BorderRadius.vertical(top: Radius.circular(12)),
                       ),
@@ -303,10 +303,14 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: AppColors.secondaryGoldenYellow,
+                              color: AppColors.primaryDarkTealLight,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(Icons.route, size: 24),
+                            child: const Icon(
+                              Icons.route,
+                              size: 24,
+                              color: AppColors.neutralLightBackground,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -318,14 +322,14 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
-                                    color: Colors.black87,
+                                    color: AppColors.neutralLightBackground,
                                   ),
                                 ),
                                 Text(
                                   '${filteredHojasRuta.length} hojas de ruta disponibles',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey[600],
+                                    color: Colors.grey[400],
                                   ),
                                 ),
                               ],
@@ -418,10 +422,14 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: AppColors.secondaryGoldenYellow,
+                              color: AppColors.primaryDarkTeal,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: Icon(item['icon'], size: 20),
+                            child: Icon(
+                              item['icon'],
+                              size: 20,
+                              color: AppColors.neutralLightBackground,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(

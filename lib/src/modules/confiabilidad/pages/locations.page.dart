@@ -282,12 +282,12 @@ class LocationsPageState extends State<LocationsPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.primaryDarkTeal,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     _getLocationIcon(ubicacion['general']['categoria']),
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.neutralLightBackground,
                     size: 20,
                   ),
                 ),

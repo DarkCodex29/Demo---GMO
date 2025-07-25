@@ -232,47 +232,11 @@ class CyclePageState extends State<CyclePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header del card
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: AppColors.secondaryGoldenYellow,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryGoldenYellow,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.refresh, size: 24),
-                ),
-                const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'Ciclos de Mantenimiento',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // Contenido del card
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: filteredCiclos.isEmpty
-                ? _buildEmptyState()
-                : ResponsiveBreakpoints.of(context).isMobile
-                    ? _buildMobileCiclosList()
-                    : _buildDesktopCiclosTable(),
-          ),
+          filteredCiclos.isEmpty
+              ? _buildEmptyState()
+              : ResponsiveBreakpoints.of(context).isMobile
+                  ? _buildMobileCiclosList()
+                  : _buildDesktopCiclosTable(),
         ],
       ),
     );

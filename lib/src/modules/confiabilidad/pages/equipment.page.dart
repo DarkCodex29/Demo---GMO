@@ -282,12 +282,12 @@ class EquipmentPageState extends State<EquipmentPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.primaryDarkTeal,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                    color: AppColors.secondaryGoldenYellow,
+                    color: AppColors.neutralLightBackground,
                     size: 20,
                   ),
                 ),
@@ -326,6 +326,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['criticidad'],
                                   style: const TextStyle(
+                                    color: AppColors.neutralLightBackground,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -342,6 +343,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['estado'],
                                   style: const TextStyle(
+                                    color: AppColors.neutralLightBackground,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
