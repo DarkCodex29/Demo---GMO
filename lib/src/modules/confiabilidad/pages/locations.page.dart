@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class LocationsPage extends StatefulWidget {
   const LocationsPage({super.key});
@@ -25,7 +26,8 @@ class LocationsPageState extends State<LocationsPage> {
 
   Future<void> _loadUbicaciones() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/locations.json');
+      final String response =
+          await rootBundle.loadString('assets/data/locations.json');
       final data = await json.decode(response);
       setState(() {
         ubicaciones = (data['ubicaciones'] as List)
@@ -38,7 +40,7 @@ class LocationsPageState extends State<LocationsPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de ubicaciones: $e');
+      debugPrint('Error al cargar datos de ubicaciones: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -65,7 +67,7 @@ class LocationsPageState extends State<LocationsPage> {
         filteredUbicaciones = ubicaciones;
       } else {
         filteredUbicaciones = ubicaciones.where((ubicacion) {
-          return ubicacion.values.any((value) => 
+          return ubicacion.values.any((value) =>
               value.toString().toLowerCase().contains(query.toLowerCase()));
         }).toList();
       }
@@ -87,7 +89,7 @@ class LocationsPageState extends State<LocationsPage> {
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
-    
+
     return MainLayout(
       currentModule: 'confiabilidad',
       customTitle: 'Ubicaciones Técnicas',
@@ -145,11 +147,11 @@ class LocationsPageState extends State<LocationsPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar ubicaciones...' 
+                  hintText: isMobile
+                      ? 'Buscar ubicaciones...'
                       : 'Buscar por código, descripción o edificio...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -193,8 +195,10 @@ class LocationsPageState extends State<LocationsPage> {
                         horizontal: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 12.0),
-                            const Condition.largerThan(name: MOBILE, value: 16.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 12.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 16.0),
                           ],
                         ).value,
                       ),
@@ -247,8 +251,9 @@ class LocationsPageState extends State<LocationsPage> {
 
   Widget _buildUbicacionCard(Map<String, dynamic> ubicacion) {
     final statusColor = _getStatusColor(ubicacion['general']['estado']);
-    final categoriaColor = _getCategoriaColor(ubicacion['general']['categoria']);
-    
+    final categoriaColor =
+        _getCategoriaColor(ubicacion['general']['categoria']);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -277,12 +282,12 @@ class LocationsPageState extends State<LocationsPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.orange.shade100,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     _getLocationIcon(ubicacion['general']['categoria']),
-                    color: Colors.orange.shade700,
+                    color: AppColors.secondaryGoldenYellow,
                     size: 20,
                   ),
                 ),
@@ -313,13 +318,17 @@ class LocationsPageState extends State<LocationsPage> {
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
                                   color: categoriaColor,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  ubicacion['general']['categoria'].toString().split(' ').first,
+                                  ubicacion['general']['categoria']
+                                      .toString()
+                                      .split(' ')
+                                      .first,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 9,
@@ -329,7 +338,8 @@ class LocationsPageState extends State<LocationsPage> {
                               ),
                               const SizedBox(width: 4),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
                                   color: statusColor,
                                   borderRadius: BorderRadius.circular(4),
@@ -357,12 +367,18 @@ class LocationsPageState extends State<LocationsPage> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      _buildDetailRow('Edificio', ubicacion['emplazamiento']['edificio']),
-                      _buildDetailRow('Piso', ubicacion['emplazamiento']['piso']),
-                      _buildDetailRow('Centro', ubicacion['organizacion']['centro_costo']),
-                      _buildDetailRow('Responsable', ubicacion['general']['responsable']),
-                      if (ubicacion['equipos_asignados'] != null && ubicacion['equipos_asignados'].isNotEmpty)
-                        _buildDetailRow('Equipos', '${ubicacion['equipos_asignados'].length} asignados'),
+                      _buildDetailRow(
+                          'Edificio', ubicacion['emplazamiento']['edificio']),
+                      _buildDetailRow(
+                          'Piso', ubicacion['emplazamiento']['piso']),
+                      _buildDetailRow(
+                          'Centro', ubicacion['organizacion']['centro_costo']),
+                      _buildDetailRow(
+                          'Responsable', ubicacion['general']['responsable']),
+                      if (ubicacion['equipos_asignados'] != null &&
+                          ubicacion['equipos_asignados'].isNotEmpty)
+                        _buildDetailRow('Equipos',
+                            '${ubicacion['equipos_asignados'].length} asignados'),
                     ],
                   ),
                 ),
@@ -475,8 +491,9 @@ class LocationsPageState extends State<LocationsPage> {
         ],
         rows: filteredUbicaciones.map((ubicacion) {
           final statusColor = _getStatusColor(ubicacion['general']['estado']);
-          final categoriaColor = _getCategoriaColor(ubicacion['general']['categoria']);
-          
+          final categoriaColor =
+              _getCategoriaColor(ubicacion['general']['categoria']);
+
           return DataRow(
             onSelectChanged: (selected) {
               if (selected == true) {
@@ -489,7 +506,7 @@ class LocationsPageState extends State<LocationsPage> {
                   children: [
                     Icon(
                       _getLocationIcon(ubicacion['general']['categoria']),
-                      color: Colors.orange.shade600,
+                      color: AppColors.secondaryGoldenYellow,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -517,7 +534,8 @@ class LocationsPageState extends State<LocationsPage> {
               ),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: categoriaColor,
                     borderRadius: BorderRadius.circular(4),
@@ -552,8 +570,9 @@ class LocationsPageState extends State<LocationsPage> {
               ),
               DataCell(
                 Text(
-                  ubicacion['equipos_asignados'] != null ? 
-                    '${ubicacion['equipos_asignados'].length}' : '0',
+                  ubicacion['equipos_asignados'] != null
+                      ? '${ubicacion['equipos_asignados'].length}'
+                      : '0',
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -562,7 +581,8 @@ class LocationsPageState extends State<LocationsPage> {
               ),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -604,7 +624,7 @@ class LocationsPageState extends State<LocationsPage> {
       case 'activo':
         return Colors.green;
       case 'en mantenimiento':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'inactivo':
         return Colors.red;
       default:
@@ -632,7 +652,8 @@ class LocationsPageState extends State<LocationsPage> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Container(
             width: ResponsiveValue<double>(
               context,
@@ -651,7 +672,7 @@ class LocationsPageState extends State<LocationsPage> {
                     children: [
                       Icon(
                         _getLocationIcon(ubicacion['general']['categoria']),
-                        color: Colors.orange.shade600,
+                        color: AppColors.secondaryGoldenYellow,
                         size: 24,
                       ),
                       const SizedBox(width: 12),
@@ -674,11 +695,15 @@ class LocationsPageState extends State<LocationsPage> {
                   ),
                   const SizedBox(height: 16),
                   _buildDetailSection('General', ubicacion['general']),
-                  _buildDetailSection('Organización', ubicacion['organizacion']),
-                  _buildDetailSection('Emplazamiento', ubicacion['emplazamiento']),
+                  _buildDetailSection(
+                      'Organización', ubicacion['organizacion']),
+                  _buildDetailSection(
+                      'Emplazamiento', ubicacion['emplazamiento']),
                   _buildDetailSection('Estructura', ubicacion['estructura']),
-                  _buildDetailSection('Características', ubicacion['caracteristicas']),
-                  if (ubicacion['equipos_asignados'] != null && ubicacion['equipos_asignados'].isNotEmpty)
+                  _buildDetailSection(
+                      'Características', ubicacion['caracteristicas']),
+                  if (ubicacion['equipos_asignados'] != null &&
+                      ubicacion['equipos_asignados'].isNotEmpty)
                     _buildEquiposSection(ubicacion['equipos_asignados']),
                 ],
               ),
@@ -695,41 +720,41 @@ class LocationsPageState extends State<LocationsPage> {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.orange.shade700,
+            color: AppColors.secondaryGoldenYellow,
           ),
         ),
         const SizedBox(height: 8),
         ...data.entries.map((entry) => Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 120,
-                child: Text(
-                  _formatFieldName(entry.key),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: Text(
+                      _formatFieldName(entry.key),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  entry.value.toString(),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black87,
+                  Expanded(
+                    child: Text(
+                      entry.value.toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        )),
+            )),
         const SizedBox(height: 12),
       ],
     );
@@ -739,35 +764,38 @@ class LocationsPageState extends State<LocationsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Equipos Asignados',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.orange.shade700,
+            color: AppColors.secondaryGoldenYellow,
           ),
         ),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
           runSpacing: 4,
-          children: equipos.map((equipo) => Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              border: Border.all(color: Colors.blue.shade200),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              equipo.toString(),
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.blue.shade700,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'monospace',
-              ),
-            ),
-          )).toList(),
+          children: equipos
+              .map((equipo) => Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      border: Border.all(color: Colors.blue.shade200),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      equipo.toString(),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.blue.shade700,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                  ))
+              .toList(),
         ),
         const SizedBox(height: 12),
       ],
@@ -778,7 +806,7 @@ class LocationsPageState extends State<LocationsPage> {
     return fieldName
         .replaceAll('_', ' ')
         .split(' ')
-        .map((word) => word.isNotEmpty 
+        .map((word) => word.isNotEmpty
             ? word[0].toUpperCase() + word.substring(1).toLowerCase()
             : word)
         .join(' ');

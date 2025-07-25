@@ -566,11 +566,11 @@ class MainLayoutState extends State<MainLayout> {
         // Llevamos a la página principal del módulo Confiabilidad
         return const ConfiabilidadMainPage();
       case 'demanda':
-        // Llevamos a avisos/warnings como página principal
-        return const AvisoPage();
+        // Llevamos a la página principal del módulo Demanda
+        return const DemandaMainPage();
       case 'planificacion':
-        // Llevamos a crear orden como página principal
-        return const CreateOrderPage();
+        // Llevamos a la página principal del módulo Planificación
+        return const PlanificacionMainPage();
       case 'programacion':
         // Por ahora llevamos a capacity management
         return const CapacityManagementPage();

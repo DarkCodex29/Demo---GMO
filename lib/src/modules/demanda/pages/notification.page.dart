@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -57,13 +58,13 @@ class NotificationPageState extends State<NotificationPage> {
   Color _getNotificationColor(String type) {
     switch (type) {
       case 'order':
-        return Colors.blue;
+        return AppColors.secondaryBrightBlue;
       case 'capacity':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'failure':
-        return Colors.red;
+        return AppColors.secondaryCoralRed;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 
@@ -85,6 +86,7 @@ class NotificationPageState extends State<NotificationPage> {
     return MainLayout(
       currentModule: 'demanda',
       customTitle: 'Notificaciones',
+      showBackButton: true,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -138,15 +140,15 @@ class NotificationPageState extends State<NotificationPage> {
           Icon(
             Icons.notifications_off,
             size: 64,
-            color: Colors.grey[400],
+            color: AppColors.neutralTextGray.withOpacity(0.5),
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'No hay notificaciones',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[600],
+              color: AppColors.neutralTextGray,
             ),
           ),
           const SizedBox(height: 8),
@@ -154,7 +156,7 @@ class NotificationPageState extends State<NotificationPage> {
             'Las notificaciones aparecer�n aqu� cuando est�n disponibles',
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey[500],
+              color: AppColors.neutralTextGray.withOpacity(0.7),
             ),
             textAlign: TextAlign.center,
           ),
@@ -226,14 +228,14 @@ class NotificationPageState extends State<NotificationPage> {
                   Icon(
                     Icons.access_time,
                     size: 12,
-                    color: Colors.grey[500],
+                    color: AppColors.neutralTextGray.withOpacity(0.7),
                   ),
                   const SizedBox(width: 4),
                   Text(
                     notification['timestamp'] ?? 'Sin fecha',
                     style: TextStyle(
                       fontSize: 11,
-                      color: Colors.grey[500],
+                      color: AppColors.neutralTextGray.withOpacity(0.7),
                     ),
                   ),
                   const Spacer(),
@@ -287,15 +289,15 @@ class NotificationPageState extends State<NotificationPage> {
   Color _getPriorityColor(String? priority) {
     switch (priority?.toLowerCase()) {
       case 'critica':
-        return Colors.red;
+        return AppColors.secondaryCoralRed;
       case 'alta':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'media':
-        return Colors.blue;
+        return AppColors.secondaryBrightBlue;
       case 'baja':
-        return Colors.green;
+        return AppColors.secondaryAquaGreen;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 

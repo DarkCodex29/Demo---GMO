@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class UbtPage extends StatefulWidget {
   const UbtPage({super.key});
@@ -25,9 +26,10 @@ class UbtPageState extends State<UbtPage> {
 
   Future<void> _loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/ubts.json');
+      final String response =
+          await rootBundle.loadString('assets/data/ubts.json');
       final List<dynamic> data = json.decode(response);
-      
+
       if (data.isNotEmpty) {
         final datos = data[0]['datos'];
         setState(() {
@@ -40,7 +42,7 @@ class UbtPageState extends State<UbtPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de UBTs: $e');
+      debugPrint('Error al cargar datos de UBTs: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -83,14 +85,15 @@ class UbtPageState extends State<UbtPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
           ),
         ),
       );
     }
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    
+
     return MainLayout(
       currentModule: 'confiabilidad',
       customTitle: 'UBTs',
@@ -148,11 +151,11 @@ class UbtPageState extends State<UbtPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar UBTs...' 
+                  hintText: isMobile
+                      ? 'Buscar UBTs...'
                       : 'Buscar por código, nombre o categoría...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -233,16 +236,16 @@ class UbtPageState extends State<UbtPage> {
           // Header del card
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade50,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            decoration: const BoxDecoration(
+              color: AppColors.secondaryGoldenYellow,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.work_outline, size: 24),
@@ -261,7 +264,7 @@ class UbtPageState extends State<UbtPage> {
               ],
             ),
           ),
-          
+
           // Contenido del card
           Padding(
             padding: const EdgeInsets.all(16),
@@ -310,7 +313,7 @@ class UbtPageState extends State<UbtPage> {
 
   Widget _buildUbtItemCard(Map<String, dynamic> ubt) {
     final statusColor = _getStatusColor(ubt['estado']);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -328,7 +331,8 @@ class UbtPageState extends State<UbtPage> {
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(4),
@@ -444,7 +448,8 @@ class UbtPageState extends State<UbtPage> {
             cells: [
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(4),
@@ -484,7 +489,8 @@ class UbtPageState extends State<UbtPage> {
               DataCell(Text(ubt['frecuencia'])),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -511,7 +517,7 @@ class UbtPageState extends State<UbtPage> {
       case 'activo':
         return Colors.green;
       case 'en revisión':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'inactivo':
         return Colors.red;
       default:

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/core/services/notification_service.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 import 'dart:convert';
 
 class CapacityManagementPage extends StatefulWidget {
@@ -74,7 +75,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
                 ),
               ],
             ),
-            backgroundColor: Theme.of(context).colorScheme.error,
+            backgroundColor: AppColors.secondaryCoralRed,
           ),
         );
       }
@@ -98,26 +99,26 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   Color _getEstadoColor(String estado) {
     switch (estado.toLowerCase()) {
       case 'normal':
-        return Colors.green;
+        return AppColors.secondaryAquaGreen;
       case 'crítico':
-        return Colors.red;
+        return AppColors.secondaryCoralRed;
       case 'sobrecargado':
-        return Colors.red;
+        return AppColors.secondaryCoralRed;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 
   Color _getPrioridadColor(String prioridad) {
     switch (prioridad.toLowerCase()) {
       case 'alta':
-        return Colors.red;
+        return AppColors.secondaryCoralRed;
       case 'media':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'baja':
-        return Colors.green;
+        return AppColors.secondaryAquaGreen;
       default:
-        return Colors.grey;
+        return AppColors.neutralTextGray;
     }
   }
 
@@ -133,7 +134,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
             ),
           ],
         ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: AppColors.primaryDarkTeal,
         duration: const Duration(seconds: 3),
       ),
     );

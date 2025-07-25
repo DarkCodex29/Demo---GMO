@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class StrategyPage extends StatefulWidget {
   const StrategyPage({super.key});
@@ -25,9 +26,10 @@ class StrategyPageState extends State<StrategyPage> {
 
   Future<void> _loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/estrategias_mantenimiento.json');
+      final String response = await rootBundle
+          .loadString('assets/data/estrategias_mantenimiento.json');
       final List<dynamic> data = json.decode(response);
-      
+
       if (data.isNotEmpty) {
         final datos = data[0]['datos'];
         setState(() {
@@ -85,14 +87,15 @@ class StrategyPageState extends State<StrategyPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
           ),
         ),
       );
     }
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    
+
     return MainLayout(
       currentModule: 'confiabilidad',
       customTitle: 'Estrategia',
@@ -150,11 +153,11 @@ class StrategyPageState extends State<StrategyPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar estrategias...' 
+                  hintText: isMobile
+                      ? 'Buscar estrategias...'
                       : 'Buscar por tipo, objetivo o responsable...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -235,16 +238,16 @@ class StrategyPageState extends State<StrategyPage> {
           // Header del card
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade50,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            decoration: const BoxDecoration(
+              color: AppColors.secondaryGoldenYellow,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.psychology, size: 24),
@@ -263,7 +266,7 @@ class StrategyPageState extends State<StrategyPage> {
               ],
             ),
           ),
-          
+
           // Contenido del card
           Padding(
             padding: const EdgeInsets.all(16),
@@ -306,13 +309,15 @@ class StrategyPageState extends State<StrategyPage> {
 
   Widget _buildMobileEstrategiaList() {
     return Column(
-      children: filteredEstrategias.map((estrategia) => _buildEstrategiaItemCard(estrategia)).toList(),
+      children: filteredEstrategias
+          .map((estrategia) => _buildEstrategiaItemCard(estrategia))
+          .toList(),
     );
   }
 
   Widget _buildEstrategiaItemCard(Map<String, dynamic> estrategia) {
     final statusColor = _getStatusColor(estrategia['estado']);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -446,7 +451,8 @@ class StrategyPageState extends State<StrategyPage> {
               DataCell(Text(estrategia['responsable'])),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -473,7 +479,7 @@ class StrategyPageState extends State<StrategyPage> {
       case 'activo':
         return Colors.green;
       case 'en desarrollo':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'inactivo':
         return Colors.red;
       default:

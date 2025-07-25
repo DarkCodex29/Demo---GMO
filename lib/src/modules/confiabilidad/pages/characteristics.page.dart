@@ -44,7 +44,7 @@ class CaracteristicsPageState extends State<CaracteristicsPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de capacidades: $e');
+      debugPrint('Error al cargar datos de capacidades: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

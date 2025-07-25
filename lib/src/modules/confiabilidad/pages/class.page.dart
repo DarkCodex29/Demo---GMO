@@ -173,7 +173,8 @@ class ClasesPageState extends State<ClasesPage> {
 
           // Classes list
           ResponsiveRowColumnItem(
-            child: Expanded(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height - 200,
               child: filteredClases.isEmpty
                   ? _buildEmptyState()
                   : Padding(

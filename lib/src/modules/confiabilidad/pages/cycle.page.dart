@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class CyclePage extends StatefulWidget {
   const CyclePage({super.key});
@@ -25,9 +26,10 @@ class CyclePageState extends State<CyclePage> {
 
   Future<void> _loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/ciclos_mantenimiento.json');
+      final String response =
+          await rootBundle.loadString('assets/data/ciclos_mantenimiento.json');
       final List<dynamic> data = json.decode(response);
-      
+
       if (data.isNotEmpty) {
         final datos = data[0]['datos'];
         setState(() {
@@ -40,7 +42,7 @@ class CyclePageState extends State<CyclePage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de ciclos: $e');
+      debugPrint('Error al cargar datos de ciclos: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -53,7 +55,7 @@ class CyclePageState extends State<CyclePage> {
                 ),
               ],
             ),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.secondaryCoralRed,
           ),
         );
       }
@@ -83,14 +85,14 @@ class CyclePageState extends State<CyclePage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            color: AppColors.primaryDarkTeal,
           ),
         ),
       );
     }
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    
+
     return MainLayout(
       currentModule: 'confiabilidad',
       customTitle: 'Ciclos de Mantenimiento',
@@ -148,11 +150,11 @@ class CyclePageState extends State<CyclePage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar ciclos...' 
+                  hintText: isMobile
+                      ? 'Buscar ciclos...'
                       : 'Buscar por tipo, estado o responsable...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -233,16 +235,16 @@ class CyclePageState extends State<CyclePage> {
           // Header del card
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade50,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            decoration: const BoxDecoration(
+              color: AppColors.secondaryGoldenYellow,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.refresh, size: 24),
@@ -261,7 +263,7 @@ class CyclePageState extends State<CyclePage> {
               ],
             ),
           ),
-          
+
           // Contenido del card
           Padding(
             padding: const EdgeInsets.all(16),
@@ -304,13 +306,14 @@ class CyclePageState extends State<CyclePage> {
 
   Widget _buildMobileCiclosList() {
     return Column(
-      children: filteredCiclos.map((ciclo) => _buildCicloItemCard(ciclo)).toList(),
+      children:
+          filteredCiclos.map((ciclo) => _buildCicloItemCard(ciclo)).toList(),
     );
   }
 
   Widget _buildCicloItemCard(Map<String, dynamic> ciclo) {
     final statusColor = _getStatusColor(ciclo['estado']);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -438,7 +441,8 @@ class CyclePageState extends State<CyclePage> {
               DataCell(Text(ciclo['responsable'])),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -467,7 +471,7 @@ class CyclePageState extends State<CyclePage> {
       case 'en progreso':
         return Colors.blue;
       case 'programado':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'inactivo':
         return Colors.red;
       default:

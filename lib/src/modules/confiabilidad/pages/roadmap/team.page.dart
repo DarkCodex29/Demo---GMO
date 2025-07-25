@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class TeamPage extends StatefulWidget {
   const TeamPage({super.key});
@@ -25,9 +26,10 @@ class TeamPageState extends State<TeamPage> {
 
   Future<void> _loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/equipos_trabajo.json');
+      final String response =
+          await rootBundle.loadString('assets/data/equipos_trabajo.json');
       final List<dynamic> data = json.decode(response);
-      
+
       if (data.isNotEmpty) {
         final datos = data[0]['datos'];
         setState(() {
@@ -40,7 +42,7 @@ class TeamPageState extends State<TeamPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de equipos: $e');
+      debugPrint('Error al cargar datos de equipos: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -83,14 +85,15 @@ class TeamPageState extends State<TeamPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
           ),
         ),
       );
     }
 
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    
+
     return MainLayout(
       currentModule: 'confiabilidad',
       customTitle: 'Equipos de Trabajo',
@@ -148,11 +151,11 @@ class TeamPageState extends State<TeamPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar equipos...' 
+                  hintText: isMobile
+                      ? 'Buscar equipos...'
                       : 'Buscar por nombre, líder o especialidad...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -233,16 +236,16 @@ class TeamPageState extends State<TeamPage> {
           // Header del card
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade50,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            decoration: const BoxDecoration(
+              color: AppColors.secondaryGoldenYellow,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.orange,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.groups, size: 24),
@@ -261,7 +264,7 @@ class TeamPageState extends State<TeamPage> {
               ],
             ),
           ),
-          
+
           // Contenido del card
           Padding(
             padding: const EdgeInsets.all(16),
@@ -304,13 +307,15 @@ class TeamPageState extends State<TeamPage> {
 
   Widget _buildMobileEquiposList() {
     return Column(
-      children: filteredEquipos.map((equipo) => _buildEquipoItemCard(equipo)).toList(),
+      children: filteredEquipos
+          .map((equipo) => _buildEquipoItemCard(equipo))
+          .toList(),
     );
   }
 
   Widget _buildEquipoItemCard(Map<String, dynamic> equipo) {
     final statusColor = _getStatusColor(equipo['estado']);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -328,7 +333,8 @@ class TeamPageState extends State<TeamPage> {
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(4),
@@ -435,7 +441,8 @@ class TeamPageState extends State<TeamPage> {
             cells: [
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(4),
@@ -457,7 +464,8 @@ class TeamPageState extends State<TeamPage> {
               DataCell(Text(equipo['ubicacion'])),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -484,7 +492,7 @@ class TeamPageState extends State<TeamPage> {
       case 'activo':
         return Colors.green;
       case 'en formación':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'inactivo':
         return Colors.red;
       default:

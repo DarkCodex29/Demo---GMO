@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 import 'roadmap/instruction.page.dart';
 import 'roadmap/team.page.dart';
 import 'roadmap/ubt.page.dart';
@@ -28,11 +29,13 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
 
   Future<void> _loadHojasRuta() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/hojas_ruta.json');
+      final String response =
+          await rootBundle.loadString('assets/data/hojas_ruta.json');
       final List<dynamic> data = json.decode(response);
-      
+
       setState(() {
-        hojasRuta = data.map((item) => Map<String, dynamic>.from(item as Map)).toList();
+        hojasRuta =
+            data.map((item) => Map<String, dynamic>.from(item as Map)).toList();
         filteredHojasRuta = hojasRuta;
         isLoading = false;
       });
@@ -40,7 +43,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar hojas de ruta: $e');
+      debugPrint('Error al cargar hojas de ruta: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -69,16 +72,18 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         filteredHojasRuta = hojasRuta.where((hoja) {
           final codigo = hoja['codigo']?.toString().toLowerCase() ?? '';
           final nombre = hoja['nombre']?.toString().toLowerCase() ?? '';
-          final descripcion = hoja['descripcion']?.toString().toLowerCase() ?? '';
+          final descripcion =
+              hoja['descripcion']?.toString().toLowerCase() ?? '';
           final equipo = hoja['equipo']?.toString().toLowerCase() ?? '';
-          final responsable = hoja['responsable']?.toString().toLowerCase() ?? '';
+          final responsable =
+              hoja['responsable']?.toString().toLowerCase() ?? '';
           final searchLower = query.toLowerCase();
-          
+
           return codigo.contains(searchLower) ||
-                 nombre.contains(searchLower) ||
-                 descripcion.contains(searchLower) ||
-                 equipo.contains(searchLower) ||
-                 responsable.contains(searchLower);
+              nombre.contains(searchLower) ||
+              descripcion.contains(searchLower) ||
+              equipo.contains(searchLower) ||
+              responsable.contains(searchLower);
         }).toList();
       }
     });
@@ -93,12 +98,13 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
           ),
         ),
       );
     }
-    
+
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return MainLayout(
@@ -171,7 +177,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   ),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.orange,
+                    color: AppColors.secondaryGoldenYellow,
                     size: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -188,8 +194,10 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                             size: ResponsiveValue<double>(
                               context,
                               conditionalValues: [
-                                const Condition.smallerThan(name: TABLET, value: 20.0),
-                                const Condition.largerThan(name: MOBILE, value: 24.0),
+                                const Condition.smallerThan(
+                                    name: TABLET, value: 20.0),
+                                const Condition.largerThan(
+                                    name: MOBILE, value: 24.0),
                               ],
                             ).value,
                           ),
@@ -233,7 +241,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                 ).value,
                 vertical: 8.0,
               ),
-              child: isMobile 
+              child: isMobile
                   ? _buildMobileNavigationCards()
                   : _buildDesktopNavigationCards(),
             ),
@@ -284,9 +292,10 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                     // Header
                     Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.shade50,
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                      decoration: const BoxDecoration(
+                        color: AppColors.secondaryGoldenYellow,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(12)),
                       ),
                       child: Row(
                         children: [
@@ -294,7 +303,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                             width: 40,
                             height: 40,
                             decoration: BoxDecoration(
-                              color: Colors.orange,
+                              color: AppColors.secondaryGoldenYellow,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const Icon(Icons.route, size: 24),
@@ -325,7 +334,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                         ],
                       ),
                     ),
-                    
+
                     // Contenido
                     Expanded(
                       child: filteredHojasRuta.isEmpty
@@ -388,66 +397,68 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
     ];
 
     return Column(
-      children: navigationItems.map((item) => Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        child: Material(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          elevation: 2,
-          child: InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => item['page']),
-            ),
-            borderRadius: BorderRadius.circular(8),
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(8),
+      children: navigationItems
+          .map((item) => Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => item['page']),
                     ),
-                    child: Icon(item['icon'], size: 20),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item['title'],
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
+                    borderRadius: BorderRadius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColors.secondaryGoldenYellow,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Icon(item['icon'], size: 20),
                           ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          item['subtitle'],
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[600],
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item['title'],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  item['subtitle'],
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                    color: Colors.grey[400],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      )).toList(),
+                ),
+              ))
+          .toList(),
     );
   }
 
@@ -474,58 +485,60 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
     ];
 
     return Row(
-      children: navigationItems.map((item) => Expanded(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          child: Material(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            elevation: 2,
-            child: InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => item['page']),
-              ),
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(12),
+      children: navigationItems
+          .map((item) => Expanded(
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    elevation: 2,
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => item['page']),
                       ),
-                      child: Icon(item['icon'], size: 24),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      item['title'],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 48,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                color: AppColors.secondaryGoldenYellow,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(item['icon'], size: 24),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              item['title'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              item['subtitle'],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      item['subtitle'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ),
-      )).toList(),
+              ))
+          .toList(),
     );
   }
 
@@ -543,7 +556,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
   Widget _buildMobileHojaRutaCard(Map<String, dynamic> hoja) {
     final statusColor = _getStatusColor(hoja['estado']);
     final operaciones = hoja['operaciones'] as List? ?? [];
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -567,7 +580,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(4),
@@ -617,7 +631,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   ],
                 ),
               ),
-              
+
               // Badges y metadata (25%)
               Expanded(
                 flex: 25,
@@ -625,7 +639,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: statusColor,
                         borderRadius: BorderRadius.circular(4),
@@ -641,7 +656,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                     ),
                     const SizedBox(height: 4),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.blue.shade100,
                         borderRadius: BorderRadius.circular(4),
@@ -735,12 +751,13 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         rows: filteredHojasRuta.map((hoja) {
           final statusColor = _getStatusColor(hoja['estado']);
           final operaciones = hoja['operaciones'] as List? ?? [];
-          
+
           return DataRow(
             cells: [
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(4),
@@ -760,7 +777,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   width: 200,
                   child: Text(
                     hoja['nombre'],
-                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
@@ -771,7 +789,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   children: [
                     Text(
                       hoja['equipo'],
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       hoja['equipoDescripcion'],
@@ -787,7 +806,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                   children: [
                     Text(
                       hoja['centro'],
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       hoja['centroDescripcion'],
@@ -799,7 +819,8 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
               DataCell(Text(hoja['responsable'])),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.blue.shade100,
                     borderRadius: BorderRadius.circular(4),
@@ -817,12 +838,14 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
               DataCell(
                 Text(
                   'v${hoja['version']}',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w500),
                 ),
               ),
               DataCell(
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: statusColor,
                     borderRadius: BorderRadius.circular(4),
@@ -857,16 +880,17 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                 // Header del modal
                 Container(
                   padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.orange.shade50,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  decoration: const BoxDecoration(
+                    color: AppColors.secondaryGoldenYellow,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(12)),
                   ),
                   child: Row(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.orange,
+                          color: AppColors.secondaryGoldenYellow,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.route, size: 24),
@@ -902,7 +926,7 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                     ],
                   ),
                 ),
-                
+
                 // Contenido del modal
                 Expanded(
                   child: SingleChildScrollView(
@@ -917,25 +941,24 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
                           _buildDetailRow('Versión', 'v${hoja['version']}'),
                           _buildDetailRow('Responsable', hoja['responsable']),
                         ]),
-                        
                         const SizedBox(height: 20),
-                        
                         _buildDetailSection('Equipo y Ubicación', [
-                          _buildDetailRow('Equipo', '${hoja['equipo']} - ${hoja['equipoDescripcion']}'),
-                          _buildDetailRow('Ubicación Técnica', hoja['ubicacionTecnica']),
-                          _buildDetailRow('Centro', '${hoja['centro']} - ${hoja['centroDescripcion']}'),
+                          _buildDetailRow('Equipo',
+                              '${hoja['equipo']} - ${hoja['equipoDescripcion']}'),
+                          _buildDetailRow(
+                              'Ubicación Técnica', hoja['ubicacionTecnica']),
+                          _buildDetailRow('Centro',
+                              '${hoja['centro']} - ${hoja['centroDescripcion']}'),
                         ]),
-                        
                         const SizedBox(height: 20),
-                        
                         _buildDetailSection('Fechas', [
                           _buildDetailRow('Creación', hoja['fechaCreacion']),
-                          _buildDetailRow('Última Actualización', hoja['fechaUltimaActualizacion']),
+                          _buildDetailRow('Última Actualización',
+                              hoja['fechaUltimaActualizacion']),
                         ]),
-                        
                         const SizedBox(height: 20),
-                        
-                        _buildOperacionesSection(hoja['operaciones'] as List? ?? []),
+                        _buildOperacionesSection(
+                            hoja['operaciones'] as List? ?? []),
                       ],
                     ),
                   ),
@@ -1027,54 +1050,56 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
         ),
         const SizedBox(height: 12),
         ...operaciones.map((operacion) => Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade50,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.blue.shade200),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Op. ${operacion['numero']}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          'Op. ${operacion['numero']}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      operacion['descripcion'],
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          operacion['descripcion'],
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  const SizedBox(height: 8),
+                  _buildDetailRow('Puesto Trabajo', operacion['puestoTrabajo']),
+                  _buildDetailRow('Personal',
+                      '${operacion['cantidadPersonas']} persona(s)'),
+                  _buildDetailRow('Duración', operacion['duracion']),
+                  _buildDetailRow('Frecuencia', operacion['frecuencia']),
                 ],
               ),
-              const SizedBox(height: 8),
-              _buildDetailRow('Puesto Trabajo', operacion['puestoTrabajo']),
-              _buildDetailRow('Personal', '${operacion['cantidadPersonas']} persona(s)'),
-              _buildDetailRow('Duración', operacion['duracion']),
-              _buildDetailRow('Frecuencia', operacion['frecuencia']),
-            ],
-          ),
-        )),
+            )),
       ],
     );
   }
@@ -1084,11 +1109,11 @@ class _RoadmapMainPageState extends State<RoadmapMainPage> {
       case 'liberado':
         return Colors.green;
       case 'en revisión':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'bloqueado':
         return Colors.red;
       default:
         return Colors.grey;
     }
   }
-} 
+}

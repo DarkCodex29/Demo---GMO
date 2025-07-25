@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'dart:convert';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class StrategiesPage extends StatefulWidget {
   const StrategiesPage({super.key});
@@ -25,9 +26,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
 
   Future<void> _loadProcesos() async {
     try {
-      final String response = await rootBundle.loadString('assets/data/planificacion_mantenimiento.json');
+      final String response = await rootBundle
+          .loadString('assets/data/planificacion_mantenimiento.json');
       final List<dynamic> data = json.decode(response);
-      
+
       setState(() {
         procesos = data.cast<Map<String, dynamic>>();
         filteredProcesos = procesos;
@@ -37,7 +39,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error detallado al cargar procesos de planificación: $e');
+      debugPrint('Error detallado al cargar procesos de planificación: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -46,7 +48,8 @@ class _StrategiesPageState extends State<StrategiesPage> {
                 const Icon(Icons.error_outline),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text('Error al cargar procesos de planificación: ${e.toString()}'),
+                  child: Text(
+                      'Error al cargar procesos de planificación: ${e.toString()}'),
                 ),
               ],
             ),
@@ -69,13 +72,14 @@ class _StrategiesPageState extends State<StrategiesPage> {
               .map((item) => Map<String, dynamic>.from(item as Map))
               .toList();
           final searchLower = query.toLowerCase();
-          
+
           bool matchNombre = nombre.contains(searchLower);
-          bool matchCampos = campos.any((campo) => 
-            campo['campo']?.toString().toLowerCase().contains(searchLower) == true ||
-            campo['valor']?.toString().toLowerCase().contains(searchLower) == true
-          );
-          
+          bool matchCampos = campos.any((campo) =>
+              campo['campo']?.toString().toLowerCase().contains(searchLower) ==
+                  true ||
+              campo['valor']?.toString().toLowerCase().contains(searchLower) ==
+                  true);
+
           return matchNombre || matchCampos;
         }).toList();
       }
@@ -91,12 +95,13 @@ class _StrategiesPageState extends State<StrategiesPage> {
         showBackButton: true,
         child: Center(
           child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+            valueColor:
+                AlwaysStoppedAnimation<Color>(AppColors.secondaryGoldenYellow),
           ),
         ),
       );
     }
-    
+
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
 
     return MainLayout(
@@ -156,11 +161,11 @@ class _StrategiesPageState extends State<StrategiesPage> {
                   ).value,
                 ),
                 decoration: InputDecoration(
-                  hintText: isMobile 
-                      ? 'Buscar procesos...' 
+                  hintText: isMobile
+                      ? 'Buscar procesos...'
                       : 'Buscar por proceso, campo o valor...',
                   hintStyle: TextStyle(
-                    color: Colors.grey[500], 
+                    color: Colors.grey[500],
                     fontSize: ResponsiveValue<double>(
                       context,
                       conditionalValues: [
@@ -216,8 +221,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 16.0),
-                                  const Condition.largerThan(name: MOBILE, value: 18.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 16.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 18.0),
                                 ],
                               ).value,
                               color: Colors.grey[600],
@@ -258,7 +265,8 @@ class _StrategiesPageState extends State<StrategiesPage> {
   Widget _buildProcesoCard(Map<String, dynamic> proceso, int index) {
     final tipo = proceso['tipo']?.toString() ?? '';
     final isPrincipal = tipo == 'proceso_principal';
-    final statusColor = isPrincipal ? Colors.orange : Colors.blue;
+    final statusColor =
+        isPrincipal ? AppColors.secondaryGoldenYellow : Colors.blue;
     final statusIcon = isPrincipal ? Icons.engineering : Icons.storage;
 
     return Container(
@@ -289,10 +297,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
           expansionTileTheme: const ExpansionTileThemeData(
             backgroundColor: Colors.transparent,
             collapsedBackgroundColor: Colors.transparent,
-            iconColor: Colors.orange,
-            textColor: Colors.orange,
+            iconColor: AppColors.secondaryGoldenYellow,
+            textColor: AppColors.secondaryGoldenYellow,
             collapsedTextColor: Colors.black87,
-            collapsedIconColor: Colors.orange,
+            collapsedIconColor: AppColors.secondaryGoldenYellow,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
@@ -350,8 +358,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
                         fontSize: ResponsiveValue<double>(
                           context,
                           conditionalValues: [
-                            const Condition.smallerThan(name: TABLET, value: 14.0),
-                            const Condition.largerThan(name: MOBILE, value: 15.0),
+                            const Condition.smallerThan(
+                                name: TABLET, value: 14.0),
+                            const Condition.largerThan(
+                                name: MOBILE, value: 15.0),
                           ],
                         ).value,
                         fontWeight: FontWeight.w600,
@@ -368,13 +378,17 @@ class _StrategiesPageState extends State<StrategiesPage> {
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
-                            isPrincipal ? 'Proceso Principal' : 'Datos Maestros',
+                            isPrincipal
+                                ? 'Proceso Principal'
+                                : 'Datos Maestros',
                             style: TextStyle(
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 11.0),
-                                  const Condition.largerThan(name: MOBILE, value: 12.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 11.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 12.0),
                                 ],
                               ).value,
                               color: Colors.grey[600],
@@ -389,7 +403,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                   ],
                 ),
               ),
-              
+
               // Badges a la derecha
               Expanded(
                 flex: 2,
@@ -397,11 +411,13 @@ class _StrategiesPageState extends State<StrategiesPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: statusColor.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: statusColor.withOpacity(0.4), width: 0.5),
+                        border: Border.all(
+                            color: statusColor.withOpacity(0.4), width: 0.5),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -418,8 +434,10 @@ class _StrategiesPageState extends State<StrategiesPage> {
                               fontSize: ResponsiveValue<double>(
                                 context,
                                 conditionalValues: [
-                                  const Condition.smallerThan(name: TABLET, value: 9.0),
-                                  const Condition.largerThan(name: MOBILE, value: 10.0),
+                                  const Condition.smallerThan(
+                                      name: TABLET, value: 9.0),
+                                  const Condition.largerThan(
+                                      name: MOBILE, value: 10.0),
                                 ],
                               ).value,
                               fontWeight: FontWeight.w600,
@@ -503,14 +521,15 @@ class _StrategiesPageState extends State<StrategiesPage> {
               ),
             ],
           ),
-          SizedBox(height: ResponsiveValue<double>(
+          SizedBox(
+              height: ResponsiveValue<double>(
             context,
             conditionalValues: [
               const Condition.smallerThan(name: TABLET, value: 8.0),
               const Condition.largerThan(name: MOBILE, value: 12.0),
             ],
           ).value),
-          
+
           // Tabla de campos responsive
           if (isDesktop || isTablet)
             _buildTableView(campos)
@@ -532,10 +551,9 @@ class _StrategiesPageState extends State<StrategiesPage> {
       children: [
         _buildTableHeader(),
         ...campos.map((campo) => _buildTableRow(
-          campo['campo']?.toString() ?? '',
-          campo['valor']?.toString() ?? '',
-          campo['referencia']?.toString() ?? ''
-        )),
+            campo['campo']?.toString() ?? '',
+            campo['valor']?.toString() ?? '',
+            campo['referencia']?.toString() ?? '')),
       ],
     );
   }
@@ -583,11 +601,12 @@ class _StrategiesPageState extends State<StrategiesPage> {
 
   Widget _buildListView(List<Map<String, dynamic>> campos) {
     return Column(
-      children: campos.map((campo) => _buildDetailRow(
-        campo['campo']?.toString() ?? '',
-        campo['valor']?.toString() ?? '',
-        campo['referencia']?.toString() ?? ''
-      )).toList(),
+      children: campos
+          .map((campo) => _buildDetailRow(
+              campo['campo']?.toString() ?? '',
+              campo['valor']?.toString() ?? '',
+              campo['referencia']?.toString() ?? ''))
+          .toList(),
     );
   }
 
@@ -595,7 +614,8 @@ class _StrategiesPageState extends State<StrategiesPage> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
+        border:
+            Border(bottom: BorderSide(color: Colors.grey.shade200, width: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -654,7 +674,7 @@ class _StrategiesPageState extends State<StrategiesPage> {
                         const Condition.largerThan(name: MOBILE, value: 11.0),
                       ],
                     ).value,
-                    color: Colors.orange.shade600,
+                    color: AppColors.secondaryGoldenYellow,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

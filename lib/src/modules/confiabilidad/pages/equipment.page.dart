@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
 
 class EquipmentPage extends StatefulWidget {
   const EquipmentPage({super.key});
@@ -40,7 +41,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       setState(() {
         isLoading = false;
       });
-      print('Error al cargar datos de equipos: $e');
+      debugPrint('Error al cargar datos de equipos: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -81,7 +82,9 @@ class EquipmentPageState extends State<EquipmentPage> {
         customTitle: 'Equipos',
         showBackButton: true,
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: AppColors.primaryDarkTeal,
+          ),
         ),
       );
     }
@@ -124,7 +127,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                 8,
               ),
               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.shade300,
@@ -255,7 +258,7 @@ class EquipmentPageState extends State<EquipmentPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
@@ -279,12 +282,12 @@ class EquipmentPageState extends State<EquipmentPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.orange.shade100,
+                    color: AppColors.secondaryGoldenYellow,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                    color: Colors.orange.shade700,
+                    color: AppColors.secondaryGoldenYellow,
                     size: 20,
                   ),
                 ),
@@ -323,7 +326,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['criticidad'],
                                   style: const TextStyle(
-                                                                        fontSize: 9,
+                                    fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -339,7 +342,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                                 child: Text(
                                   equipo['general']['estado'],
                                   style: const TextStyle(
-                                                                        fontSize: 9,
+                                    fontSize: 9,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -412,7 +415,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.grey.shade200),
         ),
         columnSpacing: ResponsiveValue<double>(
@@ -491,7 +494,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   children: [
                     Icon(
                       _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                      color: Colors.orange.shade600,
+                      color: AppColors.secondaryGoldenYellow,
                       size: 16,
                     ),
                     const SizedBox(width: 8),
@@ -551,7 +554,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   child: Text(
                     equipo['general']['estado'],
                     style: const TextStyle(
-                                            fontSize: 11,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -568,7 +571,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                   child: Text(
                     equipo['general']['criticidad'],
                     style: const TextStyle(
-                                            fontSize: 11,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -605,7 +608,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       case 'operativo':
         return Colors.green;
       case 'en mantenimiento':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'fuera de servicio':
         return Colors.red;
       default:
@@ -618,7 +621,7 @@ class EquipmentPageState extends State<EquipmentPage> {
       case 'alta':
         return Colors.red;
       case 'media':
-        return Colors.orange;
+        return AppColors.secondaryGoldenYellow;
       case 'baja':
         return Colors.green;
       default:
@@ -651,7 +654,7 @@ class EquipmentPageState extends State<EquipmentPage> {
                     children: [
                       Icon(
                         _getEquipmentIcon(equipo['general']['tipo_equipo']),
-                        color: Colors.orange.shade600,
+                        color: AppColors.secondaryGoldenYellow,
                         size: 24,
                       ),
                       const SizedBox(width: 12),
@@ -692,10 +695,10 @@ class EquipmentPageState extends State<EquipmentPage> {
       children: [
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Colors.orange.shade700,
+            color: AppColors.secondaryGoldenYellow,
           ),
         ),
         const SizedBox(height: 8),
