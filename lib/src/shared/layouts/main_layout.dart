@@ -5,6 +5,7 @@ import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/modules/confiabilidad/confiabilidad.dart';
 import 'package:demo/src/modules/demanda/demanda.dart';
 import 'package:demo/src/modules/planificacion/planificacion.dart';
+import 'package:demo/src/modules/programacion/programacion.dart';
 import 'package:demo/src/modules/ejecucion/ejecucion.dart';
 import 'package:demo/src/modules/seguimiento_control/seguimiento_control.dart';
 
@@ -572,8 +573,8 @@ class MainLayoutState extends State<MainLayout> {
         // Llevamos a la página principal del módulo Planificación
         return const PlanificacionMainPage();
       case 'programacion':
-        // Por ahora llevamos a capacity management
-        return const CapacityManagementPage();
+        // Llevamos a la página principal del módulo Programación
+        return const ProgramacionMainPage();
       case 'ejecucion':
         // Llevamos a la página principal del módulo Ejecución
         return const EjecucionMainPage();

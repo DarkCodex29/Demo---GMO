@@ -220,12 +220,6 @@ class OrdenPageState extends State<OrdenPage> {
         title: ResponsiveRowColumn(
           layout: ResponsiveRowColumnType.ROW,
           children: [
-            const ResponsiveRowColumnItem(
-              child: Icon(Icons.assignment_turned_in),
-            ),
-            const ResponsiveRowColumnItem(
-              child: SizedBox(width: 8),
-            ),
             ResponsiveRowColumnItem(
               child: FittedBox(
                 fit: BoxFit.scaleDown,
@@ -348,8 +342,7 @@ class OrdenPageState extends State<OrdenPage> {
             child: Expanded(
               child: isLoading
                   ? const Center(
-                      child: CircularProgressIndicator(
-                      ),
+                      child: CircularProgressIndicator(),
                     )
                   : filteredOrdenes.isEmpty
                       ? Center(

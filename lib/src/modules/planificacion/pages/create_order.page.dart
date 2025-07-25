@@ -67,6 +67,7 @@ class CreateOrderPageState extends State<CreateOrderPage> {
     return MainLayout(
       currentModule: 'planificacion',
       customTitle: 'Crear Orden de Trabajo',
+      showBackButton: true,
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
