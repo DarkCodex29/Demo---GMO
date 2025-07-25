@@ -166,7 +166,7 @@ class DataService {
       final orders = await getOrders();
       final notifications = await getNotifications();
       final equipment = await getEquipment();
-      final pmOrders = await getPMOrders();
+      // final pmOrders = await getPMOrders(); // Not used currently
 
       // Calcular estadísticas básicas
       final activeOrders = orders.where((order) => 

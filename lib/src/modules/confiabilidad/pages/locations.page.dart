@@ -75,11 +75,11 @@ class LocationsPageState extends State<LocationsPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Ubicaciones Técnicas',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(),
         ),
       );

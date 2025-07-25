@@ -77,11 +77,11 @@ class InstructionPageState extends State<InstructionPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Instrucciones de Trabajo',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),

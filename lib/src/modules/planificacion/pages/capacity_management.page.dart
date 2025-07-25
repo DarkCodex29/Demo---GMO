@@ -687,7 +687,7 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
       const SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.warning),
+            Icon(Icons.warning),
             SizedBox(width: 8),
             Expanded(child: Text('Alerta de capacidad enviada')),
           ],
@@ -700,10 +700,10 @@ class CapacityManagementPageState extends State<CapacityManagementPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'planificacion',
         customTitle: 'Gestión de Capacidad',
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),

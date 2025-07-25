@@ -221,7 +221,7 @@ class OrdenPageState extends State<OrdenPage> {
           layout: ResponsiveRowColumnType.ROW,
           children: [
             const ResponsiveRowColumnItem(
-              child: const Icon(Icons.assignment_turned_in),
+              child: Icon(Icons.assignment_turned_in),
             ),
             const ResponsiveRowColumnItem(
               child: SizedBox(width: 8),

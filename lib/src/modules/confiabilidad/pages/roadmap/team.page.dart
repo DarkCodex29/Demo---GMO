@@ -77,11 +77,11 @@ class TeamPageState extends State<TeamPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Equipos de Trabajo',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),

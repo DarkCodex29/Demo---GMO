@@ -87,11 +87,11 @@ class _RoadmapPageState extends State<RoadmapPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Hoja de Ruta',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),

@@ -76,11 +76,11 @@ class EquipmentPageState extends State<EquipmentPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Equipos',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(),
         ),
       );

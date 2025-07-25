@@ -760,8 +760,8 @@ class DemandManagementPageState extends State<DemandManagementPage> {
           ResponsiveRowColumn(
             layout: ResponsiveRowColumnType.ROW,
             children: [
-              ResponsiveRowColumnItem(
-                child: const Icon(Icons.info_outline, size: 20),
+              const ResponsiveRowColumnItem(
+                child: Icon(Icons.info_outline, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),

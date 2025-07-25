@@ -46,7 +46,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
             AppColors.primaryDarkTeal,
             AppColors.primaryMediumTeal,
@@ -96,7 +96,7 @@ class ConfiabilidadMainPage extends StatelessWidget {
                     color: AppColors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.settings_outlined,
                     size: 48,
                     color: AppColors.white,

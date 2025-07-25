@@ -21,7 +21,7 @@ class EquipmentReportPageState extends State<EquipmentReportPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.precision_manufacturing, size: 64),
+            Icon(Icons.precision_manufacturing, size: 64),
             SizedBox(height: 16),
             Text(
               'Reporte de Equipos',

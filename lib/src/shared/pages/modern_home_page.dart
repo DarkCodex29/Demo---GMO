@@ -95,7 +95,7 @@ class ModernHomePageState extends State<ModernHomePage> {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
             AppColors.primaryDarkTeal,
             AppColors.primaryMediumTeal,
@@ -144,7 +144,7 @@ class ModernHomePageState extends State<ModernHomePage> {
                     color: AppColors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.engineering,
                     size: 48,
                     color: AppColors.white,
@@ -165,7 +165,7 @@ class ModernHomePageState extends State<ModernHomePage> {
       {
         'title': 'Órdenes Activas',
         'value': '${stats['activeOrders'] ?? 0}',
-        'subtitle': '${stats['activeOrders'] != null && stats['activeOrders'] > 0 ? '+3 vs ayer' : 'Sin datos'}',
+        'subtitle': stats['activeOrders'] != null && stats['activeOrders'] > 0 ? '+3 vs ayer' : 'Sin datos',
         'icon': Icons.assignment,
         'color': AppColors.primaryDarkTeal,
         'trend': 'up',
@@ -173,7 +173,7 @@ class ModernHomePageState extends State<ModernHomePage> {
       {
         'title': 'Avisos Pendientes',
         'value': '${stats['pendingNotifications'] ?? 0}',
-        'subtitle': '${stats['pendingNotifications'] != null && stats['pendingNotifications'] > 0 ? 'Requieren atención' : 'Todo al día'}',
+        'subtitle': stats['pendingNotifications'] != null && stats['pendingNotifications'] > 0 ? 'Requieren atención' : 'Todo al día',
         'icon': Icons.notification_important,
         'color': AppColors.secondaryCoralRed,
         'trend': stats['pendingNotifications'] != null && stats['pendingNotifications'] > 5 ? 'up' : 'down',
@@ -426,7 +426,7 @@ class ModernHomePageState extends State<ModernHomePage> {
                 padding: const EdgeInsets.only(bottom: 16),
                 child: _buildActivityItem(activity),
               ),
-            ).toList(),
+            ),
           ],
         ),
       ),
@@ -497,7 +497,7 @@ class ModernHomePageState extends State<ModernHomePage> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _buildQuickActionItem(action),
               ),
-            ).toList(),
+            ),
           ],
         ),
       ),

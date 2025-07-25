@@ -85,11 +85,11 @@ class _StrategiesPageState extends State<StrategiesPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return MainLayout(
+      return const MainLayout(
         currentModule: 'confiabilidad',
         customTitle: 'Estrategias de Mantenimiento',
         showBackButton: true,
-        child: const Center(
+        child: Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
           ),
@@ -479,8 +479,8 @@ class _StrategiesPageState extends State<StrategiesPage> {
           ResponsiveRowColumn(
             layout: ResponsiveRowColumnType.ROW,
             children: [
-              ResponsiveRowColumnItem(
-                child: const Icon(Icons.info_outline, size: 20),
+              const ResponsiveRowColumnItem(
+                child: Icon(Icons.info_outline, size: 20),
               ),
               const ResponsiveRowColumnItem(
                 child: SizedBox(width: 8),
