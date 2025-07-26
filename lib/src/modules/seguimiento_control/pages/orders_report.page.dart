@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/theme/app_colors.dart';
+import 'package:demo/src/theme/app_text_styles.dart';
 
 class OrdersReportPage extends StatefulWidget {
   const OrdersReportPage({super.key});
@@ -157,55 +160,69 @@ class OrdersReportPageState extends State<OrdersReportPage> {
 
   Color _getStatusColor(String status) {
     switch (status.toUpperCase()) {
-      case 'CREA': return Colors.blue;
-      case 'LIBE': return Colors.green;
-      case 'EJEC': return Colors.orange;
-      case 'CERR': return Colors.grey;
-      default: return Colors.grey;
+      case 'CREA': return AppColors.secondaryBrightBlue;
+      case 'LIBE': return AppColors.secondaryAquaGreen;
+      case 'EJEC': return AppColors.secondaryGoldenYellow;
+      case 'CERR': return AppColors.neutralTextGray;
+      default: return AppColors.neutralTextGray;
     }
   }
 
   Color _getActividadColor(String actividad) {
     switch (actividad.toUpperCase()) {
-      case 'REP': return Colors.red;
-      case 'CAM': return Colors.orange;
-      case 'CAL': return Colors.blue;
-      case 'ALT': return Colors.purple;
-      default: return Colors.grey;
+      case 'REP': return AppColors.secondaryCoralRed;
+      case 'CAM': return AppColors.secondaryGoldenYellow;
+      case 'CAL': return AppColors.secondaryBrightBlue;
+      case 'ALT': return AppColors.primaryMintGreen;
+      default: return AppColors.neutralTextGray;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    if (isLoading) {
+      return const MainLayout(
+        currentModule: 'seguimiento_control',
+        customTitle: 'Reporte de Órdenes',
+        showBackButton: true,
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColors.primaryDarkTeal,
+          ),
+        ),
+      );
+    }
 
-    return Scaffold(
-      
-      appBar: AppBar(
-        title: const Text('Reporte de Órdenes'),
-        backgroundColor: Colors.green,
-        
-      ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(color: Colors.green),
-            )
-          : Column(
-              children: [
-                // Panel de filtros
-                _buildFiltersPanel(isMobile),
-                
-                // Estadísticas resumidas
-                _buildSummaryStats(),
-                
-                // Lista/tabla de órdenes
-                Expanded(
-                  child: isMobile 
-                      ? _buildMobileList()
-                      : _buildDesktopTable(),
-                ),
-              ],
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
+
+    return MainLayout(
+      currentModule: 'seguimiento_control',
+      customTitle: 'Reporte de Órdenes',
+      showBackButton: true,
+      child: ResponsiveRowColumn(
+        layout: ResponsiveRowColumnType.COLUMN,
+        children: [
+          // Panel de filtros
+          ResponsiveRowColumnItem(
+            child: _buildFiltersPanel(isMobile),
+          ),
+          
+          // Estadísticas resumidas
+          ResponsiveRowColumnItem(
+            child: _buildSummaryStats(),
+          ),
+          
+          // Lista/tabla de órdenes
+          ResponsiveRowColumnItem(
+            child: Expanded(
+              child: isMobile 
+                  ? _buildMobileList()
+                  : _buildDesktopTable(),
             ),
+          ),
+        ],
+      ),
     );
   }
 
