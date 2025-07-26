@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/shared/widgets/fade_out_card.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/modules/ejecucion/pages/order.page.dart';
 import 'package:demo/src/modules/ejecucion/pages/execution.page.dart';
 import 'package:demo/src/modules/ejecucion/pages/closing.page.dart';
 
-class EjecucionMainPage extends StatelessWidget {
+class EjecucionMainPage extends StatefulWidget {
   const EjecucionMainPage({super.key});
+  
+  @override
+  EjecucionMainPageState createState() => EjecucionMainPageState();
+}
+
+class EjecucionMainPageState extends State<EjecucionMainPage> {
+  bool _showInfoCard = true;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +31,17 @@ class EjecucionMainPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header section
-            _buildHeader(isMobile),
+            // Header section con efecto de desvanecimiento
+            InfoCard(
+              fadeDelay: const Duration(seconds: 2),
+              fadeDuration: const Duration(milliseconds: 1500),
+              onFadeComplete: () {
+                setState(() {
+                  _showInfoCard = false;
+                });
+              },
+              child: _buildHeader(isMobile),
+            ),
             SizedBox(height: isMobile ? 20 : 32),
 
             // Sections grid

@@ -112,52 +112,84 @@ class AuthPageState extends State<AuthPage> {
 
     return Scaffold(
       backgroundColor: AppColors.neutralLightBackground,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: isMobile ? double.infinity : (isTablet ? 400 : 450),
-            ),
-            margin: EdgeInsets.all(isMobile ? 16 : 24),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(isMobile ? 24 : 32),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Logo y título
-                      _buildHeader(isMobile),
-                      SizedBox(height: isMobile ? 24 : 32),
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: isMobile ? double.infinity : (isTablet ? 400 : 450),
+                ),
+                margin: EdgeInsets.all(isMobile ? 16 : 24),
+                child: Card(
+                  elevation: 8,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(isMobile ? 24 : 32),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Solo título sin logo
+                          Text(
+                            'Iniciar Sesión',
+                            style: AppTextStyles.heading3.copyWith(
+                              color: AppColors.neutralTextGray,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 36),
 
-                      // Campos de entrada
-                      _buildUsernameField(),
-                      const SizedBox(height: 16),
-                      _buildPasswordField(),
-                      const SizedBox(height: 8),
+                          // Campos de entrada
+                          _buildUsernameField(),
+                          const SizedBox(height: 16),
+                          _buildPasswordField(),
 
-                      // Recordar usuario y olvidar contraseña
-                      _buildOptionsRow(),
-                      SizedBox(height: isMobile ? 24 : 32),
+                          // Recordar usuario y olvidar contraseña
+                          _buildOptionsRow(),
+                          const SizedBox(height: 12),
+                          _buildLoginButton(),
 
-                      // Botón de login o loading
-                      _buildLoginButton(),
-
-                      // Credenciales de demo
-                      const SizedBox(height: 24),
-                      _buildDemoCredentials(),
-                    ],
+                          // Credenciales de demo
+                          const SizedBox(height: 24),
+                          _buildDemoCredentials(),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
+          // Logo en la esquina inferior derecha
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: Opacity(
+              opacity: 0.8,
+              child: Image.asset(
+                'assets/images/logo_demo.png',
+                width: isMobile ? 80 : 100,
+                height: isMobile ? 80 : 100,
+              ),
+            ),
+          ),
+          // Loading overlay
+          if (_isLoading)
+            Container(
+              color: Colors.black54,
+              child: const Center(
+                child: CompanyAnimatedLoading(
+                  size: 100,
+                  text: 'Iniciando sesión...',
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -356,22 +388,13 @@ class AuthPageState extends State<AuthPage> {
           ),
           disabledBackgroundColor: AppColors.neutralTextGray.withOpacity(0.3),
         ),
-        child: _isLoading
-            ? const SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  color: AppColors.white,
-                  strokeWidth: 2,
-                ),
-              )
-            : Text(
-                'Iniciar Sesión',
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+        child: Text(
+          'Iniciar Sesión',
+          style: AppTextStyles.labelLarge.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }

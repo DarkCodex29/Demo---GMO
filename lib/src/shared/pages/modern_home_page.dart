@@ -3,6 +3,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/shared/widgets/skeleton_loader.dart';
+import 'package:demo/src/shared/widgets/fade_out_card.dart';
 import 'package:demo/src/core/core.dart';
 
 class ModernHomePage extends StatefulWidget {
@@ -15,6 +17,7 @@ class ModernHomePage extends StatefulWidget {
 class ModernHomePageState extends State<ModernHomePage> {
   Map<String, dynamic>? _dashboardStats;
   bool _isLoading = true;
+  final bool _showInfoCard = true;
 
   @override
   void initState() {
@@ -24,6 +27,9 @@ class ModernHomePageState extends State<ModernHomePage> {
 
   Future<void> _loadDashboardData() async {
     try {
+      // Simular tiempo de carga para mostrar skeleton
+      await Future.delayed(const Duration(seconds: 2));
+
       final stats = await DataService.instance.getDashboardStats();
       if (mounted) {
         setState(() {
@@ -32,7 +38,7 @@ class ModernHomePageState extends State<ModernHomePage> {
         });
       }
     } catch (e) {
-      print('Error loading dashboard data: $e');
+      debugPrint('Error loading dashboard data: $e');
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -45,15 +51,12 @@ class ModernHomePageState extends State<ModernHomePage> {
   Widget build(BuildContext context) {
     return MainLayout(
       currentModule: 'home',
-      child: _isLoading 
-        ? const Center(child: CircularProgressIndicator())
-        : _buildDashboard(),
+      child: _isLoading ? _buildSkeletonDashboard() : _buildDashboard(),
     );
   }
 
   Widget _buildDashboard() {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 16 : 24),
@@ -165,7 +168,9 @@ class ModernHomePageState extends State<ModernHomePage> {
       {
         'title': 'Órdenes Activas',
         'value': '${stats['activeOrders'] ?? 0}',
-        'subtitle': stats['activeOrders'] != null && stats['activeOrders'] > 0 ? '+3 vs ayer' : 'Sin datos',
+        'subtitle': stats['activeOrders'] != null && stats['activeOrders'] > 0
+            ? '+3 vs ayer'
+            : 'Sin datos',
         'icon': Icons.assignment,
         'color': AppColors.primaryDarkTeal,
         'trend': 'up',
@@ -173,10 +178,16 @@ class ModernHomePageState extends State<ModernHomePage> {
       {
         'title': 'Avisos Pendientes',
         'value': '${stats['pendingNotifications'] ?? 0}',
-        'subtitle': stats['pendingNotifications'] != null && stats['pendingNotifications'] > 0 ? 'Requieren atención' : 'Todo al día',
+        'subtitle': stats['pendingNotifications'] != null &&
+                stats['pendingNotifications'] > 0
+            ? 'Requieren atención'
+            : 'Todo al día',
         'icon': Icons.notification_important,
         'color': AppColors.secondaryCoralRed,
-        'trend': stats['pendingNotifications'] != null && stats['pendingNotifications'] > 5 ? 'up' : 'down',
+        'trend': stats['pendingNotifications'] != null &&
+                stats['pendingNotifications'] > 5
+            ? 'up'
+            : 'down',
       },
       {
         'title': 'Equipos Operativos',
@@ -286,7 +297,7 @@ class ModernHomePageState extends State<ModernHomePage> {
     required String trend,
   }) {
     final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    
+
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -317,23 +328,23 @@ class ModernHomePageState extends State<ModernHomePage> {
                 Container(
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: trend == 'up' 
+                    color: trend == 'up'
                         ? AppColors.success.withOpacity(0.1)
-                        : trend == 'down' 
+                        : trend == 'down'
                             ? AppColors.secondaryCoralRed.withOpacity(0.1)
                             : AppColors.neutralTextGray.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
-                    trend == 'up' 
-                        ? Icons.trending_up 
-                        : trend == 'down' 
-                            ? Icons.trending_down 
+                    trend == 'up'
+                        ? Icons.trending_up
+                        : trend == 'down'
+                            ? Icons.trending_down
                             : Icons.trending_flat,
-                    color: trend == 'up' 
-                        ? AppColors.success 
-                        : trend == 'down' 
-                            ? AppColors.secondaryCoralRed 
+                    color: trend == 'up'
+                        ? AppColors.success
+                        : trend == 'down'
+                            ? AppColors.secondaryCoralRed
                             : AppColors.neutralTextGray,
                     size: isMobile ? 14 : 16,
                   ),
@@ -341,7 +352,7 @@ class ModernHomePageState extends State<ModernHomePage> {
               ],
             ),
             SizedBox(height: isMobile ? 12 : 16),
-            
+
             // Valor principal
             Text(
               value,
@@ -352,7 +363,7 @@ class ModernHomePageState extends State<ModernHomePage> {
               ),
             ),
             SizedBox(height: isMobile ? 2 : 4),
-            
+
             // Título
             Text(
               title,
@@ -364,11 +375,11 @@ class ModernHomePageState extends State<ModernHomePage> {
               overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: isMobile ? 6 : 8),
-            
+
             // Subtítulo optimizado
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 6 : 8, 
+                horizontal: isMobile ? 6 : 8,
                 vertical: isMobile ? 2 : 4,
               ),
               decoration: BoxDecoration(
@@ -391,7 +402,6 @@ class ModernHomePageState extends State<ModernHomePage> {
       ),
     );
   }
-
 
   Widget _buildRecentActivity() {
     return Card(
@@ -421,8 +431,8 @@ class ModernHomePageState extends State<ModernHomePage> {
               ],
             ),
             const SizedBox(height: 16),
-            ..._getRecentActivities().map((activity) => 
-              Padding(
+            ..._getRecentActivities().map(
+              (activity) => Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: _buildActivityItem(activity),
               ),
@@ -492,8 +502,8 @@ class ModernHomePageState extends State<ModernHomePage> {
               ),
             ),
             const SizedBox(height: 16),
-            ..._getQuickActions().map((action) => 
-              Padding(
+            ..._getQuickActions().map(
+              (action) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _buildQuickActionItem(action),
               ),
@@ -596,9 +606,53 @@ class ModernHomePageState extends State<ModernHomePage> {
     ];
   }
 
-
   void _handleQuickAction(String actionId) {
-    // TODO: Implement quick actions
-    print('Quick action: $actionId');
+    debugPrint('Quick action: $actionId');
+  }
+
+  Widget _buildSkeletonDashboard() {
+    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(isMobile ? 16 : 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header skeleton
+          HeaderCardSkeleton(isMobile: isMobile),
+          SizedBox(height: isMobile ? 20 : 32),
+
+          // KPI skeletons
+          Row(
+            children: [
+              Expanded(child: StatsSkeleton(isMobile: isMobile)),
+              const SizedBox(width: 12),
+              Expanded(child: StatsSkeleton(isMobile: isMobile)),
+              if (!isMobile) ...[
+                const SizedBox(width: 12),
+                Expanded(child: StatsSkeleton(isMobile: isMobile)),
+                const SizedBox(width: 12),
+                Expanded(child: StatsSkeleton(isMobile: isMobile)),
+              ],
+            ],
+          ),
+          SizedBox(height: isMobile ? 20 : 32),
+
+          // Module cards skeleton
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: isMobile ? 1 : 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: isMobile ? 2.5 : 2.2,
+            children: List.generate(
+              6,
+              (index) => CardSkeleton(isMobile: isMobile),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -208,13 +208,15 @@ class FloatingSearchState extends State<FloatingSearch>
               final screenSize = MediaQuery.of(context).size;
               final newX = _position.dx - details.delta.dx;
               final newY = _position.dy - details.delta.dy;
-              
+
               // Límites para mantener el botón dentro de la pantalla
-              final minX = 16.0;
-              final maxX = screenSize.width - 72; // 56 (ancho del botón) + 16 (margen)
-              final minY = 16.0;
-              final maxY = screenSize.height - 140; // Altura del botón + margen inferior
-              
+              const minX = 16.0;
+              final maxX =
+                  screenSize.width - 72; // 56 (ancho del botón) + 16 (margen)
+              const minY = 16.0;
+              final maxY =
+                  screenSize.height - 140; // Altura del botón + margen inferior
+
               _position = Offset(
                 newX.clamp(minX, maxX),
                 newY.clamp(minY, maxY),

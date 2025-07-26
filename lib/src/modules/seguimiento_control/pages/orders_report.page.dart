@@ -4,8 +4,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
 import 'package:demo/src/theme/app_colors.dart';
-import 'package:demo/src/theme/app_text_styles.dart';
-
 class OrdersReportPage extends StatefulWidget {
   const OrdersReportPage({super.key});
 

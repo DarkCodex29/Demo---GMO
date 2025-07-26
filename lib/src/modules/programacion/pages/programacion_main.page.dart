@@ -3,13 +3,21 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/shared/widgets/fade_out_card.dart';
 import 'package:demo/src/modules/programacion/pages/calendar.page.dart';
 import 'package:demo/src/modules/programacion/pages/scheduling.page.dart';
 import 'package:demo/src/modules/programacion/pages/resources.page.dart';
 import 'package:demo/src/modules/programacion/pages/workload.page.dart';
 
-class ProgramacionMainPage extends StatelessWidget {
+class ProgramacionMainPage extends StatefulWidget {
   const ProgramacionMainPage({super.key});
+  
+  @override
+  ProgramacionMainPageState createState() => ProgramacionMainPageState();
+}
+
+class ProgramacionMainPageState extends State<ProgramacionMainPage> {
+  bool _showInfoCard = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +32,17 @@ class ProgramacionMainPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header section
-            _buildHeader(isMobile),
+            // Header section con efecto de desvanecimiento
+            InfoCard(
+              fadeDelay: const Duration(seconds: 2),
+              fadeDuration: const Duration(milliseconds: 1500),
+              onFadeComplete: () {
+                setState(() {
+                  _showInfoCard = false;
+                });
+              },
+              child: _buildHeader(isMobile),
+            ),
             SizedBox(height: isMobile ? 20 : 32),
 
             // Sections grid

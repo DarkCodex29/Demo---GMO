@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/shared/widgets/fade_out_card.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'stock_report.page.dart';
@@ -9,8 +10,15 @@ import 'capacity_report.page.dart';
 import 'equipment_report.page.dart';
 import 'fault.log.page.dart';
 
-class ReportsMainPage extends StatelessWidget {
+class ReportsMainPage extends StatefulWidget {
   const ReportsMainPage({super.key});
+  
+  @override
+  ReportsMainPageState createState() => ReportsMainPageState();
+}
+
+class ReportsMainPageState extends State<ReportsMainPage> {
+  bool _showInfoCard = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +33,17 @@ class ReportsMainPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header section
-            _buildHeader(isMobile),
+            // Header section con efecto de desvanecimiento
+            InfoCard(
+              fadeDelay: const Duration(seconds: 2),
+              fadeDuration: const Duration(milliseconds: 1500),
+              onFadeComplete: () {
+                setState(() {
+                  _showInfoCard = false;
+                });
+              },
+              child: _buildHeader(isMobile),
+            ),
             SizedBox(height: isMobile ? 20 : 32),
 
             // Sections grid

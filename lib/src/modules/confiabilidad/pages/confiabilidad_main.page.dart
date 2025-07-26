@@ -3,6 +3,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/shared/layouts/main_layout.dart';
+import 'package:demo/src/shared/widgets/fade_out_card.dart';
 import 'package:demo/src/modules/confiabilidad/pages/equipment.page.dart';
 import 'package:demo/src/modules/confiabilidad/pages/locations.page.dart';
 import 'package:demo/src/modules/confiabilidad/pages/class.page.dart';
@@ -13,8 +14,15 @@ import 'package:demo/src/modules/confiabilidad/pages/strategies.page.dart';
 import 'package:demo/src/modules/confiabilidad/pages/cycle.page.dart';
 import 'package:demo/src/modules/confiabilidad/pages/roadmap_main.page.dart';
 
-class ConfiabilidadMainPage extends StatelessWidget {
+class ConfiabilidadMainPage extends StatefulWidget {
   const ConfiabilidadMainPage({super.key});
+  
+  @override
+  ConfiabilidadMainPageState createState() => ConfiabilidadMainPageState();
+}
+
+class ConfiabilidadMainPageState extends State<ConfiabilidadMainPage> {
+  bool _showInfoCard = true;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +37,17 @@ class ConfiabilidadMainPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header section
-            _buildHeader(isMobile),
+            // Header section con efecto de desvanecimiento
+            InfoCard(
+              fadeDelay: const Duration(seconds: 2),
+              fadeDuration: const Duration(milliseconds: 1500),
+              onFadeComplete: () {
+                setState(() {
+                  _showInfoCard = false;
+                });
+              },
+              child: _buildHeader(isMobile),
+            ),
             SizedBox(height: isMobile ? 20 : 32),
 
             // Sections grid
