@@ -1,5 +1,7 @@
 import 'package:demo/src/modules/auth/auth.dart';
 import 'package:demo/src/shared/shared.dart';
+import 'package:demo/src/shared/widgets/animated_loading.dart';
+import 'package:demo/src/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,9 +32,13 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     if (isLoggedIn == null) {
       // Mientras se carga el estado de la autenticación, muestra un indicador de carga
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+      return Scaffold(
+        backgroundColor: AppColors.neutralLightBackground,
+        body: const Center(
+          child: CompanyAnimatedLoading(
+            size: 80,
+            text: 'Cargando...',
+          ),
         ),
       );
     }

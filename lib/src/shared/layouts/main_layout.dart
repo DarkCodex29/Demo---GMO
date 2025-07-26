@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:demo/src/theme/app_colors.dart';
 import 'package:demo/src/theme/app_text_styles.dart';
 import 'package:demo/src/modules/confiabilidad/confiabilidad.dart';
@@ -9,6 +10,7 @@ import 'package:demo/src/modules/programacion/programacion.dart';
 import 'package:demo/src/modules/ejecucion/ejecucion.dart';
 import 'package:demo/src/modules/seguimiento_control/seguimiento_control.dart';
 import 'package:demo/src/shared/widgets/floating_search.dart';
+import 'package:demo/src/modules/auth/auth.dart';
 
 class MainLayout extends StatefulWidget {
   final Widget child;
@@ -832,15 +834,9 @@ class MainLayoutState extends State<MainLayout> {
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).pop();
-              // Aquí puedes agregar la lógica real de logout
-              // Por ejemplo, limpiar SharedPreferences y navegar a AuthPage
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Función de logout pendiente de implementar'),
-                ),
-              );
+              await _performLogout();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondaryCoralRed,
@@ -851,6 +847,30 @@ class MainLayoutState extends State<MainLayout> {
         ],
       ),
     );
+  }
+
+  Future<void> _performLogout() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false);
+      await prefs.remove('username');
+      
+      if (mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const AuthPage()),
+          (route) => false,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al cerrar sesión: $e'),
+            backgroundColor: AppColors.secondaryCoralRed,
+          ),
+        );
+      }
+    }
   }
 
   Widget _buildNavigationBar() {

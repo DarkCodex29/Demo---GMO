@@ -18,6 +18,8 @@ class FloatingSearchState extends State<FloatingSearch>
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isExpanded = false;
+  Offset _position = const Offset(16, 20); // Posición inicial (right, bottom)
+  bool _isDragging = false;
 
   @override
   void initState() {
@@ -190,24 +192,60 @@ class FloatingSearchState extends State<FloatingSearch>
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 20,
-      right: 16,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        width: _isExpanded ? 280 : 56,
-        height: 56,
-        decoration: BoxDecoration(
-          color: AppColors.primaryDarkTeal,
-          borderRadius: BorderRadius.circular(_isExpanded ? 25 : 28),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
+      bottom: _position.dy,
+      right: _position.dx,
+      child: GestureDetector(
+        onPanStart: (details) {
+          if (!_isExpanded) {
+            setState(() {
+              _isDragging = true;
+            });
+          }
+        },
+        onPanUpdate: (details) {
+          if (!_isExpanded && _isDragging) {
+            setState(() {
+              final screenSize = MediaQuery.of(context).size;
+              final newX = _position.dx - details.delta.dx;
+              final newY = _position.dy - details.delta.dy;
+              
+              // Límites para mantener el botón dentro de la pantalla
+              final minX = 16.0;
+              final maxX = screenSize.width - 72; // 56 (ancho del botón) + 16 (margen)
+              final minY = 16.0;
+              final maxY = screenSize.height - 140; // Altura del botón + margen inferior
+              
+              _position = Offset(
+                newX.clamp(minX, maxX),
+                newY.clamp(minY, maxY),
+              );
+            });
+          }
+        },
+        onPanEnd: (details) {
+          if (!_isExpanded) {
+            setState(() {
+              _isDragging = false;
+            });
+          }
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: _isDragging ? 0 : 300),
+          width: _isExpanded ? 280 : 56,
+          height: 56,
+          decoration: BoxDecoration(
+            color: AppColors.primaryDarkTeal,
+            borderRadius: BorderRadius.circular(_isExpanded ? 25 : 28),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(_isDragging ? 0.3 : 0.2),
+                blurRadius: _isDragging ? 12 : 8,
+                offset: Offset(0, _isDragging ? 6 : 4),
+              ),
+            ],
+          ),
+          child: _isExpanded ? _buildExpandedSearch() : _buildCollapsedSearch(),
         ),
-        child: _isExpanded ? _buildExpandedSearch() : _buildCollapsedSearch(),
       ),
     );
   }
