@@ -1,0 +1,282 @@
+import 'package:flutter/material.dart';
+import 'package:demo/src/theme/app_colors.dart';
+import 'package:demo/src/theme/app_text_styles.dart';
+
+class FloatingSearch extends StatefulWidget {
+  const FloatingSearch({super.key});
+
+  @override
+  FloatingSearchState createState() => FloatingSearchState();
+}
+
+class FloatingSearchState extends State<FloatingSearch>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _fadeAnimation;
+
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _scaleAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut,
+    );
+
+    _fadeAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _searchController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _toggleSearch() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+    });
+
+    if (_isExpanded) {
+      _animationController.forward();
+      _focusNode.requestFocus();
+    } else {
+      _animationController.reverse();
+      _searchController.clear();
+      _focusNode.unfocus();
+    }
+  }
+
+  void _performSearch(String query) {
+    if (query.isNotEmpty) {
+      // Aquí iría la lógica de búsqueda
+      debugPrint('Buscando: $query');
+      _showSearchResults(query);
+    }
+  }
+
+  void _showSearchResults(String query) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryDarkTeal,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search, color: AppColors.white),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Resultados para "$query"',
+                      style: AppTextStyles.heading6.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close, color: AppColors.white),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(16),
+                  children: [
+                    _buildSearchResultItem(
+                      'Equipo ${query.toUpperCase()}',
+                      'Bomba centrífuga - Ubicación: PLANTA-A',
+                      Icons.engineering,
+                      AppColors.primaryDarkTeal,
+                    ),
+                    _buildSearchResultItem(
+                      'Orden ZIA1-$query',
+                      'Mantenimiento preventivo - Estado: Planificada',
+                      Icons.assignment,
+                      AppColors.primaryMediumTeal,
+                    ),
+                    _buildSearchResultItem(
+                      'Material $query',
+                      'Repuesto disponible - Stock: 25 unidades',
+                      Icons.inventory,
+                      AppColors.primaryMintGreen,
+                    ),
+                    _buildSearchResultItem(
+                      'Aviso AV-$query',
+                      'Mantenimiento correctivo - Prioridad: Alta',
+                      Icons.warning,
+                      AppColors.secondaryCoralRed,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchResultItem(
+      String title, String subtitle, IconData icon, Color color) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        title: Text(
+          title,
+          style: AppTextStyles.labelMedium.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: AppTextStyles.bodySmall.copyWith(
+            color: AppColors.neutralTextGray.withOpacity(0.8),
+          ),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: AppColors.neutralTextGray,
+        ),
+        onTap: () {
+          Navigator.pop(context);
+          _toggleSearch();
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 20,
+      right: 16,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: _isExpanded ? 280 : 56,
+        height: 56,
+        decoration: BoxDecoration(
+          color: AppColors.primaryDarkTeal,
+          borderRadius: BorderRadius.circular(_isExpanded ? 25 : 28),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: _isExpanded ? _buildExpandedSearch() : _buildCollapsedSearch(),
+      ),
+    );
+  }
+
+  Widget _buildCollapsedSearch() {
+    return InkWell(
+      onTap: _toggleSearch,
+      borderRadius: BorderRadius.circular(28),
+      child: const Center(
+        child: Icon(
+          Icons.search,
+          color: AppColors.white,
+          size: 24,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildExpandedSearch() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            Icons.search,
+            color: AppColors.white,
+            size: 18,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: TextField(
+              controller: _searchController,
+              focusNode: _focusNode,
+              onSubmitted: _performSearch,
+              style: const TextStyle(
+                color: AppColors.white,
+                fontSize: 14,
+              ),
+              cursorColor: AppColors.white,
+              decoration: const InputDecoration(
+                hintText: 'Buscar...',
+                hintStyle: TextStyle(
+                  color: Color(0xFFB3DFDF),
+                  fontSize: 14,
+                ),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
+                isDense: true,
+                filled: false,
+                fillColor: Colors.transparent,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: _toggleSearch,
+            child: const Icon(
+              Icons.close,
+              color: AppColors.white,
+              size: 18,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -258,13 +258,14 @@ class EquipmentPageState extends State<EquipmentPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.neutralTextGray),
-        boxShadow: const [
+        border: Border.all(color: AppColors.neutralMediumBorder),
+        boxShadow: [
           BoxShadow(
-            color: AppColors.neutralTextGray,
+            color: AppColors.neutralTextGray.withOpacity(0.1),
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),

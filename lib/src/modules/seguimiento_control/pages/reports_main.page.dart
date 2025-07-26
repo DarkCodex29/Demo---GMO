@@ -42,10 +42,10 @@ class ReportsMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
+            AppColors.secondaryBrightBlue,
+            AppColors.secondaryBrightBlue.withOpacity(0.8),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -105,18 +105,21 @@ class ReportsMainPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionsGrid(BuildContext context, bool isMobile, bool isTablet) {
+  Widget _buildSectionsGrid(
+      BuildContext context, bool isMobile, bool isTablet) {
     final sections = _getSections();
-    
+
     if (isMobile) {
       // En móvil: 1 columna
       return Column(
-        children: sections.map((section) => 
-          Container(
-            margin: const EdgeInsets.only(bottom: 16),
-            child: _buildSectionCard(context, section, isMobile),
-          ),
-        ).toList(),
+        children: sections
+            .map(
+              (section) => Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                child: _buildSectionCard(context, section, isMobile),
+              ),
+            )
+            .toList(),
       );
     } else if (isTablet) {
       // En tablet: 2 columnas
@@ -153,7 +156,8 @@ class ReportsMainPage extends StatelessWidget {
     }
   }
 
-  Widget _buildSectionCard(BuildContext context, Map<String, dynamic> section, bool isMobile) {
+  Widget _buildSectionCard(
+      BuildContext context, Map<String, dynamic> section, bool isMobile) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -192,7 +196,7 @@ class ReportsMainPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: isMobile ? 16 : 20),
-              
+
               // Title
               Text(
                 section['title'] as String,
@@ -204,7 +208,7 @@ class ReportsMainPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 8),
-              
+
               // Description
               Text(
                 section['description'] as String,
@@ -215,12 +219,13 @@ class ReportsMainPage extends StatelessWidget {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
-              
+
               // Count badge if available
               if (section['count'] != null) ...[
                 const SizedBox(height: 12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.neutralLightBackground,
                     borderRadius: BorderRadius.circular(6),
@@ -258,7 +263,7 @@ class ReportsMainPage extends StatelessWidget {
         'title': 'Reporte de Órdenes',
         'description': 'Estado y seguimiento de órdenes de mantenimiento',
         'icon': Icons.assignment_outlined,
-        'color': AppColors.primaryMintGreen,
+        'color': AppColors.secondaryBrightBlue,
         'count': 156,
         'page': const OrdersReportPage(),
       },
@@ -267,25 +272,27 @@ class ReportsMainPage extends StatelessWidget {
         'title': 'Reporte de Capacidades',
         'description': 'Análisis de capacidad por centro de trabajo y recursos',
         'icon': Icons.analytics_outlined,
-        'color': AppColors.secondaryGoldenYellow,
+        'color': AppColors.secondaryBrightBlue,
         'count': 28,
         'page': const CapacityReportPage(),
       },
       {
         'id': 'reporte_equipos',
         'title': 'Reporte de Equipos',
-        'description': 'Estado, ubicación y rendimiento de equipos industriales',
+        'description':
+            'Estado, ubicación y rendimiento de equipos industriales',
         'icon': Icons.precision_manufacturing_outlined,
-        'color': AppColors.primaryMediumTeal,
+        'color': AppColors.secondaryBrightBlue,
         'count': 125,
         'page': const EquipmentReportPage(),
       },
       {
         'id': 'log_fallas',
         'title': 'Log de Fallas',
-        'description': 'Registro histórico de fallas y eventos críticos del sistema',
+        'description':
+            'Registro histórico de fallas y eventos críticos del sistema',
         'icon': Icons.bug_report_outlined,
-        'color': AppColors.secondaryCoralRed,
+        'color': AppColors.secondaryBrightBlue,
         'count': 89,
         'page': const FaultLogPage(),
       },

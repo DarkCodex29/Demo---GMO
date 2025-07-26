@@ -158,6 +158,27 @@ class AppTheme {
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
+      // Navigation Bar Theme
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.white,
+        indicatorColor: AppColors.primaryDarkTeal.withOpacity(0.1),
+        height: 65,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTextStyles.labelSmall.copyWith(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primaryDarkTeal,
+            );
+          }
+          return AppTextStyles.labelSmall.copyWith(
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: AppColors.neutralTextGray,
+          );
+        }),
+      ),
+
       // ExpansionTile Theme
       expansionTileTheme: const ExpansionTileThemeData(
         backgroundColor: AppColors.transparent,

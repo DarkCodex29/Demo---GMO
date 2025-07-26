@@ -8,6 +8,7 @@ import 'package:demo/src/modules/planificacion/planificacion.dart';
 import 'package:demo/src/modules/programacion/programacion.dart';
 import 'package:demo/src/modules/ejecucion/ejecucion.dart';
 import 'package:demo/src/modules/seguimiento_control/seguimiento_control.dart';
+import 'package:demo/src/shared/widgets/floating_search.dart';
 
 class MainLayout extends StatefulWidget {
   final Widget child;
@@ -51,7 +52,12 @@ class MainLayoutState extends State<MainLayout> {
     return Scaffold(
       appBar: _buildAppBar(true),
       drawer: _buildNavigationDrawer(),
-      body: widget.child,
+      body: Stack(
+        children: [
+          widget.child,
+          const FloatingSearch(),
+        ],
+      ),
     );
   }
 
@@ -64,7 +70,14 @@ class MainLayoutState extends State<MainLayout> {
             child: Column(
               children: [
                 _buildAppBar(false),
-                Expanded(child: widget.child),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      widget.child,
+                      const FloatingSearch(),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -82,7 +95,14 @@ class MainLayoutState extends State<MainLayout> {
             child: Column(
               children: [
                 _buildAppBar(false),
-                Expanded(child: widget.child),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      widget.child,
+                      const FloatingSearch(),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -100,6 +120,7 @@ class MainLayoutState extends State<MainLayout> {
               onPressed: () => Navigator.of(context).pop(),
             )
           : (showMenuButton ? null : Container()),
+      titleSpacing: showMenuButton ? 0 : 16,
       title: Text(
         widget.customTitle ?? _getModuleTitle(widget.currentModule),
         style: AppTextStyles.appBarTitle.copyWith(
@@ -108,10 +129,6 @@ class MainLayoutState extends State<MainLayout> {
         ),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () => _showGlobalSearch(),
-        ),
         IconButton(
           icon: Stack(
             children: [
@@ -211,7 +228,7 @@ class MainLayoutState extends State<MainLayout> {
       labelType: extended ? null : NavigationRailLabelType.selected,
       leading: extended
           ? Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Container(
@@ -258,7 +275,7 @@ class MainLayoutState extends State<MainLayout> {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+            padding: const EdgeInsets.fromLTRB(8, 16, 8, 6),
             decoration: const BoxDecoration(
               color: AppColors.primaryDarkTeal,
             ),
@@ -297,12 +314,12 @@ class MainLayoutState extends State<MainLayout> {
           ),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 2),
               children: _getDrawerItems(),
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
               border: Border(
                 top: BorderSide(
@@ -386,7 +403,7 @@ class MainLayoutState extends State<MainLayout> {
     return modules.map((module) {
       return NavigationRailDestination(
         icon: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             color: widget.currentModule == module['id']
                 ? AppColors.primaryDarkTeal.withOpacity(0.1)
@@ -401,7 +418,7 @@ class MainLayoutState extends State<MainLayout> {
           ),
         ),
         selectedIcon: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             color: AppColors.primaryDarkTeal,
             borderRadius: BorderRadius.circular(8),
@@ -428,7 +445,7 @@ class MainLayoutState extends State<MainLayout> {
     return modules.map((module) {
       final isSelected = widget.currentModule == module['id'];
       return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primaryDarkTeal.withOpacity(0.1) : null,
           borderRadius: BorderRadius.circular(8),
@@ -586,12 +603,6 @@ class MainLayoutState extends State<MainLayout> {
     }
   }
 
-  void _showGlobalSearch() {
-    showSearch(
-      context: context,
-      delegate: GlobalSearchDelegate(),
-    );
-  }
 
   void _showNotifications() {
     showDialog(
@@ -839,6 +850,39 @@ class MainLayoutState extends State<MainLayout> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildNavigationBar() {
+    final modules = _getModules().where((module) => module['id'] != 'home').toList();
+    final currentModuleIndex = modules.indexWhere((module) => module['id'] == widget.currentModule);
+    
+    return NavigationBar(
+      selectedIndex: currentModuleIndex >= 0 ? currentModuleIndex : 0,
+      onDestinationSelected: (index) {
+        if (index < modules.length) {
+          _onModuleSelected(modules[index]['id']);
+        }
+      },
+      backgroundColor: AppColors.white,
+      indicatorColor: AppColors.primaryDarkTeal.withOpacity(0.1),
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      height: 65,
+      destinations: modules.take(5).map((module) {
+        return NavigationDestination(
+          icon: Icon(
+            module['icon'],
+            color: AppColors.neutralTextGray,
+            size: 20,
+          ),
+          selectedIcon: Icon(
+            module['icon'],
+            color: AppColors.primaryDarkTeal,
+            size: 20,
+          ),
+          label: module['title'],
+        );
+      }).toList(),
     );
   }
 }
