@@ -243,16 +243,14 @@ class FloatingSearchState extends State<FloatingSearch>
               controller: _searchController,
               focusNode: _focusNode,
               onSubmitted: _performSearch,
-              style: const TextStyle(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.white,
-                fontSize: 14,
               ),
               cursorColor: AppColors.white,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Buscar...',
-                hintStyle: TextStyle(
-                  color: Color(0xFFB3DFDF),
-                  fontSize: 14,
+                hintStyle: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.white.withOpacity(0.7),
                 ),
                 border: InputBorder.none,
                 enabledBorder: InputBorder.none,

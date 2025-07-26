@@ -44,8 +44,8 @@ class ReportsMainPage extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColors.secondaryBrightBlue,
-            AppColors.secondaryBrightBlue.withOpacity(0.8),
+            AppColors.primaryDarkTeal,
+            AppColors.primaryMediumTeal,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -254,7 +254,7 @@ class ReportsMainPage extends StatelessWidget {
         'title': 'Reporte de Stock',
         'description': 'Inventario y disponibilidad de materiales y repuestos',
         'icon': Icons.inventory_2_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'count': 342,
         'page': const StockReportPage(),
       },
@@ -263,7 +263,7 @@ class ReportsMainPage extends StatelessWidget {
         'title': 'Reporte de Órdenes',
         'description': 'Estado y seguimiento de órdenes de mantenimiento',
         'icon': Icons.assignment_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryMediumTeal,
         'count': 156,
         'page': const OrdersReportPage(),
       },
@@ -272,7 +272,7 @@ class ReportsMainPage extends StatelessWidget {
         'title': 'Reporte de Capacidades',
         'description': 'Análisis de capacidad por centro de trabajo y recursos',
         'icon': Icons.analytics_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'count': 28,
         'page': const CapacityReportPage(),
       },
@@ -282,7 +282,7 @@ class ReportsMainPage extends StatelessWidget {
         'description':
             'Estado, ubicación y rendimiento de equipos industriales',
         'icon': Icons.precision_manufacturing_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryMediumTeal,
         'count': 125,
         'page': const EquipmentReportPage(),
       },
@@ -292,7 +292,7 @@ class ReportsMainPage extends StatelessWidget {
         'description':
             'Registro histórico de fallas y eventos críticos del sistema',
         'icon': Icons.bug_report_outlined,
-        'color': AppColors.secondaryBrightBlue,
+        'color': AppColors.primaryDarkTeal,
         'count': 89,
         'page': const FaultLogPage(),
       },
