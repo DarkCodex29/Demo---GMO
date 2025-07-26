@@ -666,6 +666,7 @@ class MainLayoutState extends State<MainLayout> {
   Widget _buildNotificationItem(
       String title, String subtitle, IconData icon, Color color, String time) {
     return ListTile(
+      contentPadding: EdgeInsets.zero,
       leading: Container(
         //padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -725,6 +726,7 @@ class MainLayoutState extends State<MainLayout> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: CircleAvatar(
                 backgroundColor: AppColors.primaryDarkTeal.withOpacity(0.1),
                 child: Text(
@@ -740,11 +742,13 @@ class MainLayoutState extends State<MainLayout> {
             ),
             const Divider(),
             const ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.email),
               title: Text('Email'),
               subtitle: Text('gianpierre.mio@empresa.com'),
             ),
             const ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.badge),
               title: Text('Rol'),
               subtitle: Text('Administrador GMO'),
@@ -779,6 +783,7 @@ class MainLayoutState extends State<MainLayout> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.notifications),
               title: const Text('Notificaciones'),
               trailing: Switch(
@@ -787,6 +792,7 @@ class MainLayoutState extends State<MainLayout> {
               ),
             ),
             ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.dark_mode),
               title: const Text('Modo oscuro'),
               trailing: Switch(
@@ -795,6 +801,7 @@ class MainLayoutState extends State<MainLayout> {
               ),
             ),
             ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.language),
               title: const Text('Idioma'),
               subtitle: const Text('Español'),
