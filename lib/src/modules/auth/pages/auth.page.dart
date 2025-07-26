@@ -15,7 +15,7 @@ class AuthPage extends StatefulWidget {
   AuthPageState createState() => AuthPageState();
 }
 
-class AuthPageState extends State<AuthPage> {
+class AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -24,12 +24,40 @@ class AuthPageState extends State<AuthPage> {
   bool _rememberMe = false;
 
   Map<String, String> users = {};
+  
+  // Controllers para animaciones de fondo
+  late AnimationController _backgroundController;
+  late List<AnimationController> _shapeControllers;
 
   @override
   void initState() {
     super.initState();
     _loadUsers();
     _loadRememberedUser();
+    _initializeAnimations();
+  }
+
+  void _initializeAnimations() {
+    _backgroundController = AnimationController(
+      duration: const Duration(seconds: 15),
+      vsync: this,
+    )..repeat();
+
+    _shapeControllers = List.generate(5, (index) {
+      return AnimationController(
+        duration: Duration(seconds: 6 + (index * 2)),
+        vsync: this,
+      )..repeat(reverse: true);
+    });
+  }
+
+  @override
+  void dispose() {
+    _backgroundController.dispose();
+    for (var controller in _shapeControllers) {
+      controller.dispose();
+    }
+    super.dispose();
   }
 
   Future<void> _loadRememberedUser() async {
@@ -111,10 +139,25 @@ class AuthPageState extends State<AuthPage> {
     final isTablet = ResponsiveBreakpoints.of(context).isTablet;
 
     return Scaffold(
-      backgroundColor: AppColors.neutralLightBackground,
       resizeToAvoidBottomInset: false,
-      body: Stack(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.primaryDarkTeal.withOpacity(0.35),
+              AppColors.primaryMediumTeal.withOpacity(0.25),
+              AppColors.primaryMintGreen.withOpacity(0.15),
+              AppColors.white,
+            ],
+            stops: const [0.0, 0.3, 0.6, 1.0],
+          ),
+        ),
+        child: Stack(
         children: [
+          // Formas animadas en el fondo
+          _buildMovingShapes(),
           Center(
             child: SingleChildScrollView(
               child: Container(
@@ -190,6 +233,7 @@ class AuthPageState extends State<AuthPage> {
               ),
             ),
         ],
+        ),
       ),
     );
   }
@@ -438,6 +482,163 @@ class AuthPageState extends State<AuthPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildMovingShapes() {
+    return Positioned.fill(
+      child: AnimatedBuilder(
+        animation: _backgroundController,
+        builder: (context, child) {
+          return Stack(
+            children: [
+              // Forma 1: Círculo grande flotante (superior izquierda)
+              AnimatedBuilder(
+                animation: _shapeControllers[0],
+                builder: (context, child) {
+                  return Positioned(
+                    left: -100 + (120 * _shapeControllers[0].value),
+                    top: 30 + (150 * _backgroundController.value),
+                    child: Transform.scale(
+                      scale: 0.6 + (0.5 * _shapeControllers[0].value),
+                      child: Container(
+                        width: 180,
+                        height: 180,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryMintGreen.withOpacity(0.12),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryMintGreen.withOpacity(0.1),
+                              blurRadius: 20,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              
+              // Forma 2: Cuadrado redondeado (superior derecha)
+              AnimatedBuilder(
+                animation: _shapeControllers[1],
+                builder: (context, child) {
+                  return Positioned(
+                    right: -80 + (140 * _shapeControllers[1].value),
+                    top: 80 + (100 * (1 - _backgroundController.value)),
+                    child: Transform.rotate(
+                      angle: _backgroundController.value * 1.0,
+                      child: Transform.scale(
+                        scale: 0.7 + (0.4 * _shapeControllers[1].value),
+                        child: Container(
+                          width: 140,
+                          height: 140,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryDarkTeal.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(35),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primaryDarkTeal.withOpacity(0.08),
+                                blurRadius: 15,
+                                spreadRadius: 3,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              
+              // Forma 3: Círculo medio (centro)
+              AnimatedBuilder(
+                animation: _shapeControllers[2],
+                builder: (context, child) {
+                  return Positioned(
+                    left: MediaQuery.of(context).size.width * 0.1 + (150 * _shapeControllers[2].value),
+                    bottom: 200 + (80 * _backgroundController.value),
+                    child: Transform.scale(
+                      scale: 0.5 + (0.6 * _shapeControllers[2].value),
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryMediumTeal.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryMediumTeal.withOpacity(0.06),
+                              blurRadius: 12,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              
+              // Forma 4: Cuadrado redondeado pequeño (inferior derecha)
+              AnimatedBuilder(
+                animation: _shapeControllers[3],
+                builder: (context, child) {
+                  return Positioned(
+                    right: 30 + (80 * _shapeControllers[3].value),
+                    bottom: 80 + (120 * (1 - _backgroundController.value)),
+                    child: Transform.rotate(
+                      angle: _shapeControllers[3].value * 2.0,
+                      child: Transform.scale(
+                        scale: 0.8 + (0.3 * _shapeControllers[3].value),
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryDarkTeal.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              
+              // Forma 5: Círculo pequeño flotante (centro superior)
+              AnimatedBuilder(
+                animation: _shapeControllers[4],
+                builder: (context, child) {
+                  return Positioned(
+                    left: MediaQuery.of(context).size.width * 0.6 + (60 * _shapeControllers[4].value),
+                    top: 200 + (80 * _backgroundController.value),
+                    child: Transform.scale(
+                      scale: 0.4 + (0.7 * _shapeControllers[4].value),
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryMintGreen.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryMintGreen.withOpacity(0.15),
+                              blurRadius: 10,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
       ),
     );
   }
