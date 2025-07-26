@@ -40,14 +40,7 @@ class EjecucionMainPage extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(isMobile ? 20 : 32),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.primaryDarkTeal,
-            AppColors.primaryMediumTeal,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primaryDarkTeal,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -87,7 +80,7 @@ class EjecucionMainPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
+                    color: AppColors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -262,7 +255,7 @@ class EjecucionMainPage extends StatelessWidget {
         'title': 'Ejecución de Trabajos',
         'description': 'Registro de actividades y tiempo de ejecución en campo',
         'icon': Icons.engineering,
-        'color': AppColors.primaryMintGreen,
+        'color': AppColors.primaryMediumTeal,
         'count': 43,
         'page': const ExecutionPage(),
       },
@@ -272,7 +265,7 @@ class EjecucionMainPage extends StatelessWidget {
         'description':
             'Finalización y cierre técnico de órdenes de mantenimiento',
         'icon': Icons.check_circle_outline,
-        'color': AppColors.secondaryAquaGreen,
+        'color': AppColors.primaryDarkTeal,
         'count': 89,
         'page': const ClosingPage(),
       },
